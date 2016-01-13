@@ -1,11 +1,14 @@
 /// <reference path="typings/tsd.d.ts" />
 "use strict";
 
-const electron = require("electron");
+import * as electron from "electron";
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
+import * as request from "request";
 
-electron.crashReporter.start();
+electron.crashReporter.start({
+    companyName: "yao"
+});
 
 let mainWindow: GitHubElectron.BrowserWindow = null;
 

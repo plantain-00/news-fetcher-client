@@ -19,5 +19,9 @@
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-shell": "^0.5.1"
+  },
+  "dependencies": {
+    "jquery": "^2.2.0",
+    "request": "^2.67.0"
   }
 }

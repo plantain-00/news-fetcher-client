@@ -9,7 +9,16 @@
       "commit": "2e354e005f0fc12e18a40546afdab225620f51c9"
     },
     "node/node.d.ts": {
-      "commit": "2e354e005f0fc12e18a40546afdab225620f51c9"
+      "commit": "984a41af67d76b5134e0d4991a30f813dfb8561f"
+    },
+    "request/request.d.ts": {
+      "commit": "984a41af67d76b5134e0d4991a30f813dfb8561f"
+    },
+    "form-data/form-data.d.ts": {
+      "commit": "984a41af67d76b5134e0d4991a30f813dfb8561f"
+    },
+    "jquery/jquery.d.ts": {
+      "commit": "f85b83dbbffbc0d490b232b34f0664b424e8ce33"
     }
   }
 }
