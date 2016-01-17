@@ -22,6 +22,7 @@ export interface Self<T> {
 }
 
 export const sources = {
-    v2ex_hot: "v2ex_hot",
-    kickass_torrents: "kickass_torrents",
+    v2ex_hot: "https://v2ex.com/?tab=hot",
+    kickass_torrents: "https://kat.cr",
+    eztv: "https://eztv.ag",
 };

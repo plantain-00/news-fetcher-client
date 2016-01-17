@@ -35,6 +35,26 @@ let MainComponent = React.createClass({
             self.setState({ news: news });
         });
         electron.ipcRenderer.send(types.sources.v2ex_hot);
+
+        electron.ipcRenderer.on(types.sources.kickass_torrents, (event, arg) => {
+            let news = self.state.news;
+            news.push({
+                source: types.sources.kickass_torrents,
+                items: arg,
+            });
+            self.setState({ news: news });
+        });
+        electron.ipcRenderer.send(types.sources.kickass_torrents);
+
+        electron.ipcRenderer.on(types.sources.eztv, (event, arg) => {
+            let news = self.state.news;
+            news.push({
+                source: types.sources.eztv,
+                items: arg,
+            });
+            self.setState({ news: news });
+        });
+        electron.ipcRenderer.send(types.sources.eztv);
     },
     render: function() {
         let self: Self = this;
@@ -47,7 +67,7 @@ let MainComponent = React.createClass({
             });
             return (
                 <div key={n.source}>
-                    <div>{n.source}</div>
+                    <div><a href={n.source}>{n.source}</a></div>
                     {itemsView}
                 </div>
             );
