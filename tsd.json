@@ -19,6 +19,15 @@
     },
     "jquery/jquery.d.ts": {
       "commit": "f85b83dbbffbc0d490b232b34f0664b424e8ce33"
+    },
+    "cheerio/cheerio.d.ts": {
+      "commit": "70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e"
+    },
+    "react/react.d.ts": {
+      "commit": "70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e"
+    },
+    "react/react-dom.d.ts": {
+      "commit": "70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e"
     }
   }
 }
