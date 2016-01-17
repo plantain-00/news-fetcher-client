@@ -25,4 +25,9 @@ export const sources = {
     v2ex_hot: "https://v2ex.com/?tab=hot",
     kickass_torrents: "https://kat.cr",
     eztv: "https://eztv.ag",
+    cnbeta: "http://www.cnbeta.com",
+};
+
+export const events = {
+    items: "items"
 };

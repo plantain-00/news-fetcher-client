@@ -2,7 +2,8 @@ import * as libs from "./libs";
 import * as types from "./types";
 
 libs.electron.crashReporter.start({
-    companyName: "yao"
+    companyName: "yao",
+    submitURL: "http://localhost",
 });
 
 let mainWindow: GitHubElectron.BrowserWindow = null;
@@ -13,78 +14,129 @@ libs.electron.app.on("window-all-closed", function() {
     }
 });
 
-function fetchV2exHot() {
-    libs.electron.ipcMain.on(types.sources.v2ex_hot, async (event) => {
-        try {
-            let response = await libs.requestAsync({
-                url: types.sources.v2ex_hot
+libs.electron.ipcMain.on(types.events.items, async (event) => {
+    fetchV2exHot(event);
+    fetchKickassTorrents(event);
+    fetchEztv(event);
+    fetchCnbeta(event);
+});
+
+async function fetchV2exHot(event: GitHubElectron.IPCMainEvent) {
+    let source = types.sources.v2ex_hot;
+    try {
+        let response = await libs.requestAsync({
+            url: source
+        });
+        let $ = libs.cheerio.load(response.body);
+        let items = $(".item_title");
+        let result: types.Item[] = [];
+        for (let i = 0; i < items.length; i++) {
+            let item = items[i];
+            let a = $($(item).children()[0]);
+            result.push({
+                href: "https://v2ex.com" + a.attr("href"),
+                title: a.text(),
             });
-            let $ = libs.cheerio.load(response.body);
-            let items = $(".item_title");
-            let result: types.Item[] = [];
-            for (let i = 0; i < items.length; i++) {
-                let item = items[i];
-                let a = $($(item).children()[0]);
-                result.push({
-                    href: "https://v2ex.com" + a.attr("href"),
-                    title: a.text(),
-                });
-            }
-            event.sender.send(types.sources.v2ex_hot, result);
-        } catch (error) {
-            console.log(error);
         }
-    });
+        event.sender.send(types.events.items, {
+            source: source,
+            items: result,
+        });
+    } catch (error) {
+        console.log(error);
+        event.sender.send(types.events.items, {
+            source: source
+        });
+    }
 }
 
-function fetchKickassTorrents() {
-    libs.electron.ipcMain.on(types.sources.kickass_torrents, async (event) => {
-        try {
-            let response = await libs.requestAsync({
-                url: types.sources.kickass_torrents
+async function fetchKickassTorrents(event: GitHubElectron.IPCMainEvent) {
+    let source = types.sources.kickass_torrents;
+    try {
+        let response = await libs.requestAsync({
+            url: source,
+            gzip: true,
+        });
+        let $ = libs.cheerio.load(response.body);
+        let items = $(".filmType");
+        let result: types.Item[] = [];
+        for (let i = 0; i < items.length; i++) {
+            let item = items[i];
+            let a = $($(item).children()[1]);
+            result.push({
+                href: "https://kat.cr" + a.attr("href"),
+                title: a.text(),
             });
-            console.log(response.body);
-            let $ = libs.cheerio.load(response.body);
-            let items = $(".filmType");
-            console.log(items.length);
-            let result: types.Item[] = [];
-            for (let i = 0; i < items.length; i++) {
-                let item = items[i];
-                let a = $($(item).children()[0]);
-                result.push({
-                    href: "https://kat.cr" + a.attr("href"),
-                    title: a.text(),
-                });
-            }
-            event.sender.send(types.sources.kickass_torrents, result);
-        } catch (error) {
-            console.log(error);
         }
-    });
+        console.log(result);
+        event.sender.send(types.events.items, {
+            source: source,
+            items: result,
+        });
+    } catch (error) {
+        console.log(error);
+        event.sender.send(types.events.items, {
+            source: source
+        });
+    }
 }
 
-function fetchEztv() {
-    libs.electron.ipcMain.on(types.sources.eztv, async (event) => {
-        try {
-            let response = await libs.requestAsync({
-                url: types.sources.eztv
+async function fetchEztv(event: GitHubElectron.IPCMainEvent) {
+    let source = types.sources.eztv;
+    try {
+        let response = await libs.requestAsync({
+            url: source
+        });
+        let $ = libs.cheerio.load(response.body);
+        let items = $(".epinfo");
+        let result: types.Item[] = [];
+        for (let i = 0; i < items.length; i++) {
+            let item = items[i];
+            let a = $(item);
+            result.push({
+                href: "https://eztv.ag" + a.attr("href"),
+                title: a.text(),
             });
-            let $ = libs.cheerio.load(response.body);
-            let items = $(".epinfo");
-            let result: types.Item[] = [];
-            for (let i = 0; i < items.length; i++) {
-                let item = items[i];
-                let a = $(item);
-                result.push({
-                    href: "https://eztv.ag" + a.attr("href"),
-                    title: a.text(),
-                });
-            }
-            event.sender.send(types.sources.eztv, result);
-        } catch (error) {
-            console.log(error);
         }
-    });
+        event.sender.send(types.events.items, {
+            source: source,
+            items: result,
+        });
+    } catch (error) {
+        console.log(error);
+        event.sender.send(types.events.items, {
+            source: source
+        });
+    }
+}
+
+async function fetchCnbeta(event: GitHubElectron.IPCMainEvent) {
+    let source = types.sources.cnbeta;
+    try {
+        let response = await libs.requestAsync({
+            url: source
+        });
+        let $ = libs.cheerio.load(response.body);
+        let items = $(".title");
+        let result: types.Item[] = [];
+        for (let i = 0; i < items.length; i++) {
+            let item = items[i];
+            let a = $($(item).children()[0]);
+            result.push({
+                href: "http://www.cnbeta.com" + a.attr("href"),
+                title: a.text(),
+            });
+        }
+        event.sender.send(types.events.items, {
+            source: source,
+            items: result,
+        });
+    } catch (error) {
+        console.log(error);
+        event.sender.send(types.events.items, {
+            source: source
+        });
+    }
 }
 
 libs.electron.app.on("ready", () => {
@@ -94,8 +146,4 @@ libs.electron.app.on("ready", () => {
     mainWindow.on("closed", function() {
         mainWindow = null;
     });
-
-    fetchV2exHot();
-    fetchKickassTorrents();
-    fetchEztv();
 });

@@ -26,51 +26,36 @@ let MainComponent = React.createClass({
     componentDidMount: function() {
         let self: Self = this;
 
-        electron.ipcRenderer.on(types.sources.v2ex_hot, (event, arg) => {
+        electron.ipcRenderer.on(types.events.items, (event, arg) => {
             let news = self.state.news;
-            news.push({
-                source: types.sources.v2ex_hot,
-                items: arg,
-            });
+            news.push(arg);
             self.setState({ news: news });
         });
-        electron.ipcRenderer.send(types.sources.v2ex_hot);
-
-        electron.ipcRenderer.on(types.sources.kickass_torrents, (event, arg) => {
-            let news = self.state.news;
-            news.push({
-                source: types.sources.kickass_torrents,
-                items: arg,
-            });
-            self.setState({ news: news });
-        });
-        electron.ipcRenderer.send(types.sources.kickass_torrents);
-
-        electron.ipcRenderer.on(types.sources.eztv, (event, arg) => {
-            let news = self.state.news;
-            news.push({
-                source: types.sources.eztv,
-                items: arg,
-            });
-            self.setState({ news: news });
-        });
-        electron.ipcRenderer.send(types.sources.eztv);
+        electron.ipcRenderer.send(types.events.items);
     },
     render: function() {
         let self: Self = this;
 
         let newsView = self.state.news.map(n => {
-            let itemsView = n.items.map((i, index) => {
+            if (n.items) {
+                let itemsView = n.items.map((i, index) => {
+                    return (
+                        <div key={index}><a href={i.href}>{i.title}</a></div>
+                    );
+                });
                 return (
-                    <div key={index}><a href={i.href}>{i.title}</a></div>
+                    <div key={n.source}>
+                        <div><a href={n.source}>{n.source}</a></div>
+                        {itemsView}
+                    </div>
                 );
-            });
-            return (
-                <div key={n.source}>
-                    <div><a href={n.source}>{n.source}</a></div>
-                    {itemsView}
-                </div>
-            );
+            } else {
+                return (
+                    <div key={n.source}>
+                        <div><a href={n.source}>{n.source}</a>error</div>
+                    </div>
+                );
+            }
         });
 
         return (
