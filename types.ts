@@ -1,3 +1,5 @@
+/// <reference path="./typings/tsd.d.ts" />
+
 export interface Item {
     href: string;
     title: string;
@@ -20,5 +22,6 @@ export interface Self<T> {
 }
 
 export const sources = {
-    v2ex_hot: "v2ex_hot"
+    v2ex_hot: "v2ex_hot",
+    kickass_torrents: "kickass_torrents",
 };

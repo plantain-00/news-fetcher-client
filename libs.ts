@@ -1,5 +1,3 @@
-/// <reference path="typings/tsd.d.ts" />
-
 import * as electron from "electron";
 export {electron};
 

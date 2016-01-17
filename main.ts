@@ -1,7 +1,5 @@
 import * as libs from "./libs";
 import * as types from "./types";
-const app = libs.electron.app;
-const BrowserWindow = libs.electron.BrowserWindow;
 
 libs.electron.crashReporter.start({
     companyName: "yao"
@@ -9,15 +7,15 @@ libs.electron.crashReporter.start({
 
 let mainWindow: GitHubElectron.BrowserWindow = null;
 
-app.on("window-all-closed", function() {
-    if (process.platform != "darwin") {
-        app.quit();
+libs.electron.app.on("window-all-closed", function() {
+    if (process.platform !== "darwin") {
+        libs.electron.app.quit();
     }
 });
 
-app.on("ready", () => {
-    mainWindow = new BrowserWindow({ width: 1200, height: 800 });
-    mainWindow.loadURL('file://' + __dirname + '/index.html');
+libs.electron.app.on("ready", () => {
+    mainWindow = new libs.electron.BrowserWindow({ width: 1200, height: 800 });
+    mainWindow.loadURL(`file://${__dirname}/index.html`);
     mainWindow.webContents.openDevTools();
     mainWindow.on("closed", function() {
         mainWindow = null;

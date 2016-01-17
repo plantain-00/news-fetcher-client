@@ -1,5 +1,3 @@
-/// <reference path="../typings/tsd.d.ts" />
-
 import * as $ from "jquery";
 import * as electron from "electron";
 import * as React from "react";
@@ -58,7 +56,7 @@ let MainComponent = React.createClass({
         return (
             <div>{newsView}</div>
         );
-    }
+    },
 });
 
 ReactDOM.render(<MainComponent/>, document.getElementById("container"));
