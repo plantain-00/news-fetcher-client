@@ -4,6 +4,7 @@ export interface Item {
     href: string;
     title: string;
     detail?: string;
+    hidden?: boolean;
 }
 
 export interface News {

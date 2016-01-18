@@ -17,10 +17,24 @@ interface State {
 }
 
 interface Self extends types.Self<State> {
-
+    hide: (item: types.Item) => void;
+    openAndHide: (item: types.Item) => void;
 }
 
 let MainComponent = React.createClass({
+    hide: function(item: types.Item) {
+        let self: Self = this;
+
+        let news = self.state.news;
+        item.hidden = true;
+        self.setState({ news: news });
+    },
+    openAndHide: function(item: types.Item) {
+        let self: Self = this;
+
+        electron.shell.openExternal(item.href);
+        self.hide(item);
+    },
     getInitialState: function() {
         return {
             news: []
@@ -48,28 +62,44 @@ let MainComponent = React.createClass({
                             <a href={i.detail} className="btn btn-link">detail</a>
                         );
                     }
-                    return (
-                        <div key={index}>
-                            <a href={i.href} className="btn btn-link">{i.title}</a>
-                            <button className="btn btn-link">hide</button>
-                            {detailView}
-                        </div>
-                    );
+                    if (i.hidden) {
+                        return (
+                            <div key={index}>
+                                <a href={i.href} className="btn btn-link item-hidden">{i.title}</a>
+                                {detailView}
+                            </div>
+                        );
+                    } else {
+                        return (
+                            <div key={index}>
+                                <a href={i.href} className="btn btn-link">{i.title}</a>
+                                <button className="btn btn-link" onClick={self.hide.bind(this, i)}>hide</button>
+                                {detailView}
+                                <button className="btn btn-link" onClick={self.openAndHide.bind(this, i)}>open and hide</button>
+                            </div>
+                        );
+                    }
                 });
                 return (
-                    <div key={n.source}>
-                        <div>
-                            <a href={n.source} className="btn btn-link">{n.source}</a>
+                    <div key={n.source} className="panel panel-default row">
+                        <div className="panel-heading">
+                            <h3 className="panel-title">
+                                <a href={n.source} className="btn btn-link">{n.source}</a>
+                            </h3>
                         </div>
-                        {itemsView}
+                        <div className="panel-body">
+                            {itemsView}
+                        </div>
                     </div>
                 );
             } else {
                 return (
-                    <div key={n.source}>
-                        <div>
-                            <a href={n.source} className="btn btn-link">{n.source}</a>
-                            <span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <div key={n.source} className="panel panel-default row">
+                        <div className="panel-heading">
+                            <h3 className="panel-title">
+                                <a href={n.source} className="btn btn-link">{n.source}</a>
+                                <span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            </h3>
                         </div>
                     </div>
                 );
