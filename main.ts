@@ -29,7 +29,7 @@ let sources: Source[] = [
         selector: ".item_title > a",
         getItem: (cheerio: Cheerio) => {
             return {
-                href: "https://v2ex.com" + cheerio.attr("href"),
+                href: "https://v2ex.com" + cheerio.attr("href").split("#")[0],
                 title: cheerio.text(),
             };
         },
@@ -159,7 +159,6 @@ libs.electron.ipcMain.on(types.events.items, async (event) => {
 libs.electron.app.on("ready", () => {
     mainWindow = new libs.electron.BrowserWindow({ width: 1200, height: 800 });
     mainWindow.loadURL(`file://${__dirname}/index.html`);
-    mainWindow.webContents.openDevTools();
     mainWindow.on("closed", function() {
         mainWindow = null;
     });

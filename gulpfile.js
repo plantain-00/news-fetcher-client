@@ -12,6 +12,6 @@ gulp.task("tslint", () => {
         .pipe(tslint.report("prose", { emitError: true }));
 });
 
-gulp.task("pack-osx", shell.task(`rm -rf dist && electron-packager . "news" --out=dist --platform=darwin --arch=x64 --version=0.36.1 --icon=./news.ico`));
+gulp.task("pack-osx", shell.task(`rm -rf dist/news-darwin-x64 && electron-packager . "news" --out=dist --platform=darwin --arch=x64 --version=0.36.1 --package="(node_modules/gulp*|node_modules/tslint|node_modules/typescript|*.ts|*.tsx)"`));
 
-gulp.task("build-osx", shell.task(`electron-builder "dist/news.app" --platform=osx --out="dist" --config=builder.json`));
+gulp.task("pack-win", shell.task(`rm -rf dist && electron-packager . "news" --out=dist --platform=win32 --arch=x64 --version=0.36.1 --package="(node_modules/gulp*|node_modules/tslint|node_modules/typescript|*.ts|*.tsx)"`));

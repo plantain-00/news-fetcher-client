@@ -4,7 +4,20 @@
 - electron-prebuilt
 - typescript
 - gulp
+- electron-packager
+- electron-builder
 
 # develop
 
+- tsc && gulp tslint
 - electron .
+
+# package
+
+## osx
+
+- gulp pack-osx
+
+## windows
+
+- gulp pack-win

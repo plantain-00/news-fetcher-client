@@ -1,5 +1,5 @@
 export let key: string;
-export let serverUrl = "http://news.yorkyao.xyz";
+export let serverUrl = "https://news.yorkyao.xyz";
 
 try {
     let secret = require("./secret");
