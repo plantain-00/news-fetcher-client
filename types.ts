@@ -26,6 +26,7 @@ export const sources = {
     kickass_torrents: "https://kat.cr",
     eztv: "https://eztv.ag",
     cnbeta: "http://www.cnbeta.com",
+    github_trending: "https://github.com/trending",
 };
 
 export const events = {

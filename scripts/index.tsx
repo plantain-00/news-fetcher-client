@@ -4,6 +4,9 @@ import * as React from "react";
 import * as types from "../types";
 import * as ReactDOM from "react-dom";
 
+window["jQuery"] = $;
+require("bootstrap");
+
 $(document).on("click", "a[href^='http']", function(event) {
     event.preventDefault();
     electron.shell.openExternal(this.href);
@@ -40,19 +43,27 @@ let MainComponent = React.createClass({
             if (n.items) {
                 let itemsView = n.items.map((i, index) => {
                     return (
-                        <div key={index}><a href={i.href}>{i.title}</a></div>
+                        <div key={index}>
+                            <a href={i.href} className="btn btn-link">{i.title}</a>
+                            <button className="btn btn-link">hide</button>
+                        </div>
                     );
                 });
                 return (
                     <div key={n.source}>
-                        <div><a href={n.source}>{n.source}</a></div>
+                        <div>
+                            <a href={n.source} className="btn btn-link">{n.source}</a>
+                        </div>
                         {itemsView}
                     </div>
                 );
             } else {
                 return (
                     <div key={n.source}>
-                        <div><a href={n.source}>{n.source}</a>error</div>
+                        <div>
+                            <a href={n.source} className="btn btn-link">{n.source}</a>
+                            <span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        </div>
                     </div>
                 );
             }
