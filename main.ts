@@ -14,200 +14,110 @@ libs.electron.app.on("window-all-closed", function() {
     }
 });
 
-libs.electron.ipcMain.on(types.events.items, async (event) => {
-    fetchV2exHot(event);
-    fetchKickassTorrents(event);
-    fetchEztv(event);
-    fetchCnbeta(event);
-    fetchGithubTrending(event);
-    fetchCzechMassage(event);
-    fetchXart(event);
-});
-
-async function fetchV2exHot(event: GitHubElectron.IPCMainEvent) {
-    let source = types.sources.v2ex_hot;
-    try {
-        let response = await libs.requestAsync({
-            url: source
-        });
-        let $ = libs.cheerio.load(response.body);
-        let result: types.Item[] = [];
-        $(".item_title > a").each((index, a) => {
-            result.push({
-                href: "https://v2ex.com" + $(a).attr("href"),
-                title: $(a).text(),
-            });
-        });
-        event.sender.send(types.events.items, {
-            source: source,
-            items: result,
-        });
-    } catch (error) {
-        console.log(error);
-        event.sender.send(types.events.items, {
-            source: source
-        });
-    }
+interface Source {
+    url: string;
+    selector: string;
+    getItem: ($: Cheerio) => types.Item;
 }
 
-async function fetchKickassTorrents(event: GitHubElectron.IPCMainEvent) {
-    let source = types.sources.kickass_torrents;
-    try {
-        let response = await libs.requestAsync({
-            url: source
-        });
-        let $ = libs.cheerio.load(response.body);
-        let result: types.Item[] = [];
-        $(".filmType > a").each((index, a) => {
-            result.push({
-                href: "https://kat.cr" + $(a).attr("href"),
-                title: $(a).text(),
-            });
-        });
-        event.sender.send(types.events.items, {
-            source: source,
-            items: result,
-        });
-    } catch (error) {
-        console.log(error);
-        event.sender.send(types.events.items, {
-            source: source
-        });
-    }
-}
-
-async function fetchEztv(event: GitHubElectron.IPCMainEvent) {
-    let source = types.sources.eztv;
-    try {
-        let response = await libs.requestAsync({
-            url: source
-        });
-        let $ = libs.cheerio.load(response.body);
-        let result: types.Item[] = [];
-        $(".epinfo > a").each((index, a) => {
-            result.push({
-                href: "https://eztv.ag" + $(a).attr("href"),
-                title: $(a).text(),
-            });
-        });
-        event.sender.send(types.events.items, {
-            source: source,
-            items: result,
-        });
-    } catch (error) {
-        console.log(error);
-        event.sender.send(types.events.items, {
-            source: source
-        });
-    }
-}
-
-async function fetchCnbeta(event: GitHubElectron.IPCMainEvent) {
-    let source = types.sources.cnbeta;
-    try {
-        let response = await libs.requestAsync({
-            url: source
-        });
-        let $ = libs.cheerio.load(response.body);
-        let result: types.Item[] = [];
-        $(".title > a").each((index, a) => {
-            result.push({
-                href: "http://www.cnbeta.com" + $(a).attr("href"),
-                title: $(a).text(),
-            });
-        });
-        event.sender.send(types.events.items, {
-            source: source,
-            items: result,
-        });
-    } catch (error) {
-        console.log(error);
-        event.sender.send(types.events.items, {
-            source: source
-        });
-    }
-}
-
-async function fetchGithubTrending(event: GitHubElectron.IPCMainEvent) {
-    let source = types.sources.github_trending;
-    try {
-        let response = await libs.requestAsync({
-            url: source
-        });
-        let $ = libs.cheerio.load(response.body);
-        let result: types.Item[] = [];
-        $(".repo-list-name > a").each((index, a) => {
-            result.push({
-                href: "https://github.com" + $(a).attr("href"),
-                title: $(a).text(),
-            });
-        });
-        event.sender.send(types.events.items, {
-            source: source,
-            items: result,
-        });
-    } catch (error) {
-        console.log(error);
-        event.sender.send(types.events.items, {
-            source: source
-        });
-    }
-}
-
-async function fetchCzechMassage(event: GitHubElectron.IPCMainEvent) {
-    let source = types.sources.czech_massage;
-    try {
-        let response = await libs.requestAsync({
-            url: source,
-            gzip: true,
-        });
-        let $ = libs.cheerio.load(response.body);
-        let result: types.Item[] = [];
-        $(".filmType > a").each((index, a) => {
-            result.push({
-                href: "https://kat.cr" + $(a).attr("href"),
-                title: $(a).text(),
-            });
-        });
-        event.sender.send(types.events.items, {
-            source: source,
-            items: result,
-        });
-    } catch (error) {
-        console.log(error);
-        event.sender.send(types.events.items, {
-            source: source
-        });
-    }
-}
-
-async function fetchXart(event: GitHubElectron.IPCMainEvent) {
-    let source = types.sources.xart;
-    try {
-        let response = await libs.requestAsync({
-            url: source
-        });
-        let $ = libs.cheerio.load(response.body);
-        let result: types.Item[] = [];
-        $(".show-for-touch > .cover > img").each((index, img) => {
-            let name = $(img).attr("alt");
-            result.push({
+let sources: Source[] = [
+    {
+        url: "https://v2ex.com/?tab=hot",
+        selector: ".item_title > a",
+        getItem: (cheerio: Cheerio) => {
+            return {
+                href: "https://v2ex.com" + cheerio.attr("href"),
+                title: cheerio.text(),
+            };
+        },
+    },
+    {
+        url: "https://kat.cr",
+        selector: ".filmType > a",
+        getItem: (cheerio: Cheerio) => {
+            return {
+                href: "https://kat.cr" + cheerio.attr("href"),
+                title: cheerio.text(),
+            };
+        },
+    },
+    {
+        url: "https://eztv.ag",
+        selector: ".epinfo > a",
+        getItem: (cheerio: Cheerio) => {
+            return {
+                href: "https://eztv.ag" + cheerio.attr("href"),
+                title: cheerio.text(),
+            };
+        },
+    },
+    {
+        url: "http://www.cnbeta.com",
+        selector: ".title > a",
+        getItem: (cheerio: Cheerio) => {
+            return {
+                href: "http://www.cnbeta.com" + cheerio.attr("href"),
+                title: cheerio.text(),
+            };
+        },
+    },
+    {
+        url: "https://github.com/trending",
+        selector: ".repo-list-name > a",
+        getItem: (cheerio: Cheerio) => {
+            return {
+                href: "https://github.com" + cheerio.attr("href"),
+                title: cheerio.text(),
+            };
+        },
+    },
+    {
+        url: "https://kat.cr/usearch/czech%20massage/?field=time_add&sorder=desc",
+        selector: ".filmType > a",
+        getItem: (cheerio: Cheerio) => {
+            return {
+                href: "https://kat.cr" + cheerio.attr("href"),
+                title: cheerio.text(),
+            };
+        },
+    },
+    {
+        url: "http://www.xart.com/videos",
+        selector: ".show-for-touch > .cover > img",
+        getItem: (cheerio: Cheerio) => {
+            let name = cheerio.attr("alt");
+            return {
                 href: "https://kat.cr/usearch/" + name,
                 title: name,
-                detail: $(img).attr("src"),
+                detail: cheerio.attr("src"),
+            };
+        },
+    },
+];
+
+libs.electron.ipcMain.on(types.events.items, async (event) => {
+    for (let source of sources) {
+        try {
+            let response = await libs.requestAsync({
+                url: source.url
             });
-        });
-        event.sender.send(types.events.items, {
-            source: source,
-            items: result,
-        });
-    } catch (error) {
-        console.log(error);
-        event.sender.send(types.events.items, {
-            source: source
-        });
+            let $ = libs.cheerio.load(response.body);
+            let result: types.Item[] = [];
+            $(source.selector).each((index, element) => {
+                result.push(source.getItem($(element)));
+            });
+            event.sender.send(types.events.items, {
+                source: source.url,
+                items: result,
+            });
+        } catch (error) {
+            console.log(error);
+            event.sender.send(types.events.items, {
+                source: source.url
+            });
+        }
     }
-}
+});
 
 libs.electron.app.on("ready", () => {
     mainWindow = new libs.electron.BrowserWindow({ width: 1200, height: 800 });
