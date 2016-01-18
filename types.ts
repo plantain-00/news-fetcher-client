@@ -24,5 +24,6 @@ export interface Self<T> {
 }
 
 export const events = {
-    items: "items"
+    items: "items",
+    hide: "hide",
 };

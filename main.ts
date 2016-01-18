@@ -1,5 +1,6 @@
 import * as libs from "./libs";
 import * as types from "./types";
+import * as settings from "./settings";
 
 libs.electron.crashReporter.start({
     companyName: "yao",
@@ -97,27 +98,61 @@ let sources: Source[] = [
     },
 ];
 
+let json: { isSuccess: boolean; errorMessage: string; items: string[]; };
+
+libs.electron.ipcMain.on(types.events.hide, async (event, url) => {
+    try {
+        json.items.push(url);
+
+        await libs.requestAsync({
+            url: `${settings.serverUrl}/items?key=${settings.key}`,
+            method: "POST",
+            form: {
+                url: url
+            },
+        });
+    } catch (error) {
+        console.log(error);
+    }
+});
+
 libs.electron.ipcMain.on(types.events.items, async (event) => {
-    for (let source of sources) {
-        try {
-            let response = await libs.requestAsync({
-                url: source.url
-            });
-            let $ = libs.cheerio.load(response.body);
-            let result: types.Item[] = [];
-            $(source.selector).each((index, element) => {
-                result.push(source.getItem($(element)));
-            });
-            event.sender.send(types.events.items, {
-                source: source.url,
-                items: result,
-            });
-        } catch (error) {
-            console.log(error);
-            event.sender.send(types.events.items, {
-                source: source.url
-            });
+    try {
+        let response = await libs.requestAsync({
+            url: `${settings.serverUrl}/items?key=${settings.key}`
+        });
+        json = JSON.parse(response.body);
+        if (!json.isSuccess) {
+            console.log(json.errorMessage);
+            return;
         }
+
+        for (let source of sources) {
+            try {
+                let response = await libs.requestAsync({
+                    url: source.url
+                });
+                let $ = libs.cheerio.load(response.body);
+                let result: types.Item[] = [];
+                $(source.selector).each((index, element) => {
+                    let item = source.getItem($(element));
+                    if (json.items.indexOf(item.href) === -1) {
+                        result.push(item);
+                    }
+                });
+                event.sender.send(types.events.items, {
+                    source: source.url,
+                    items: result,
+                });
+            } catch (error) {
+                console.log(error);
+                event.sender.send(types.events.items, {
+                    source: source.url
+                });
+            }
+        }
+    } catch (error) {
+        console.log(error);
     }
 });
 

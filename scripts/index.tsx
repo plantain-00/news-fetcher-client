@@ -3,6 +3,7 @@ import * as electron from "electron";
 import * as React from "react";
 import * as types from "../types";
 import * as ReactDOM from "react-dom";
+import * as settings from "../settings";
 
 window["jQuery"] = $;
 require("bootstrap");
@@ -28,6 +29,7 @@ let MainComponent = React.createClass({
         let news = self.state.news;
         item.hidden = true;
         self.setState({ news: news });
+        electron.ipcRenderer.send(types.events.hide, item.href);
     },
     openAndHide: function(item: types.Item) {
         let self: Self = this;
