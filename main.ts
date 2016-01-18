@@ -20,6 +20,8 @@ libs.electron.ipcMain.on(types.events.items, async (event) => {
     fetchEztv(event);
     fetchCnbeta(event);
     fetchGithubTrending(event);
+    fetchCzechMassage(event);
+    fetchXart(event);
 });
 
 async function fetchV2exHot(event: GitHubElectron.IPCMainEvent) {
@@ -29,16 +31,13 @@ async function fetchV2exHot(event: GitHubElectron.IPCMainEvent) {
             url: source
         });
         let $ = libs.cheerio.load(response.body);
-        let items = $(".item_title");
         let result: types.Item[] = [];
-        for (let i = 0; i < items.length; i++) {
-            let item = items[i];
-            let a = $($(item).children()[0]);
+        $(".item_title > a").each((index, a) => {
             result.push({
-                href: "https://v2ex.com" + a.attr("href"),
-                title: a.text(),
+                href: "https://v2ex.com" + $(a).attr("href"),
+                title: $(a).text(),
             });
-        }
+        });
         event.sender.send(types.events.items, {
             source: source,
             items: result,
@@ -55,22 +54,16 @@ async function fetchKickassTorrents(event: GitHubElectron.IPCMainEvent) {
     let source = types.sources.kickass_torrents;
     try {
         let response = await libs.requestAsync({
-            url: source,
-            gzip: true,
+            url: source
         });
         let $ = libs.cheerio.load(response.body);
-        let items = $(".filmType");
-        console.log(items);
         let result: types.Item[] = [];
-        for (let i = 0; i < items.length; i++) {
-            let item = items[i];
-            let a = $($(item).children()[0]);
+        $(".filmType > a").each((index, a) => {
             result.push({
-                href: "https://kat.cr" + a.attr("href"),
-                title: a.text(),
+                href: "https://kat.cr" + $(a).attr("href"),
+                title: $(a).text(),
             });
-        }
-        console.log(result);
+        });
         event.sender.send(types.events.items, {
             source: source,
             items: result,
@@ -90,16 +83,13 @@ async function fetchEztv(event: GitHubElectron.IPCMainEvent) {
             url: source
         });
         let $ = libs.cheerio.load(response.body);
-        let items = $(".epinfo");
         let result: types.Item[] = [];
-        for (let i = 0; i < items.length; i++) {
-            let item = items[i];
-            let a = $(item);
+        $(".epinfo > a").each((index, a) => {
             result.push({
-                href: "https://eztv.ag" + a.attr("href"),
-                title: a.text(),
+                href: "https://eztv.ag" + $(a).attr("href"),
+                title: $(a).text(),
             });
-        }
+        });
         event.sender.send(types.events.items, {
             source: source,
             items: result,
@@ -119,16 +109,13 @@ async function fetchCnbeta(event: GitHubElectron.IPCMainEvent) {
             url: source
         });
         let $ = libs.cheerio.load(response.body);
-        let items = $(".title");
         let result: types.Item[] = [];
-        for (let i = 0; i < items.length; i++) {
-            let item = items[i];
-            let a = $($(item).children()[0]);
+        $(".title > a").each((index, a) => {
             result.push({
-                href: "http://www.cnbeta.com" + a.attr("href"),
-                title: a.text(),
+                href: "http://www.cnbeta.com" + $(a).attr("href"),
+                title: $(a).text(),
             });
-        }
+        });
         event.sender.send(types.events.items, {
             source: source,
             items: result,
@@ -148,16 +135,68 @@ async function fetchGithubTrending(event: GitHubElectron.IPCMainEvent) {
             url: source
         });
         let $ = libs.cheerio.load(response.body);
-        let items = $(".repo-list-name");
         let result: types.Item[] = [];
-        for (let i = 0; i < items.length; i++) {
-            let item = items[i];
-            let a = $($(item).children()[0]);
+        $(".repo-list-name > a").each((index, a) => {
             result.push({
-                href: "https://github.com" + a.attr("href"),
-                title: a.text(),
+                href: "https://github.com" + $(a).attr("href"),
+                title: $(a).text(),
             });
-        }
+        });
+        event.sender.send(types.events.items, {
+            source: source,
+            items: result,
+        });
+    } catch (error) {
+        console.log(error);
+        event.sender.send(types.events.items, {
+            source: source
+        });
+    }
+}
+
+async function fetchCzechMassage(event: GitHubElectron.IPCMainEvent) {
+    let source = types.sources.czech_massage;
+    try {
+        let response = await libs.requestAsync({
+            url: source,
+            gzip: true,
+        });
+        let $ = libs.cheerio.load(response.body);
+        let result: types.Item[] = [];
+        $(".filmType > a").each((index, a) => {
+            result.push({
+                href: "https://kat.cr" + $(a).attr("href"),
+                title: $(a).text(),
+            });
+        });
+        event.sender.send(types.events.items, {
+            source: source,
+            items: result,
+        });
+    } catch (error) {
+        console.log(error);
+        event.sender.send(types.events.items, {
+            source: source
+        });
+    }
+}
+
+async function fetchXart(event: GitHubElectron.IPCMainEvent) {
+    let source = types.sources.xart;
+    try {
+        let response = await libs.requestAsync({
+            url: source
+        });
+        let $ = libs.cheerio.load(response.body);
+        let result: types.Item[] = [];
+        $(".show-for-touch > .cover > img").each((index, img) => {
+            let name = $(img).attr("alt");
+            result.push({
+                href: "https://kat.cr/usearch/" + name,
+                title: name,
+                detail: $(img).attr("src"),
+            });
+        });
         event.sender.send(types.events.items, {
             source: source,
             items: result,

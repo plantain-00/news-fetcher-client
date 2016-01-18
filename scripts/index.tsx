@@ -42,10 +42,17 @@ let MainComponent = React.createClass({
         let newsView = self.state.news.map(n => {
             if (n.items) {
                 let itemsView = n.items.map((i, index) => {
+                    let detailView;
+                    if (i.detail) {
+                        detailView = (
+                            <a href={i.detail} className="btn btn-link">detail</a>
+                        );
+                    }
                     return (
                         <div key={index}>
                             <a href={i.href} className="btn btn-link">{i.title}</a>
                             <button className="btn btn-link">hide</button>
+                            {detailView}
                         </div>
                     );
                 });
