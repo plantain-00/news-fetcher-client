@@ -5,10 +5,10 @@
 - typescript
 - gulp
 - electron-packager
-- electron-builder
 
 # develop
 
+- npm install
 - tsc && gulp tslint
 - electron .
 
@@ -21,3 +21,13 @@
 ## windows
 
 - gulp pack-win
+
+# secure: create a file of `secret.ts`, like:
+
+```typescript
+import * as settings from "./settings";
+
+export function load() {
+    settings.key = "";
+}
+```
