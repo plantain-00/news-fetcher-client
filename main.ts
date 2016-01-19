@@ -77,6 +77,16 @@ let sources: Source[] = [
         },
     },
     {
+        url: "https://cnodejs.org/?tab=all",
+        selector: ".topic_title",
+        getItem: (cheerio: Cheerio) => {
+            return {
+                href: "https://cnodejs.org" + cheerio.attr("href"),
+                title: cheerio.text(),
+            };
+        },
+    },
+    {
         url: kissassTorrentBaseUrl,
         selector: ".filmType > a",
         getItem: (cheerio: Cheerio) => {
