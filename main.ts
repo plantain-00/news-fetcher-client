@@ -124,13 +124,15 @@ libs.electron.ipcMain.on(types.events.hide, async (event, url) => {
     try {
         json.items.push(url);
 
-        await libs.requestAsync({
-            url: `${settings.serverUrl}/items?key=${settings.key}`,
-            method: "POST",
-            form: {
-                url: url
-            },
-        });
+        if (settings.key) {
+            await libs.requestAsync({
+                url: `${settings.serverUrl}/items?key=${settings.key}`,
+                method: "POST",
+                form: {
+                    url: url
+                },
+            });
+        }
     } catch (error) {
         console.log(error);
     }
@@ -174,10 +176,19 @@ async function load(source: Source, event: GitHubElectron.IPCMainEvent) {
 
 libs.electron.ipcMain.on(types.events.items, async (event) => {
     try {
-        let response = await libs.requestAsync({
-            url: `${settings.serverUrl}/items?key=${settings.key}`
-        });
-        json = JSON.parse(response.body);
+        if (settings.key) {
+            let response = await libs.requestAsync({
+                url: `${settings.serverUrl}/items?key=${settings.key}`
+            });
+            json = JSON.parse(response.body);
+        } else {
+            json = {
+                isSuccess: false,
+                errorMessage: "no key",
+                items: [],
+            };
+        }
+
         if (!json.isSuccess) {
             console.log(json.errorMessage);
             return;
