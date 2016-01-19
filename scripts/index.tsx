@@ -61,7 +61,7 @@ let MainComponent = React.createClass({
                     let detailView;
                     if (i.detail) {
                         detailView = (
-                            <a href={i.detail} className="btn btn-link">detail</a>
+                            <a href={i.detail} className={"btn btn-link" + (i.hidden ? " item-hidden" : "")}>detail</a>
                         );
                     }
                     if (i.hidden) {
@@ -75,8 +75,8 @@ let MainComponent = React.createClass({
                         return (
                             <div key={index}>
                                 <a href={i.href} className="btn btn-link">{i.title}</a>
-                                <button className="btn btn-link" onClick={self.hide.bind(this, i)}>hide</button>
                                 {detailView}
+                                <button className="btn btn-link" onClick={self.hide.bind(this, i)}>hide</button>
                                 <button className="btn btn-link" onClick={self.openAndHide.bind(this, i)}>open and hide</button>
                             </div>
                         );
