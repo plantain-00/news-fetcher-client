@@ -35,26 +35,6 @@ let sources: Source[] = [
         },
     },
     {
-        url: kissassTorrentBaseUrl,
-        selector: ".filmType > a",
-        getItem: (cheerio: Cheerio) => {
-            return {
-                href: kissassTorrentBaseUrl + cheerio.attr("href"),
-                title: cheerio.text(),
-            };
-        },
-    },
-    {
-        url: "https://eztv.ag",
-        selector: ".epinfo",
-        getItem: (cheerio: Cheerio) => {
-            return {
-                href: "https://eztv.ag" + cheerio.attr("href"),
-                title: cheerio.text(),
-            };
-        },
-    },
-    {
         url: "http://www.cnbeta.com",
         selector: ".title > a",
         getItem: (cheerio: Cheerio) => {
@@ -75,7 +55,29 @@ let sources: Source[] = [
         },
     },
     {
-        url: `${kissassTorrentBaseUrl}/usearch/czech%20massage/?field=time_add&sorder=desc`,
+        url: "http://www.xart.com/videos",
+        selector: ".show-for-touch > .cover > img",
+        getItem: (cheerio: Cheerio) => {
+            let name = cheerio.attr("alt");
+            return {
+                href: `${kissassTorrentBaseUrl}/usearch/${name}`,
+                title: name,
+                detail: cheerio.attr("src"),
+            };
+        },
+    },
+    {
+        url: "https://news.ycombinator.com/",
+        selector: ".athing > .title > a",
+        getItem: (cheerio: Cheerio) => {
+            return {
+                href: cheerio.attr("href"),
+                title: cheerio.text(),
+            };
+        },
+    },
+    {
+        url: kissassTorrentBaseUrl,
         selector: ".filmType > a",
         getItem: (cheerio: Cheerio) => {
             return {
@@ -85,14 +87,22 @@ let sources: Source[] = [
         },
     },
     {
-        url: "http://www.xart.com/videos",
-        selector: ".show-for-touch > .cover > img",
+        url: "https://eztv.ag",
+        selector: ".epinfo",
         getItem: (cheerio: Cheerio) => {
-            let name = cheerio.attr("alt");
             return {
-                href: `${kissassTorrentBaseUrl}/usearch/${name}`,
-                title: name,
-                detail: cheerio.attr("src"),
+                href: "https://eztv.ag" + cheerio.attr("href"),
+                title: cheerio.text(),
+            };
+        },
+    },
+    {
+        url: `${kissassTorrentBaseUrl}/usearch/czech%20massage/?field=time_add&sorder=desc`,
+        selector: ".filmType > a",
+        getItem: (cheerio: Cheerio) => {
+            return {
+                href: kissassTorrentBaseUrl + cheerio.attr("href"),
+                title: cheerio.text(),
             };
         },
     },
