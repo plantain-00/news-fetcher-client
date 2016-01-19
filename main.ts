@@ -126,6 +126,42 @@ libs.electron.ipcMain.on(types.events.hide, async (event, url) => {
     }
 });
 
+libs.electron.ipcMain.on(types.events.reload, async (event, url) => {
+    try {
+        let source = sources.find(s => s.url === url);
+        if (source) {
+            await load(source, event);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+async function load(source: Source, event: GitHubElectron.IPCMainEvent) {
+    try {
+        let response = await libs.requestAsync({
+            url: source.url
+        });
+        let $ = libs.cheerio.load(response.body);
+        let result: types.Item[] = [];
+        $(source.selector).each((index, element) => {
+            let item = source.getItem($(element));
+            if (json.items.indexOf(item.href) === -1) {
+                result.push(item);
+            }
+        });
+        event.sender.send(types.events.items, {
+            source: source.url,
+            items: result,
+        });
+    } catch (error) {
+        console.log(error);
+        event.sender.send(types.events.items, {
+            source: source.url
+        });
+    }
+}
+
 libs.electron.ipcMain.on(types.events.items, async (event) => {
     try {
         let response = await libs.requestAsync({
@@ -138,28 +174,7 @@ libs.electron.ipcMain.on(types.events.items, async (event) => {
         }
 
         for (let source of sources) {
-            try {
-                let response = await libs.requestAsync({
-                    url: source.url
-                });
-                let $ = libs.cheerio.load(response.body);
-                let result: types.Item[] = [];
-                $(source.selector).each((index, element) => {
-                    let item = source.getItem($(element));
-                    if (json.items.indexOf(item.href) === -1) {
-                        result.push(item);
-                    }
-                });
-                event.sender.send(types.events.items, {
-                    source: source.url,
-                    items: result,
-                });
-            } catch (error) {
-                console.log(error);
-                event.sender.send(types.events.items, {
-                    source: source.url
-                });
-            }
+            await load(source, event);
         }
     } catch (error) {
         console.log(error);

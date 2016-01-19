@@ -18,11 +18,17 @@ interface State {
 }
 
 interface Self extends types.Self<State> {
+    reload: (n: types.News) => void;
     hide: (item: types.Item) => void;
     openAndHide: (item: types.Item) => void;
 }
 
 let MainComponent = React.createClass({
+    reload: function(n: types.News) {
+        let self: Self = this;
+
+        electron.ipcRenderer.send(types.events.reload, n.source);
+    },
     hide: function(item: types.Item) {
         let self: Self = this;
 
@@ -47,7 +53,12 @@ let MainComponent = React.createClass({
 
         electron.ipcRenderer.on(types.events.items, (event, arg) => {
             let news = self.state.news;
-            news.push(arg);
+            let index = news.findIndex(n => n.source === arg.source);
+            if (index === -1) {
+                news.push(arg);
+            } else {
+                news[index] = arg;
+            }
             self.setState({ news: news });
         });
         electron.ipcRenderer.send(types.events.items);
@@ -87,6 +98,7 @@ let MainComponent = React.createClass({
                         <div className="panel-heading">
                             <h3 className="panel-title">
                                 <a href={n.source} className="btn btn-link">{n.source}</a>
+                                <button className="btn btn-link" onClick={self.reload.bind(this, n)}>reload</button>
                             </h3>
                         </div>
                         <div className="panel-body">
@@ -101,6 +113,7 @@ let MainComponent = React.createClass({
                             <h3 className="panel-title">
                                 <a href={n.source} className="btn btn-link">{n.source}</a>
                                 <span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <button className="btn btn-link" onClick={self.reload.bind(this, n)}>reload</button>
                             </h3>
                         </div>
                     </div>

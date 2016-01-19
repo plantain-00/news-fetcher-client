@@ -26,4 +26,5 @@ export interface Self<T> {
 export const events = {
     items: "items",
     hide: "hide",
+    reload: "reload",
 };
