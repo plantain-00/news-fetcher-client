@@ -21,7 +21,7 @@ interface Source {
     getItem: ($: Cheerio) => types.Item;
 }
 
-const kissassTorrentBaseUrl = "https://kat.cr";
+const kickAssTorrentBaseUrl = "https://kat.cr";
 
 let sources: Source[] = [
     {
@@ -60,7 +60,7 @@ let sources: Source[] = [
         getItem: (cheerio: Cheerio) => {
             let name = cheerio.attr("alt");
             return {
-                href: `${kissassTorrentBaseUrl}/usearch/${name}`,
+                href: `${kickAssTorrentBaseUrl}/usearch/${name}`,
                 title: name,
                 detail: cheerio.attr("src"),
             };
@@ -87,11 +87,11 @@ let sources: Source[] = [
         },
     },
     {
-        url: kissassTorrentBaseUrl,
+        url: kickAssTorrentBaseUrl,
         selector: ".filmType > a",
         getItem: (cheerio: Cheerio) => {
             return {
-                href: kissassTorrentBaseUrl + cheerio.attr("href"),
+                href: kickAssTorrentBaseUrl + cheerio.attr("href"),
                 title: cheerio.text(),
             };
         },
@@ -107,11 +107,11 @@ let sources: Source[] = [
         },
     },
     {
-        url: `${kissassTorrentBaseUrl}/usearch/czech%20massage/?field=time_add&sorder=desc`,
+        url: `${kickAssTorrentBaseUrl}/usearch/czech%20massage/?field=time_add&sorder=desc`,
         selector: ".filmType > a",
         getItem: (cheerio: Cheerio) => {
             return {
-                href: kissassTorrentBaseUrl + cheerio.attr("href"),
+                href: kickAssTorrentBaseUrl + cheerio.attr("href"),
                 title: cheerio.text(),
             };
         },
