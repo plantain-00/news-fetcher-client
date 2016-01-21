@@ -39,9 +39,11 @@ let sources: Source[] = [
         url: "http://www.cnbeta.com",
         selector: ".title > a",
         getItem: (cheerio: Cheerio, $: CheerioStatic) => {
+            let array = cheerio.parent().parent().next().next().find("em");
+            let count = $(array[0]).text();
             return {
                 href: "http://www.cnbeta.com" + cheerio.attr("href"),
-                title: cheerio.text(),
+                title: cheerio.text() + " / " + count,
             };
         },
     },
