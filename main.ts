@@ -18,7 +18,7 @@ libs.electron.app.on("window-all-closed", function() {
 interface Source {
     url: string;
     selector: string;
-    getItem: ($: Cheerio) => types.Item;
+    getItem: (cheerio: Cheerio, $: CheerioStatic) => types.Item;
 }
 
 const kickAssTorrentBaseUrl = "https://kat.cr";
@@ -27,7 +27,7 @@ let sources: Source[] = [
     {
         url: "https://v2ex.com/?tab=hot",
         selector: ".item_title > a",
-        getItem: (cheerio: Cheerio) => {
+        getItem: (cheerio: Cheerio, $: CheerioStatic) => {
             return {
                 href: "https://v2ex.com" + cheerio.attr("href").split("#")[0],
                 title: cheerio.text(),
@@ -37,7 +37,7 @@ let sources: Source[] = [
     {
         url: "http://www.cnbeta.com",
         selector: ".title > a",
-        getItem: (cheerio: Cheerio) => {
+        getItem: (cheerio: Cheerio, $: CheerioStatic) => {
             return {
                 href: "http://www.cnbeta.com" + cheerio.attr("href"),
                 title: cheerio.text(),
@@ -47,7 +47,7 @@ let sources: Source[] = [
     {
         url: "https://github.com/trending",
         selector: ".repo-list-name > a",
-        getItem: (cheerio: Cheerio) => {
+        getItem: (cheerio: Cheerio, $: CheerioStatic) => {
             return {
                 href: "https://github.com" + cheerio.attr("href"),
                 title: cheerio.text(),
@@ -57,7 +57,7 @@ let sources: Source[] = [
     {
         url: "http://www.xart.com/videos",
         selector: ".show-for-touch > .cover > img",
-        getItem: (cheerio: Cheerio) => {
+        getItem: (cheerio: Cheerio, $: CheerioStatic) => {
             let name = cheerio.attr("alt");
             return {
                 href: `${kickAssTorrentBaseUrl}/usearch/${name}`,
@@ -69,17 +69,20 @@ let sources: Source[] = [
     {
         url: "https://news.ycombinator.com/",
         selector: ".athing > .title > a",
-        getItem: (cheerio: Cheerio) => {
+        getItem: (cheerio: Cheerio, $: CheerioStatic) => {
+            let array = cheerio.parentsUntil("tr").next().find(".subtext > a");
+            let a = array[array.length - 1];
             return {
                 href: cheerio.attr("href"),
                 title: cheerio.text(),
+                detail: "https://news.ycombinator.com/" + $(a).attr("href"),
             };
         },
     },
     {
         url: "https://cnodejs.org/?tab=all",
         selector: ".topic_title",
-        getItem: (cheerio: Cheerio) => {
+        getItem: (cheerio: Cheerio, $: CheerioStatic) => {
             return {
                 href: "https://cnodejs.org" + cheerio.attr("href"),
                 title: cheerio.text(),
@@ -89,7 +92,7 @@ let sources: Source[] = [
     {
         url: kickAssTorrentBaseUrl,
         selector: ".filmType > a",
-        getItem: (cheerio: Cheerio) => {
+        getItem: (cheerio: Cheerio, $: CheerioStatic) => {
             return {
                 href: kickAssTorrentBaseUrl + cheerio.attr("href"),
                 title: cheerio.text(),
@@ -99,7 +102,7 @@ let sources: Source[] = [
     {
         url: "https://eztv.ag",
         selector: ".epinfo",
-        getItem: (cheerio: Cheerio) => {
+        getItem: (cheerio: Cheerio, $: CheerioStatic) => {
             return {
                 href: "https://eztv.ag" + cheerio.attr("href"),
                 title: cheerio.text(),
@@ -109,7 +112,7 @@ let sources: Source[] = [
     {
         url: `${kickAssTorrentBaseUrl}/usearch/czech%20massage/?field=time_add&sorder=desc`,
         selector: ".filmType > a",
-        getItem: (cheerio: Cheerio) => {
+        getItem: (cheerio: Cheerio, $: CheerioStatic) => {
             return {
                 href: kickAssTorrentBaseUrl + cheerio.attr("href"),
                 title: cheerio.text(),
@@ -157,7 +160,7 @@ async function load(source: Source, event: GitHubElectron.IPCMainEvent) {
         let $ = libs.cheerio.load(response.body);
         let result: types.Item[] = [];
         $(source.selector).each((index, element) => {
-            let item = source.getItem($(element));
+            let item = source.getItem($(element), $);
             if (json.items.indexOf(item.href) === -1) {
                 result.push(item);
             }
