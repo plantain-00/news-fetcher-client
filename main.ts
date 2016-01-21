@@ -28,9 +28,10 @@ let sources: Source[] = [
         url: "https://v2ex.com/?tab=hot",
         selector: ".item_title > a",
         getItem: (cheerio: Cheerio, $: CheerioStatic) => {
+            let count = cheerio.parent().parent().next().find("a").text();
             return {
                 href: "https://v2ex.com" + cheerio.attr("href").split("#")[0],
-                title: cheerio.text(),
+                title: cheerio.text() + " / " + count,
             };
         },
     },
