@@ -83,9 +83,11 @@ let sources: Source[] = [
         url: "https://cnodejs.org/?tab=all",
         selector: ".topic_title",
         getItem: (cheerio: Cheerio, $: CheerioStatic) => {
+            let replyCount = cheerio.parent().prevUntil("span").find(".count_of_replies").text();
+            let title = cheerio.text();
             return {
                 href: "https://cnodejs.org" + cheerio.attr("href"),
-                title: cheerio.text(),
+                title: replyCount ? `${title} / ${replyCount}` : title,
             };
         },
     },
