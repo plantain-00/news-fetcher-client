@@ -74,7 +74,7 @@ async function load(source: types.Source, event: GitHubElectron.IPCMainEvent) {
         const result: types.Item[] = [];
         $(source.selector).each((index, element) => {
             const item = source.getItem($(element), $);
-            if (json.items.indexOf(item.href) === -1) {
+            if (item && json.items.indexOf(item.href) === -1) {
                 result.push(item);
             }
         });

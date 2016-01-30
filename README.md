@@ -41,7 +41,7 @@
 
 ### sources
 
-There are 9 news sources already(check `sources` in `settings.ts` file), and you can add more sources or remove the default sources, then rebuild and repack the program.
+There are some news sources already(check `sources` in `settings.ts` file), and you can add more sources or remove the default sources, then rebuild and repack the program.
 
 # secure: create a file of `secret.ts`, like:
 
