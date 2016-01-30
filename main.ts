@@ -9,125 +9,22 @@ libs.electron.crashReporter.start({
 
 let mainWindow: GitHubElectron.BrowserWindow = null;
 
+let json: { isSuccess: boolean; errorMessage?: string; items: string[]; };
+let localData: { url: string; createTime: number; }[];
+
+const historyPath = libs.path.resolve(libs.electron.app.getPath("userData"), "history.json");
+
 libs.electron.app.on("window-all-closed", function() {
-    if (process.platform !== "darwin") {
+    const ExpiredMoment = Date.now() - 30 * 24 * 3600 * 1000;
+    localData = localData.filter(d => d.createTime > ExpiredMoment);
+    libs.fs.writeFile(historyPath, JSON.stringify(localData, null, "    "), error => {
+        if (error) {
+            console.log(error);
+        }
+
         libs.electron.app.quit();
-    }
+    });
 });
-
-interface Source {
-    url: string;
-    selector: string;
-    getItem: (cheerio: Cheerio, $: CheerioStatic) => types.Item;
-}
-
-const kickAssTorrentBaseUrl = "https://kat.cr";
-
-let sources: Source[] = [
-    {
-        url: "https://v2ex.com/?tab=hot",
-        selector: ".item_title > a",
-        getItem: (cheerio: Cheerio, $: CheerioStatic) => {
-            let count = cheerio.parent().parent().next().find("a").text();
-            return {
-                href: "https://v2ex.com" + cheerio.attr("href").split("#")[0],
-                title: cheerio.text() + " / " + count,
-            };
-        },
-    },
-    {
-        url: "http://www.cnbeta.com",
-        selector: ".title > a",
-        getItem: (cheerio: Cheerio, $: CheerioStatic) => {
-            let array = cheerio.parent().parent().next().next().find("em");
-            let count = $(array[0]).text();
-            return {
-                href: "http://www.cnbeta.com" + cheerio.attr("href"),
-                title: cheerio.text() + " / " + count,
-            };
-        },
-    },
-    {
-        url: "https://github.com/trending",
-        selector: ".repo-list-name > a",
-        getItem: (cheerio: Cheerio, $: CheerioStatic) => {
-            return {
-                href: "https://github.com" + cheerio.attr("href"),
-                title: cheerio.text() + " : " + cheerio.parent().next().text(),
-            };
-        },
-    },
-    {
-        url: "http://www.xart.com/videos",
-        selector: ".show-for-touch > .cover > img",
-        getItem: (cheerio: Cheerio, $: CheerioStatic) => {
-            let detail = cheerio.attr("data-interchange").split(",")[0].substring(1);
-            let name = $(cheerio.parent().next().find("h1")[0]).text();
-            return {
-                href: `${kickAssTorrentBaseUrl}/usearch/${name}`,
-                title: name,
-                detail: detail,
-            };
-        },
-    },
-    {
-        url: "https://news.ycombinator.com/",
-        selector: ".athing > .title > a",
-        getItem: (cheerio: Cheerio, $: CheerioStatic) => {
-            let array = cheerio.parentsUntil("tr").next().find(".subtext > a");
-            let a = array[array.length - 1];
-            return {
-                href: cheerio.attr("href"),
-                title: cheerio.text(),
-                detail: "https://news.ycombinator.com/" + $(a).attr("href"),
-            };
-        },
-    },
-    {
-        url: "https://cnodejs.org/?tab=all",
-        selector: ".topic_title",
-        getItem: (cheerio: Cheerio, $: CheerioStatic) => {
-            let replyCount = cheerio.parent().prevUntil("span").find(".count_of_replies").text();
-            let title = cheerio.text();
-            return {
-                href: "https://cnodejs.org" + cheerio.attr("href"),
-                title: replyCount ? `${title} / ${replyCount}` : title,
-            };
-        },
-    },
-    {
-        url: kickAssTorrentBaseUrl,
-        selector: ".filmType > a",
-        getItem: (cheerio: Cheerio, $: CheerioStatic) => {
-            return {
-                href: kickAssTorrentBaseUrl + cheerio.attr("href"),
-                title: cheerio.text(),
-            };
-        },
-    },
-    {
-        url: "https://eztv.ag",
-        selector: ".epinfo",
-        getItem: (cheerio: Cheerio, $: CheerioStatic) => {
-            return {
-                href: "https://eztv.ag" + cheerio.attr("href"),
-                title: cheerio.text(),
-            };
-        },
-    },
-    {
-        url: `${kickAssTorrentBaseUrl}/usearch/czech%20massage/?field=time_add&sorder=desc`,
-        selector: ".filmType > a",
-        getItem: (cheerio: Cheerio, $: CheerioStatic) => {
-            return {
-                href: kickAssTorrentBaseUrl + cheerio.attr("href"),
-                title: cheerio.text(),
-            };
-        },
-    },
-];
-
-let json: { isSuccess: boolean; errorMessage: string; items: string[]; };
 
 libs.electron.ipcMain.on(types.events.hide, async (event, url) => {
     try {
@@ -141,6 +38,11 @@ libs.electron.ipcMain.on(types.events.hide, async (event, url) => {
                     url: url
                 },
             });
+        } else {
+            localData.push({
+                url: url,
+                createTime: Date.now(),
+            });
         }
     } catch (error) {
         console.log(error);
@@ -149,7 +51,7 @@ libs.electron.ipcMain.on(types.events.hide, async (event, url) => {
 
 libs.electron.ipcMain.on(types.events.reload, async (event, url) => {
     try {
-        let source = sources.find(s => s.url === url);
+        const source = settings.sources.find(s => s.url === url);
         if (source) {
             await load(source, event);
         }
@@ -158,15 +60,15 @@ libs.electron.ipcMain.on(types.events.reload, async (event, url) => {
     }
 });
 
-async function load(source: Source, event: GitHubElectron.IPCMainEvent) {
+async function load(source: types.Source, event: GitHubElectron.IPCMainEvent) {
     try {
-        let response = await libs.requestAsync({
+        const response = await libs.requestAsync({
             url: source.url
         });
-        let $ = libs.cheerio.load(response.body);
-        let result: types.Item[] = [];
+        const $ = libs.cheerio.load(response.body);
+        const result: types.Item[] = [];
         $(source.selector).each((index, element) => {
-            let item = source.getItem($(element), $);
+            const item = source.getItem($(element), $);
             if (json.items.indexOf(item.href) === -1) {
                 result.push(item);
             }
@@ -186,16 +88,24 @@ async function load(source: Source, event: GitHubElectron.IPCMainEvent) {
 libs.electron.ipcMain.on(types.events.items, async (event) => {
     try {
         if (settings.key) {
-            let response = await libs.requestAsync({
+            const response = await libs.requestAsync({
                 url: `${settings.serverUrl}/items?key=${settings.key}`
             });
             json = JSON.parse(response.body);
         } else {
-            json = {
-                isSuccess: false,
-                errorMessage: "no key",
-                items: [],
-            };
+            try {
+                localData = require(historyPath);
+                json = {
+                    isSuccess: true,
+                    items: localData.map(d => d.url),
+                };
+            } catch (error) {
+                localData = [];
+                json = {
+                    isSuccess: true,
+                    items: [],
+                };
+            }
         }
 
         if (!json.isSuccess) {
@@ -203,7 +113,7 @@ libs.electron.ipcMain.on(types.events.items, async (event) => {
             return;
         }
 
-        for (let source of sources) {
+        for (const source of settings.sources) {
             await load(source, event);
         }
     } catch (error) {

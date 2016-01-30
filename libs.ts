@@ -27,3 +27,9 @@ export function requestAsync(options: request.Options): Promise<{ response: http
 
 import * as cheerio from "cheerio";
 export {cheerio};
+
+import * as fs from "fs";
+export {fs};
+
+import * as path from "path";
+export {path};

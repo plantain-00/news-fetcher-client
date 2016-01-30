@@ -23,22 +23,22 @@ interface Self extends types.Self<State> {
     openAndHide: (item: types.Item) => void;
 }
 
-let MainComponent = React.createClass({
+const MainComponent = React.createClass({
     reload: function(n: types.News) {
-        let self: Self = this;
+        const self: Self = this;
 
         electron.ipcRenderer.send(types.events.reload, n.source);
     },
     hide: function(item: types.Item) {
-        let self: Self = this;
+        const self: Self = this;
 
-        let news = self.state.news;
+        const news = self.state.news;
         item.hidden = true;
         self.setState({ news: news });
         electron.ipcRenderer.send(types.events.hide, item.href);
     },
     openAndHide: function(item: types.Item) {
-        let self: Self = this;
+        const self: Self = this;
 
         electron.shell.openExternal(item.href);
         self.hide(item);
@@ -49,11 +49,11 @@ let MainComponent = React.createClass({
         } as State;
     },
     componentDidMount: function() {
-        let self: Self = this;
+        const self: Self = this;
 
         electron.ipcRenderer.on(types.events.items, (event, arg) => {
-            let news = self.state.news;
-            let index = news.findIndex(n => n.source === arg.source);
+            const news = self.state.news;
+            const index = news.findIndex(n => n.source === arg.source);
             if (index === -1) {
                 news.push(arg);
             } else {
@@ -64,11 +64,11 @@ let MainComponent = React.createClass({
         electron.ipcRenderer.send(types.events.items);
     },
     render: function() {
-        let self: Self = this;
+        const self: Self = this;
 
-        let newsView = self.state.news.map(n => {
+        const newsView = self.state.news.map(n => {
             if (n.items) {
-                let itemsView = n.items.map((i, index) => {
+                const itemsView = n.items.map((i, index) => {
                     let detailView;
                     if (i.detail) {
                         detailView = (

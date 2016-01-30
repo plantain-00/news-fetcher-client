@@ -28,3 +28,9 @@ export const events = {
     hide: "hide",
     reload: "reload",
 };
+
+export interface Source {
+    url: string;
+    selector: string;
+    getItem: (cheerio: Cheerio, $: CheerioStatic) => Item;
+}
