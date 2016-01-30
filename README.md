@@ -46,7 +46,7 @@ There are 9 news sources already(check `sources` in `settings.ts` file), and you
 # secure: create a file of `secret.ts`, like:
 
 ```typescript
-import * as settings from "./settings";
+const settings = require("./settings");
 
 export function load() {
     settings.key = "";
