@@ -53,7 +53,7 @@ let sources: Source[] = [
         getItem: (cheerio: Cheerio, $: CheerioStatic) => {
             return {
                 href: "https://github.com" + cheerio.attr("href"),
-                title: cheerio.text(),
+                title: cheerio.text() + " : " + cheerio.parent().next().text(),
             };
         },
     },
@@ -61,11 +61,12 @@ let sources: Source[] = [
         url: "http://www.xart.com/videos",
         selector: ".show-for-touch > .cover > img",
         getItem: (cheerio: Cheerio, $: CheerioStatic) => {
-            let name = cheerio.attr("alt");
+            let detail = cheerio.attr("data-interchange").split(",")[0].substring(1);
+            let name = $(cheerio.parent().next().find("h1")[0]).text();
             return {
                 href: `${kickAssTorrentBaseUrl}/usearch/${name}`,
                 title: name,
-                detail: cheerio.attr("src"),
+                detail: detail,
             };
         },
     },
