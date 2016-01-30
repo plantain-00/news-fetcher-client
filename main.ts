@@ -13,24 +13,29 @@ let json: { isSuccess: boolean; errorMessage?: string; items: string[]; };
 let localData: { url: string; createTime: number; }[];
 
 const historyPath = libs.path.resolve(libs.electron.app.getPath("userData"), "history.json");
+const willSync: boolean = !!settings.key;
 
 libs.electron.app.on("window-all-closed", function() {
-    const ExpiredMoment = Date.now() - 30 * 24 * 3600 * 1000;
-    localData = localData.filter(d => d.createTime > ExpiredMoment);
-    libs.fs.writeFile(historyPath, JSON.stringify(localData, null, "    "), error => {
-        if (error) {
-            console.log(error);
-        }
-
+    if (willSync) {
         libs.electron.app.quit();
-    });
+    } else {
+        const ExpiredMoment = Date.now() - 30 * 24 * 3600 * 1000;
+        localData = localData.filter(d => d.createTime > ExpiredMoment);
+        libs.fs.writeFile(historyPath, JSON.stringify(localData, null, "    "), error => {
+            if (error) {
+                console.log(error);
+            }
+
+            libs.electron.app.quit();
+        });
+    }
 });
 
 libs.electron.ipcMain.on(types.events.hide, async (event, url) => {
     try {
         json.items.push(url);
 
-        if (settings.key) {
+        if (willSync) {
             await libs.requestAsync({
                 url: `${settings.serverUrl}/items?key=${settings.key}`,
                 method: "POST",
@@ -87,7 +92,7 @@ async function load(source: types.Source, event: GitHubElectron.IPCMainEvent) {
 
 libs.electron.ipcMain.on(types.events.items, async (event) => {
     try {
-        if (settings.key) {
+        if (willSync) {
             const response = await libs.requestAsync({
                 url: `${settings.serverUrl}/items?key=${settings.key}`
             });
