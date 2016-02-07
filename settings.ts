@@ -79,7 +79,7 @@ export const sources: types.Source[] = [
         },
     },
     {
-        url: kickAssTorrentBaseUrl,
+        url: `${kickAssTorrentBaseUrl}/full`,
         selector: ".filmType > a",
         getItem: (cheerio: Cheerio, $: CheerioStatic) => {
             return {
