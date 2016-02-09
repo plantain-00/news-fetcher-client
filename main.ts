@@ -85,7 +85,8 @@ async function load(source: types.Source, event: GitHubElectron.IPCMainEvent) {
     } catch (error) {
         console.log(error);
         event.sender.send(types.events.items, {
-            source: source.url
+            source: source.url,
+            error: error.message,
         });
     }
 }

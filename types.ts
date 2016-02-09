@@ -10,6 +10,7 @@ export interface Item {
 export interface News {
     source: string;
     items: Item[];
+    error: string;
 }
 
 export interface Self<T> {

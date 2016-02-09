@@ -27,6 +27,9 @@ const MainComponent = React.createClass({
     reload: function(n: types.News) {
         const self: Self = this;
 
+        const news = self.state.news;
+        n.error = null;
+        self.setState({ news: news });
         electron.ipcRenderer.send(types.events.reload, n.source);
     },
     hide: function(item: types.Item) {
@@ -113,6 +116,7 @@ const MainComponent = React.createClass({
                             <h3 className="panel-title">
                                 <a href={n.source} className="btn btn-link">{n.source}</a>
                                 <span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span>{n.error}</span>
                                 <button className="btn btn-link" onClick={self.reload.bind(this, n)}>reload</button>
                             </h3>
                         </div>
