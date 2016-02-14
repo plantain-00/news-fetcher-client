@@ -8,6 +8,16 @@ const kickAssTorrentBaseUrl = "https://kat.cr";
 
 export const sources: types.Source[] = [
     {
+        url: "https://www.zhihu.com/explore/recommendations",
+        selector: ".question_link",
+        getItem: (cheerio: Cheerio, $: CheerioStatic) => {
+            return {
+                href: "https://www.zhihu.com" + cheerio.attr("href"),
+                title: cheerio.text(),
+            };
+        },
+    },
+    {
         url: "https://v2ex.com/?tab=hot",
         selector: ".item_title > a",
         getItem: (cheerio: Cheerio, $: CheerioStatic) => {
