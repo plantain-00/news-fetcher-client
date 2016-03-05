@@ -142,7 +142,7 @@ for (const milestone of milestones) {
                 title: cheerio.text() + " - " + progress,
             };
         },
-    })
+    });
 }
 
 try {

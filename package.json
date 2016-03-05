@@ -21,7 +21,7 @@
     "gulp-shell": "^0.5.1",
     "gulp-tslint": "^4.3.1",
     "tslint": "^3.2.1",
-    "typescript": "^1.7.5"
+    "typescript": "^1.8.7"
   },
   "dependencies": {
     "bootstrap": "^3.3.6",

@@ -48,7 +48,7 @@ const MainComponent = React.createClass({
     },
     getInitialState: function() {
         return {
-            news: []
+            news: [],
         } as State;
     },
     componentDidMount: function() {

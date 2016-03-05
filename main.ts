@@ -40,7 +40,7 @@ libs.electron.ipcMain.on(types.events.hide, async (event, url) => {
                 url: `${settings.serverUrl}/items?key=${settings.key}`,
                 method: "POST",
                 form: {
-                    url: url
+                    url: url,
                 },
             });
         } else {
@@ -68,7 +68,7 @@ libs.electron.ipcMain.on(types.events.reload, async (event, url) => {
 async function load(source: types.Source, event: GitHubElectron.IPCMainEvent) {
     try {
         const response = await libs.requestAsync({
-            url: source.url
+            url: source.url,
         });
         const $ = libs.cheerio.load(response.body);
         const result: types.Item[] = [];
@@ -95,7 +95,7 @@ libs.electron.ipcMain.on(types.events.items, async (event) => {
     try {
         if (willSync) {
             const response = await libs.requestAsync({
-                url: `${settings.serverUrl}/items?key=${settings.key}`
+                url: `${settings.serverUrl}/items?key=${settings.key}`,
             });
             json = JSON.parse(response.body);
         } else {
