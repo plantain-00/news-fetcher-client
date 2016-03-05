@@ -120,6 +120,31 @@ export const sources: types.Source[] = [
     },
 ];
 
+const milestones = [
+    "https://github.com/microsoft/typescript/milestones",
+    "https://github.com/angular/angular/milestones",
+    "https://github.com/facebook/react/milestones",
+    "https://github.com/vuejs/vue/milestones",
+    "https://github.com/dotnet/corefx/milestones",
+    "https://github.com/dotnet/coreclr/milestones",
+    "https://github.com/aspnet/Mvc/milestones",
+    "https://github.com/nodejs/node/milestones",
+    "https://github.com/expressjs/express/milestones",
+];
+for (const milestone of milestones) {
+    sources.push({
+        url: milestone,
+        selector: ".milestone-title-link > a",
+        getItem: (cheerio: Cheerio, $: CheerioStatic) => {
+            const progress = cheerio.parent().parent().next().find(".progress-percent").text();
+            return {
+                href: "https://github.com" + cheerio.attr("href"),
+                title: cheerio.text() + " - " + progress,
+            };
+        },
+    })
+}
+
 try {
     const secret = require("./secret");
     secret.load();
