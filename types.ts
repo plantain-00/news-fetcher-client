@@ -8,9 +8,11 @@ export interface Item {
 }
 
 export interface News {
+    name: string;
     source: string;
     items: Item[];
     error: string;
+    key: string;
 }
 
 export interface Self<T> {
@@ -31,6 +33,7 @@ export const events = {
 };
 
 export interface Source {
+    name: string;
     url: string;
     selector: string;
     getItem: (cheerio: Cheerio, $: CheerioStatic) => Item;

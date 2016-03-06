@@ -79,6 +79,7 @@ async function load(source: types.Source, event: GitHubElectron.IPCMainEvent) {
             }
         });
         event.sender.send(types.events.items, {
+            name: source.name,
             source: source.url,
             items: result,
         });
@@ -133,4 +134,5 @@ libs.electron.app.on("ready", () => {
     mainWindow.on("closed", function() {
         mainWindow = null;
     });
+    // mainWindow.webContents.openDevTools();
 });

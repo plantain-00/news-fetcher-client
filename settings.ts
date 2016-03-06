@@ -8,6 +8,7 @@ const kickAssTorrentBaseUrl = "https://kat.cr";
 
 export const sources: types.Source[] = [
     {
+        name: "zhihu explore",
         url: "https://www.zhihu.com/explore/recommendations",
         selector: ".question_link",
         getItem: (cheerio: Cheerio, $: CheerioStatic) => {
@@ -18,6 +19,7 @@ export const sources: types.Source[] = [
         },
     },
     {
+        name: "v2ex hot",
         url: "https://v2ex.com/?tab=hot",
         selector: ".item_title > a",
         getItem: (cheerio: Cheerio, $: CheerioStatic) => {
@@ -29,6 +31,7 @@ export const sources: types.Source[] = [
         },
     },
     {
+        name: "cnbeta",
         url: "http://www.cnbeta.com",
         selector: ".title > a",
         getItem: (cheerio: Cheerio, $: CheerioStatic) => {
@@ -41,6 +44,7 @@ export const sources: types.Source[] = [
         },
     },
     {
+        name: "github trending",
         url: "https://github.com/trending",
         selector: ".repo-list-name > a",
         getItem: (cheerio: Cheerio, $: CheerioStatic) => {
@@ -51,6 +55,7 @@ export const sources: types.Source[] = [
         },
     },
     {
+        name: "xart",
         url: "http://www.xart.com/videos",
         selector: ".show-for-touch > .cover > img",
         getItem: (cheerio: Cheerio, $: CheerioStatic) => {
@@ -64,6 +69,7 @@ export const sources: types.Source[] = [
         },
     },
     {
+        name: "hacker news",
         url: "https://news.ycombinator.com/",
         selector: ".athing > .title > a",
         getItem: (cheerio: Cheerio, $: CheerioStatic) => {
@@ -77,6 +83,7 @@ export const sources: types.Source[] = [
         },
     },
     {
+        name: "cnode",
         url: "https://cnodejs.org/?tab=all",
         selector: ".topic_title",
         getItem: (cheerio: Cheerio, $: CheerioStatic) => {
@@ -89,6 +96,7 @@ export const sources: types.Source[] = [
         },
     },
     {
+        name: "kickass torrent",
         url: `${kickAssTorrentBaseUrl}/full`,
         selector: ".filmType > a",
         getItem: (cheerio: Cheerio, $: CheerioStatic) => {
@@ -99,6 +107,7 @@ export const sources: types.Source[] = [
         },
     },
     {
+        name: "eztv",
         url: "https://eztv.ag",
         selector: ".epinfo",
         getItem: (cheerio: Cheerio, $: CheerioStatic) => {
@@ -109,6 +118,7 @@ export const sources: types.Source[] = [
         },
     },
     {
+        name: "czech massage",
         url: `${kickAssTorrentBaseUrl}/usearch/czech%20massage/?field=time_add&sorder=desc`,
         selector: ".filmType > a",
         getItem: (cheerio: Cheerio, $: CheerioStatic) => {
@@ -121,19 +131,20 @@ export const sources: types.Source[] = [
 ];
 
 const milestones = [
-    "https://github.com/microsoft/typescript/milestones",
-    "https://github.com/angular/angular/milestones",
-    "https://github.com/facebook/react/milestones",
-    "https://github.com/vuejs/vue/milestones",
-    "https://github.com/dotnet/corefx/milestones",
-    "https://github.com/dotnet/coreclr/milestones",
-    "https://github.com/aspnet/Mvc/milestones",
-    "https://github.com/nodejs/node/milestones",
-    "https://github.com/expressjs/express/milestones",
+    { name: "typescript", url: "https://github.com/microsoft/typescript/milestones" },
+    { name: "angular", url: "https://github.com/angular/angular/milestones" },
+    { name: "react", url: "https://github.com/facebook/react/milestones" },
+    { name: "vuejs", url: "https://github.com/vuejs/vue/milestones" },
+    { name: "corefx", url: "https://github.com/dotnet/corefx/milestones" },
+    { name: "coreclr", url: "https://github.com/dotnet/coreclr/milestones" },
+    { name: "aspnet MVC", url: "https://github.com/aspnet/Mvc/milestones" },
+    { name: "nodejs", url: "https://github.com/nodejs/node/milestones" },
+    { name: "expressjs", url: "https://github.com/expressjs/express/milestones" },
 ];
 for (const milestone of milestones) {
     sources.push({
-        url: milestone,
+        name: `${milestone.name} milestone`,
+        url: milestone.url,
         selector: ".milestone-title-link > a",
         getItem: (cheerio: Cheerio, $: CheerioStatic) => {
             const progress = cheerio.parent().parent().next().find(".progress-percent").text();

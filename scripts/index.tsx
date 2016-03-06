@@ -8,9 +8,18 @@ import * as settings from "../settings";
 window["jQuery"] = $;
 require("bootstrap");
 
-$(document).on("click", "a[href^='http']", function(event) {
-    event.preventDefault();
+const body = $("html,body");
+
+$(document).on("click", "a[href^='http']", function(e) {
+    e.preventDefault();
     electron.shell.openExternal(this.href);
+}).on("click", "a[href^='#']", function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    const top = $($(this).attr("href")).offset().top - 20;
+    body.animate({
+        scrollTop: top
+    }, 500);
 });
 
 interface State {
@@ -54,9 +63,12 @@ const MainComponent = React.createClass({
     componentDidMount: function() {
         const self: Self = this;
 
-        electron.ipcRenderer.on(types.events.items, (event, arg) => {
+        electron.ipcRenderer.on(types.events.items, (event, arg: types.News) => {
             const news = self.state.news;
             const index = news.findIndex(n => n.source === arg.source);
+            if (arg.name) {
+                arg.key = arg.name.replace(" ", "");
+            }
             if (index === -1) {
                 news.push(arg);
             } else {
@@ -99,8 +111,8 @@ const MainComponent = React.createClass({
                 return (
                     <div key={n.source} className="panel panel-default row">
                         <div className="panel-heading">
-                            <h3 className="panel-title">
-                                <a href={n.source} className="btn btn-link">{n.source}</a>
+                            <h3 className="panel-title" id={n.key}>
+                                <a href={n.source} className="btn btn-link">{n.name}</a>
                                 <button className="btn btn-link" onClick={self.reload.bind(this, n)}>reload</button>
                             </h3>
                         </div>
@@ -113,8 +125,8 @@ const MainComponent = React.createClass({
                 return (
                     <div key={n.source} className="panel panel-default row">
                         <div className="panel-heading">
-                            <h3 className="panel-title">
-                                <a href={n.source} className="btn btn-link">{n.source}</a>
+                            <h3 className="panel-title"id={n.key}>
+                                <a href={n.source} className="btn btn-link">{n.name}</a>
                                 <span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                 <span>{n.error}</span>
                                 <button className="btn btn-link" onClick={self.reload.bind(this, n)}>reload</button>
@@ -125,8 +137,17 @@ const MainComponent = React.createClass({
             }
         });
 
+        const menuView = self.state.news.map(n => {
+            return (
+                <li key={n.source}><a href={"#" + n.key}>{n.name}</a></li>
+            );
+        });
+
         return (
-            <div>{newsView}</div>
+            <div>
+                <ul className="menu">{menuView}</ul>
+                <div>{newsView}</div>
+            </div>
         );
     },
 });
