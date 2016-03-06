@@ -18,7 +18,7 @@ $(document).on("click", "a[href^='http']", function(e) {
     e.stopPropagation();
     const top = $($(this).attr("href")).offset().top - 20;
     body.animate({
-        scrollTop: top
+        scrollTop: top,
     }, 500);
 });
 
