@@ -75,6 +75,9 @@ async function load(source: types.Source, event: GitHubElectron.IPCMainEvent) {
         $(source.selector).each((index, element) => {
             const item = source.getItem($(element), $);
             if (item && json.items.indexOf(item.href) === -1) {
+                if (item.title.length > 50) {
+                    item.title = item.title.substr(0, 80) + "...";
+                }
                 result.push(item);
             }
         });
@@ -86,6 +89,7 @@ async function load(source: types.Source, event: GitHubElectron.IPCMainEvent) {
     } catch (error) {
         console.log(error);
         event.sender.send(types.events.items, {
+            name: source.name,
             source: source.url,
             error: error.message,
         });

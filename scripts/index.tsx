@@ -109,7 +109,7 @@ const MainComponent = React.createClass({
                     }
                 });
                 return (
-                    <div key={n.source} className="panel panel-default row">
+                    <div key={n.source} className="panel panel-default">
                         <div className="panel-heading">
                             <h3 className="panel-title" id={n.key}>
                                 <a href={n.source} className="btn btn-link">{n.name}</a>
@@ -123,7 +123,7 @@ const MainComponent = React.createClass({
                 );
             } else {
                 return (
-                    <div key={n.source} className="panel panel-default row">
+                    <div key={n.source} className="panel panel-default">
                         <div className="panel-heading">
                             <h3 className="panel-title"id={n.key}>
                                 <a href={n.source} className="btn btn-link">{n.name}</a>
@@ -144,7 +144,7 @@ const MainComponent = React.createClass({
         });
 
         return (
-            <div>
+            <div className="container">
                 <ul className="menu">{menuView}</ul>
                 <div>{newsView}</div>
             </div>
