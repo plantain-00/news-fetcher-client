@@ -138,14 +138,22 @@ const MainComponent = React.createClass({
         });
 
         const menuView = self.state.news.map(n => {
+            let errorView;
+            if (!n.items) {
+                errorView = (
+                    <span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                );
+            }
             return (
-                <li key={n.source}><a href={"#" + n.key}>{n.name}</a></li>
+                <li key={n.source}>
+                    <a href={"#" + n.key} className="btn btn-link">{n.name}{errorView}</a>
+                </li>
             );
         });
 
         return (
             <div className="container">
-                <ul className="menu">{menuView}</ul>
+                <ul className="menu list-unstyled">{menuView}</ul>
                 <div>{newsView}</div>
             </div>
         );
