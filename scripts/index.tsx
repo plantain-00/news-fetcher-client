@@ -146,7 +146,10 @@ const MainComponent = React.createClass({
             }
             return (
                 <li key={n.source}>
-                    <a href={"#" + n.key} className="btn btn-link">{n.name}{errorView}</a>
+                    <a href={"#" + n.key} className="btn btn-link">
+                        {n.name}
+                        {errorView}
+                    </a>
                 </li>
             );
         });
