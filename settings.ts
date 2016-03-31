@@ -142,6 +142,7 @@ const milestones = [
     { name: "expressjs", url: "https://github.com/expressjs/express/milestones" },
     { name: "bootstrap", url: "https://github.com/twbs/bootstrap/milestones" },
     { name: "NativeScript", url: "https://github.com/NativeScript/NativeScript/milestones" },
+    { name: "gogs", url: "https://github.com/gogits/gogs/milestones" },
 ];
 for (const milestone of milestones) {
     sources.push({
