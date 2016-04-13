@@ -31,19 +31,6 @@ export const sources: types.Source[] = [
         },
     },
     {
-        name: "cnbeta",
-        url: "http://www.cnbeta.com",
-        selector: ".title > a",
-        getItem: (cheerio: Cheerio, $: CheerioStatic) => {
-            const array = cheerio.parent().parent().next().next().find("em");
-            const count = $(array[0]).text();
-            return {
-                href: "http://www.cnbeta.com" + cheerio.attr("href"),
-                title: cheerio.text() + " / " + count,
-            };
-        },
-    },
-    {
         name: "github trending",
         url: "https://github.com/trending",
         selector: ".repo-list-name > a",
@@ -51,20 +38,6 @@ export const sources: types.Source[] = [
             return {
                 href: "https://github.com" + cheerio.attr("href"),
                 title: cheerio.text() + " : " + cheerio.parent().next().text(),
-            };
-        },
-    },
-    {
-        name: "xart",
-        url: "http://www.xart.com/videos",
-        selector: ".show-for-touch > .cover > img",
-        getItem: (cheerio: Cheerio, $: CheerioStatic) => {
-            const detail = cheerio.attr("data-interchange").split(",")[0].substring(1);
-            const name = $(cheerio.parent().next().find("h1")[0]).text();
-            return {
-                href: `${kickAssTorrentBaseUrl}/usearch/${name}`,
-                title: name,
-                detail: detail,
             };
         },
     },
@@ -113,17 +86,6 @@ export const sources: types.Source[] = [
         getItem: (cheerio: Cheerio, $: CheerioStatic) => {
             return {
                 href: "https://eztv.ag" + cheerio.attr("href"),
-                title: cheerio.text(),
-            };
-        },
-    },
-    {
-        name: "czech massage",
-        url: `${kickAssTorrentBaseUrl}/usearch/czech%20massage/?field=time_add&sorder=desc`,
-        selector: ".filmType > a",
-        getItem: (cheerio: Cheerio, $: CheerioStatic) => {
-            return {
-                href: kickAssTorrentBaseUrl + cheerio.attr("href"),
                 title: cheerio.text(),
             };
         },
