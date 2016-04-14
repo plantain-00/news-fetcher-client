@@ -38,20 +38,8 @@
 3. run `npm install && tsc`
 4. pack it for your current OS
 5. if you want to sync history between different PC, you may want the server-side part: https://github.com/plantain-00/news-fetcher , and add a `secret.ts` file to keep the communication safe.
+6. add environment variable `NEWS_FETCHER_KEY`
 
 ### sources
 
 There are some news sources already(check `sources` in `settings.ts` file), and you can add more sources or remove the default sources, then rebuild and repack the program.
-
-# secure: create a file of `secret.ts`, like:
-
-```typescript
-const settings = require("./settings");
-
-export function load() {
-    settings.key = "";
-}
-```
-
-to make your client communicate with your server with safety.
-It's not necessary if you don't want the server-side part.
