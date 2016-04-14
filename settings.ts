@@ -1,6 +1,6 @@
 import * as types from "./types";
 
-export let key: string;
+export let key: string = process.env.NEWS_FETCHER_KEY;
 
 export const serverUrl = "https://news.yorkyao.xyz";
 
@@ -119,11 +119,4 @@ for (const milestone of milestones) {
             };
         },
     });
-}
-
-try {
-    const secret = require("./secret");
-    secret.load();
-} catch (error) {
-    console.log(error);
 }
