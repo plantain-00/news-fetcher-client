@@ -14,7 +14,7 @@ gulp.task("tslint", () => {
 
 const version = "--version=0.36.1";
 const ignore = `--ignore="node_modules/(gulp|gulp-shell|gulp-tslint|tslint|typescript)"`;
-const appVersion = `--app-version="1.0.4"`;
+const appVersion = `--app-version="1.0.5"`;
 const arch = "--arch=x64";
 const out = "--out=dist";
 const command = `electron-packager . "news" ${out} ${arch} ${version} ${ignore} ${appVersion}`;
