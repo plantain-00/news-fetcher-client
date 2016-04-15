@@ -1,8 +1,7 @@
 import * as types from "./types";
 
-export let key: string = process.env.NEWS_FETCHER_KEY;
-
-export const serverUrl = "https://news.yorkyao.xyz";
+export const key: string = process.env.NEWS_FETCHER_KEY;
+export const serverUrl = process.env.NEWS_FETCHER_SERVER_URL;
 
 const kickAssTorrentBaseUrl = "https://kat.cr";
 
