@@ -16,16 +16,6 @@
 - tsc && gulp tslint
 - electron .
 
-# pack
-
-## osx
-
-- gulp pack-osx
-
-## windows
-
-- gulp pack-win
-
 # usage
 
 ### it is available for windows and mac OSX, looks like:
