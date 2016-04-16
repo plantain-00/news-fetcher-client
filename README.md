@@ -31,15 +31,15 @@
 ### it is available for windows and mac OSX, looks like:
 ![](./sample.png)
 
-### steps
+if you want to sync history between different PC, you may want the server-side part: https://github.com/plantain-00/news-fetcher , and add a `secret.ts` file to keep the communication safe. And add environment variable `NEWS_FETCHER_KEY` and `NEWS_FETCHER_SERVER_URL`.
+
+### develop
 
 1. pull the source code
 2. install tools and global npm packages
 3. run `npm install && tsc`
 4. pack it for your current OS
-5. if you want to sync history between different PC, you may want the server-side part: https://github.com/plantain-00/news-fetcher , and add a `secret.ts` file to keep the communication safe.
-6. add environment variable `NEWS_FETCHER_KEY` and `NEWS_FETCHER_SERVER_URL`
 
-### sources
+### news sources
 
 There are some news sources already(check `sources` in `settings.ts` file), and you can add more sources or remove the default sources, then rebuild and repack the program.
