@@ -9,10 +9,12 @@
 - typescript
 - gulp
 - electron-packager
+- tsd
 
 # develop
 
 - npm install
+- tsd install
 - tsc && gulp tslint
 - electron .
 
