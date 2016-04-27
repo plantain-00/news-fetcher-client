@@ -4,8 +4,8 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "osx": "rm -rf dist/news-darwin-x64 && electron-packager . 'news' --out=dist --arch=x64 --version=0.36.1 --app-version='1.0.5' --platform=darwin --ignore='dist/'",
-    "win": "rm -rf dist/news-win32-x64 && electron-packager . 'news' --out=dist --arch=x64 --version=0.36.1 --app-version='1.0.5' --platform=win32 --ignore='dist/'"
+    "osx": "rm -rf dist/news-darwin-x64 && electron-packager . 'news' --out=dist --arch=x64 --version=0.37.6 --app-version='1.0.6' --platform=darwin --ignore='dist/'",
+    "win": "rm -rf dist/news-win32-x64 && electron-packager . 'news' --out=dist --arch=x64 --version=0.37.6 --app-version='1.0.6' --platform=win32 --ignore='dist/'"
   },
   "repository": {
     "type": "git",
@@ -20,7 +20,7 @@
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-shell": "^0.5.1",
-    "gulp-tslint": "^4.3.1",
+    "gulp-tslint": "^5.0.0",
     "tslint": "^3.2.1",
     "typescript": "^1.8.7"
   },
