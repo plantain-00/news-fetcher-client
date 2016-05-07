@@ -4,18 +4,13 @@
 
 # tools and global npm packages
 
-- node v4+
-- electron-prebuilt
-- typescript
-- gulp
-- electron-packager
-- tsd
+- `npm i -g electron-prebuilt typescript electron-packager tsd tslint npm-check`
 
 # develop
 
-- npm install
+- npm i
 - tsd install
-- tsc && gulp tslint
+- tsc && npm run tslint
 - electron .
 
 # usage

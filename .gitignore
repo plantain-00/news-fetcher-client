@@ -1,6 +1,5 @@
 node_modules
 **/*.js
-!gulpfile.js
 dist
 typings
 .vscode
