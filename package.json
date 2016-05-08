@@ -7,7 +7,9 @@
     "osx": "rm -rf dist/news-darwin-x64 && electron-packager . 'news' --out=dist --arch=x64 --version=0.37.6 --app-version='1.0.6' --platform=darwin --ignore='dist/'",
     "win": "rm -rf dist/news-win32-x64 && electron-packager . 'news' --out=dist --arch=x64 --version=0.37.6 --app-version='1.0.6' --platform=win32 --ignore='dist/'",
     "tslint": "tslint 'scripts/*.tsx' '*.ts'",
-    "check": "npm-check -u"
+    "check": "npm-check -u",
+    "init": "npm i -g typescript tsd tslint npm-check electron-prebuilt electron-packager",
+    "restore": "tsd install && npm i"
   },
   "repository": {
     "type": "git",

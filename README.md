@@ -4,14 +4,14 @@
 
 # tools and global npm packages
 
-- `npm i -g electron-prebuilt typescript electron-packager tsd tslint npm-check`
+- `npm run init`
 
 # develop
 
-- npm i
-- tsd install
-- tsc && npm run tslint
-- electron .
+- `npm run restore`
+- `tsc`
+- `npm run tslint`
+- `electron .`
 
 # usage
 
