@@ -15,7 +15,7 @@ let localData: { url: string; createTime: number; }[];
 const historyPath = libs.path.resolve(libs.electron.app.getPath("userData"), "history.json");
 const willSync: boolean = !!settings.key;
 
-libs.electron.app.on("window-all-closed", function() {
+libs.electron.app.on("window-all-closed", function () {
     if (willSync) {
         libs.electron.app.quit();
     } else {
@@ -67,10 +67,10 @@ libs.electron.ipcMain.on(types.events.reload, async (event, url) => {
 
 async function load(source: types.Source, event: GitHubElectron.IPCMainEvent) {
     try {
-        const response = await libs.requestAsync({
+        const [response, body] = await libs.requestAsync({
             url: source.url,
         });
-        const $ = libs.cheerio.load(response.body);
+        const $ = libs.cheerio.load(body);
         const result: types.Item[] = [];
         $(source.selector).each((index, element) => {
             const item = source.getItem($(element), $);
@@ -96,10 +96,10 @@ async function load(source: types.Source, event: GitHubElectron.IPCMainEvent) {
 libs.electron.ipcMain.on(types.events.items, async (event) => {
     try {
         if (willSync) {
-            const response = await libs.requestAsync({
+            const [response, body] = await libs.requestAsync({
                 url: `${settings.serverUrl}/items?key=${settings.key}`,
             });
-            json = JSON.parse(response.body);
+            json = JSON.parse(body);
         } else {
             try {
                 localData = require(historyPath);
@@ -132,7 +132,7 @@ libs.electron.ipcMain.on(types.events.items, async (event) => {
 libs.electron.app.on("ready", () => {
     mainWindow = new libs.electron.BrowserWindow({ width: 1200, height: 800 });
     mainWindow.loadURL(`file://${__dirname}/index.html`);
-    mainWindow.on("closed", function() {
+    mainWindow.on("closed", function () {
         mainWindow = null;
     });
     // mainWindow.webContents.openDevTools();

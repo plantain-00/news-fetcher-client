@@ -5,8 +5,8 @@ import * as http from "http";
 
 import * as request from "request";
 
-export function requestAsync(options: request.Options): Promise<{ response: http.IncomingMessage; body: any; }> {
-    return new Promise((resolve, reject) => {
+export function requestAsync(options: request.Options) {
+    return new Promise<[http.IncomingMessage, any]>((resolve, reject) => {
         options.headers = {
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.65 Safari/537.36",
         };
@@ -16,10 +16,7 @@ export function requestAsync(options: request.Options): Promise<{ response: http
             if (error) {
                 reject(error);
             } else {
-                resolve({
-                    response: response,
-                    body: body,
-                });
+                resolve([response, body]);
             }
         });
     });
