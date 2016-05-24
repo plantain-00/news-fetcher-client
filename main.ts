@@ -3,7 +3,7 @@ import * as types from "./types";
 import * as settings from "./settings";
 
 libs.electron.crashReporter.start({
-    companyName: "yao",
+    companyName: "news-fetcher",
     submitURL: "http://localhost",
 });
 
@@ -12,11 +12,34 @@ let mainWindow: GitHubElectron.BrowserWindow = null;
 let json: { isSuccess: boolean; errorMessage?: string; items: string[]; };
 let localData: { url: string; createTime: number; }[];
 
-const historyPath = libs.path.resolve(libs.electron.app.getPath("userData"), "history.json");
-const willSync: boolean = !!settings.key;
+const userDataPath = libs.electron.app.getPath("userData");
+const historyPath = libs.path.resolve(userDataPath, "history.json");
+const configurationPath = libs.path.resolve(userDataPath, "configuration.json");
+
+try {
+    const data = libs.fs.readFileSync(configurationPath, "utf8");
+    const config = JSON.parse(data);
+    settings.key = config.key;
+    settings.serverUrl = config.serverUrl;
+} catch (error) {
+    console.log(error);
+    libs.fs.writeFile(configurationPath, JSON.stringify({
+        key: settings.key,
+        serverUrl: settings.serverUrl,
+        willSync: settings.willSync,
+    }, null, "    "));
+}
+
+console.log({
+    config: {
+        key: settings.key,
+        serverUrl: settings.serverUrl,
+        willSync: settings.willSync,
+    },
+});
 
 libs.electron.app.on("window-all-closed", function () {
-    if (willSync) {
+    if (settings.willSync) {
         libs.electron.app.quit();
     } else {
         const ExpiredMoment = Date.now() - 30 * 24 * 3600 * 1000;
@@ -35,7 +58,7 @@ libs.electron.ipcMain.on(types.events.hide, async (event, url) => {
     try {
         json.items.push(url);
 
-        if (willSync) {
+        if (settings.willSync) {
             await libs.requestAsync({
                 url: `${settings.serverUrl}/items?key=${settings.key}`,
                 method: "POST",
@@ -95,7 +118,7 @@ async function load(source: types.Source, event: GitHubElectron.IPCMainEvent) {
 
 libs.electron.ipcMain.on(types.events.items, async (event) => {
     try {
-        if (willSync) {
+        if (settings.willSync) {
             const [response, body] = await libs.requestAsync({
                 url: `${settings.serverUrl}/items?key=${settings.key}`,
             });

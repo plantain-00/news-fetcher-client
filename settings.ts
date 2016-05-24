@@ -1,7 +1,8 @@
 import * as types from "./types";
 
-export const key: string = process.env.NEWS_FETCHER_KEY;
-export const serverUrl = process.env.NEWS_FETCHER_SERVER_URL;
+export let key = "test key";
+export let serverUrl = "http://test_url";
+export let willSync = false;
 
 const kickAssTorrentBaseUrl = "https://kat.cr";
 
