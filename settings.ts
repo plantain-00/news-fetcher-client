@@ -1,9 +1,5 @@
 import * as types from "./types";
 
-export let key = "test key";
-export let serverUrl = "http://test_url";
-export let willSync = false;
-
 const kickAssTorrentBaseUrl = "https://kat.cr";
 
 export const sources: types.Source[] = [

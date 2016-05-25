@@ -2,6 +2,12 @@ import * as libs from "./libs";
 import * as types from "./types";
 import * as settings from "./settings";
 
+let config = {
+    key: "",
+    serverUrl: "",
+    willSync: false,
+}
+
 libs.electron.crashReporter.start({
     companyName: "news-fetcher",
     submitURL: "http://localhost",
@@ -18,28 +24,18 @@ const configurationPath = libs.path.resolve(userDataPath, "configuration.json");
 
 try {
     const data = libs.fs.readFileSync(configurationPath, "utf8");
-    const config = JSON.parse(data);
-    settings.key = config.key;
-    settings.serverUrl = config.serverUrl;
+    config = JSON.parse(data);
 } catch (error) {
     console.log(error);
-    libs.fs.writeFile(configurationPath, JSON.stringify({
-        key: settings.key,
-        serverUrl: settings.serverUrl,
-        willSync: settings.willSync,
-    }, null, "    "));
+    libs.fs.writeFile(configurationPath, JSON.stringify(config, null, "    "));
 }
 
 console.log({
-    config: {
-        key: settings.key,
-        serverUrl: settings.serverUrl,
-        willSync: settings.willSync,
-    },
+    config: config,
 });
 
 libs.electron.app.on("window-all-closed", function () {
-    if (settings.willSync) {
+    if (config.willSync) {
         libs.electron.app.quit();
     } else {
         const ExpiredMoment = Date.now() - 30 * 24 * 3600 * 1000;
@@ -58,9 +54,9 @@ libs.electron.ipcMain.on(types.events.hide, async (event, url) => {
     try {
         json.items.push(url);
 
-        if (settings.willSync) {
+        if (config.willSync) {
             await libs.requestAsync({
-                url: `${settings.serverUrl}/items?key=${settings.key}`,
+                url: `${config.serverUrl}/items?key=${config.key}`,
                 method: "POST",
                 form: {
                     url: url,
@@ -118,9 +114,9 @@ async function load(source: types.Source, event: GitHubElectron.IPCMainEvent) {
 
 libs.electron.ipcMain.on(types.events.items, async (event) => {
     try {
-        if (settings.willSync) {
+        if (config.willSync) {
             const [response, body] = await libs.requestAsync({
-                url: `${settings.serverUrl}/items?key=${settings.key}`,
+                url: `${config.serverUrl}/items?key=${config.key}`,
             });
             json = JSON.parse(body);
         } else {

@@ -18,7 +18,7 @@
 ### it is available for windows and mac OSX, looks like:
 ![](./sample.png)
 
-if you want to sync history between different PC, you may want the server-side part: https://github.com/plantain-00/news-fetcher , and add a `secret.ts` file to keep the communication safe. And add environment variable `NEWS_FETCHER_KEY` and `NEWS_FETCHER_SERVER_URL`.
+if you want to sync history between different PC, you may want the server-side part: https://github.com/plantain-00/news-fetcher , and set your key and server url at `configuration.json` in your `userData` path.
 
 ### develop
 
