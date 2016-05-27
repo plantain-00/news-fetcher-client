@@ -6,7 +6,7 @@ let config = {
     key: "",
     serverUrl: "",
     willSync: false,
-}
+};
 
 libs.electron.crashReporter.start({
     companyName: "news-fetcher",
