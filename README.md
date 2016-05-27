@@ -20,13 +20,6 @@
 
 if you want to sync history between different PC, you may want the server-side part: https://github.com/plantain-00/news-fetcher , and set your key and server url at `configuration.json` in your `userData` path.
 
-### develop
-
-1. pull the source code
-2. install tools and global npm packages
-3. run `npm install && tsc`
-4. pack it for your current OS
-
 ### news sources
 
 There are some news sources already(check `sources` in `settings.ts` file), and you can add more sources or remove the default sources, then rebuild and repack the program.
