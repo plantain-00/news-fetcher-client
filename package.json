@@ -22,8 +22,8 @@
   "homepage": "https://github.com/plantain-00/news-fetcher-client#readme",
   "dependencies": {
     "bootstrap": "^3.3.6",
-    "cheerio": "^0.20.0",
-    "jquery": "^2.2.4",
+    "cheerio": "^0.21.0",
+    "jquery": "^3.0.0",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
     "request": "^2.72.0"

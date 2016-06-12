@@ -38,7 +38,7 @@ const MainComponent = React.createClass({
 
         const news = self.state.news;
         n.error = null;
-        self.setState({ news: news });
+        self.setState({ news });
         electron.ipcRenderer.send(types.events.reload, n.source);
     },
     hide: function(item: types.Item) {
@@ -46,7 +46,7 @@ const MainComponent = React.createClass({
 
         const news = self.state.news;
         item.hidden = true;
-        self.setState({ news: news });
+        self.setState({ news });
         electron.ipcRenderer.send(types.events.hide, item.href);
     },
     openAndHide: function(item: types.Item) {

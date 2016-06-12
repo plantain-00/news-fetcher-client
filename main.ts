@@ -30,9 +30,7 @@ try {
     libs.fs.writeFile(configurationPath, JSON.stringify(config, null, "    "));
 }
 
-console.log({
-    config: config,
-});
+console.log({ config });
 
 libs.electron.app.on("window-all-closed", function () {
     if (config.willSync) {
@@ -58,13 +56,11 @@ libs.electron.ipcMain.on(types.events.hide, async (event, url) => {
             await libs.requestAsync({
                 url: `${config.serverUrl}/items?key=${config.key}`,
                 method: "POST",
-                form: {
-                    url: url,
-                },
+                form: { url },
             });
         } else {
             localData.push({
-                url: url,
+                url,
                 createTime: Date.now(),
             });
         }
@@ -90,17 +86,17 @@ async function load(source: types.Source, event: GitHubElectron.IPCMainEvent) {
             url: source.url,
         });
         const $ = libs.cheerio.load(body);
-        const result: types.Item[] = [];
+        const items: types.Item[] = [];
         $(source.selector).each((index, element) => {
             const item = source.getItem($(element), $);
             if (item && json.items.indexOf(item.href) === -1) {
-                result.push(item);
+                items.push(item);
             }
         });
         event.sender.send(types.events.items, {
             name: source.name,
             source: source.url,
-            items: result,
+            items,
         });
     } catch (error) {
         console.log(error);
