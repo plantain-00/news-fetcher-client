@@ -1,7 +1,5 @@
 import * as types from "./types";
 
-const kickAssTorrentBaseUrl = "https://kat.cr";
-
 export const sources: types.Source[] = [
     {
         name: "zhihu explore",
@@ -65,15 +63,16 @@ export const sources: types.Source[] = [
         },
     },
     {
-        name: "kickass torrent",
-        url: `${kickAssTorrentBaseUrl}/full`,
-        selector: ".filmType > a",
+        name: "extra torrent",
+        url: `http://extratorrent.cc/`,
+        selector: ".tli > a",
         getItem: (cheerio: Cheerio, $: CheerioStatic) => {
             return {
-                href: kickAssTorrentBaseUrl + cheerio.attr("href"),
+                href: "http://extratorrent.cc/" + cheerio.attr("href"),
                 title: cheerio.text(),
             };
         },
+        limit: 10,
     },
     {
         name: "eztv",

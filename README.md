@@ -8,7 +8,7 @@
 
 # develop
 
-- `npm run restore`
+- `npm i`
 - `tsc`
 - `npm run tslint`
 - `electron .`

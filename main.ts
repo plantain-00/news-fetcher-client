@@ -88,6 +88,9 @@ async function load(source: types.Source, event: Electron.IpcMainEvent) {
         const $ = libs.cheerio.load(body);
         const items: types.Item[] = [];
         $(source.selector).each((index, element) => {
+            if (source.limit && index >= source.limit) {
+                return;
+            }
             const item = source.getItem($(element), $);
             if (item && json.items.indexOf(item.href) === -1) {
                 items.push(item);

@@ -35,4 +35,5 @@ export interface Source {
     url: string;
     selector: string;
     getItem: (cheerio: Cheerio, $: CheerioStatic) => Item;
+    limit?: number;
 }
