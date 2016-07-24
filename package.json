@@ -1,11 +1,11 @@
 {
   "name": "news-fetcher-client",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "",
   "main": "main.js",
   "scripts": {
-    "osx": "rm -rf distribution/news-darwin-x64 && electron-packager . 'news' --out=distribution --arch=x64 --version=1.1.0 --app-version='1.0.7' --platform=darwin --ignore='distribution/'",
-    "win": "rm -rf distribution/news-win32-x64 && electron-packager . 'news' --out=distribution --arch=x64 --version=1.1.0 --app-version='1.0.7' --platform=win32 --ignore='distribution/'",
+    "osx": "rm -rf distribution/news-darwin-x64 && electron-packager . 'news' --out=distribution --arch=x64 --version=1.1.0 --app-version='1.0.8' --platform=darwin --ignore='distribution/'",
+    "win": "rm -rf distribution/news-win32-x64 && electron-packager . 'news' --out=distribution --arch=x64 --version=1.1.0 --app-version='1.0.8' --platform=win32 --ignore='distribution/'",
     "tslint": "tslint \"scripts/*.tsx\" \"*.ts\"",
     "init": "npm i -g typescript@beta tslint npm-check electron-prebuilt electron-packager"
   },

@@ -23,3 +23,10 @@ if you want to sync history between different PC, you may want the server-side p
 ### news sources
 
 There are some news sources already(check `sources` in `settings.ts` file), and you can add more sources or remove the default sources, then rebuild and repack the program.
+
+### MEMO
+
+When update a version, 3 places should be updated:
++ version in package.json
++ osx and win in scripts in package.json
++ title in index.html
