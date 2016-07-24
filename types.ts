@@ -1,5 +1,3 @@
-/// <reference path="./typings/tsd.d.ts" />
-
 export interface Item {
     href: string;
     title: string;
@@ -11,7 +9,7 @@ export interface News {
     name: string;
     source: string;
     items: Item[];
-    error: string;
+    error: string | null;
     key: string;
 }
 

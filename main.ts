@@ -13,7 +13,7 @@ libs.electron.crashReporter.start({
     submitURL: "http://localhost",
 });
 
-let mainWindow: GitHubElectron.BrowserWindow = null;
+let mainWindow: Electron.BrowserWindow | undefined = undefined;
 
 let json: { isSuccess: boolean; errorMessage?: string; items: string[]; };
 let localData: { url: string; createTime: number; }[];
@@ -80,9 +80,9 @@ libs.electron.ipcMain.on(types.events.reload, async (event, url) => {
     }
 });
 
-async function load(source: types.Source, event: GitHubElectron.IPCMainEvent) {
+async function load(source: types.Source, event: Electron.IpcMainEvent) {
     try {
-        const [response, body] = await libs.requestAsync({
+        const [, body] = await libs.requestAsync({
             url: source.url,
         });
         const $ = libs.cheerio.load(body);
@@ -111,7 +111,7 @@ async function load(source: types.Source, event: GitHubElectron.IPCMainEvent) {
 libs.electron.ipcMain.on(types.events.items, async (event) => {
     try {
         if (config.willSync) {
-            const [response, body] = await libs.requestAsync({
+            const [, body] = await libs.requestAsync({
                 url: `${config.serverUrl}/items?key=${config.key}`,
             });
             json = JSON.parse(body);
@@ -148,7 +148,7 @@ libs.electron.app.on("ready", () => {
     mainWindow = new libs.electron.BrowserWindow({ width: 1200, height: 800 });
     mainWindow.loadURL(`file://${__dirname}/index.html`);
     mainWindow.on("closed", function () {
-        mainWindow = null;
+        mainWindow = undefined;
     });
     // mainWindow.webContents.openDevTools();
 });

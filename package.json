@@ -7,8 +7,7 @@
     "osx": "rm -rf distribution/news-darwin-x64 && electron-packager . 'news' --out=distribution --arch=x64 --version=1.1.0 --app-version='1.0.7' --platform=darwin --ignore='distribution/'",
     "win": "rm -rf distribution/news-win32-x64 && electron-packager . 'news' --out=distribution --arch=x64 --version=1.1.0 --app-version='1.0.7' --platform=win32 --ignore='distribution/'",
     "tslint": "tslint \"scripts/*.tsx\" \"*.ts\"",
-    "init": "npm i -g typescript tsd tslint npm-check electron-prebuilt electron-packager",
-    "restore": "tsd install && npm i"
+    "init": "npm i -g typescript@beta tslint npm-check electron-prebuilt electron-packager"
   },
   "repository": {
     "type": "git",
@@ -30,5 +29,14 @@
   },
   "engines": {
     "node": ">=6.0.0"
+  },
+  "devDependencies": {
+    "@types/cheerio": "^0.17.29",
+    "@types/electron": "^0.37.14",
+    "@types/jquery": "^1.10.27",
+    "@types/react": "^0.14.27",
+    "@types/react-dom": "^0.14.13",
+    "@types/request": "0.0.27",
+    "typescript": "^2.0.0"
   }
 }
