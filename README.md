@@ -2,16 +2,12 @@
 [![devDependency Status](https://david-dm.org/plantain-00/news-fetcher-client/dev-status.svg)](https://david-dm.org/plantain-00/news-fetcher-client#info=devDependencies)
 [![Build Status](https://travis-ci.org/plantain-00/news-fetcher-client.svg?branch=master)](https://travis-ci.org/plantain-00/news-fetcher-client)
 
-# tools and global npm packages
-
-- `npm run init`
-
 # develop
 
 - `npm i`
-- `tsc`
+- `npm run build`
 - `npm run tslint`
-- `electron .`
+- `npm run start`
 
 # usage
 
