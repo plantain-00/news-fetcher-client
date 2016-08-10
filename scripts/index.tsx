@@ -31,29 +31,29 @@ interface Self extends types.Self<State> {
     openAndHide: (item: types.Item) => void;
 }
 
-const MainComponent = React.createClass({
-    reload: function (this: Self, n: types.News) {
+class MainComponent extends React.Component<any, State> {
+    public reload(this: Self, n: types.News) {
         const news = this.state!.news;
         n.error = null;
         this.setState!({ news });
         electron.ipcRenderer.send(types.events.reload, n.source);
-    },
-    hide: function (this: Self, item: types.Item) {
+    }
+    public hide(this: Self, item: types.Item) {
         const news = this.state!.news;
         item.hidden = true;
         this.setState!({ news });
         electron.ipcRenderer.send(types.events.hide, item.href);
-    },
-    openAndHide: function (this: Self, item: types.Item) {
+    }
+    public openAndHide(this: Self, item: types.Item) {
         electron.shell.openExternal(item.href);
         this.hide!(item);
-    },
-    getInitialState: function () {
+    }
+    public getInitialState() {
         return {
             news: [],
         } as State;
-    },
-    componentDidMount: function (this: Self) {
+    }
+    public componentDidMount(this: Self) {
         electron.ipcRenderer.on(types.events.items, (event: Electron.IpcRendererEvent, arg: types.News) => {
             const news = this.state!.news!;
             const index = news.findIndex(n => n.source === arg.source);
@@ -68,8 +68,8 @@ const MainComponent = React.createClass({
             this.setState!({ news: news });
         });
         electron.ipcRenderer.send(types.events.items);
-    },
-    render: function (this: Self) {
+    }
+    public render(this: Self) {
         const newsView = this.state!.news!.map(n => {
             if (n.items) {
                 const itemsView = n.items.map((i, index) => {
@@ -149,7 +149,7 @@ const MainComponent = React.createClass({
                 <div>{newsView}</div>
             </div>
         );
-    },
-});
+    }
+};
 
-ReactDOM.render(<MainComponent/>, document.getElementById("container") !);
+ReactDOM.render(<MainComponent /> as any, document.getElementById("container") !);

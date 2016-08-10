@@ -92,7 +92,7 @@ async function load(source: types.Source, event: Electron.IpcMainEvent) {
                 return;
             }
             const item = source.getItem($(element), $);
-            if (item && json.items.indexOf(item.href) === -1) {
+            if (item && json.items.indexOf(item.href) === -1 && items.findIndex(i => i.href === item.href) === -1) {
                 items.push(item);
             }
         });
