@@ -1,6 +1,14 @@
 import * as types from "./types";
 
-export const sources: types.Source[] = [
+export type Source = {
+    name: string;
+    url: string;
+    selector: string;
+    getItem: (cheerio: Cheerio, $: CheerioStatic) => types.Item;
+    limit?: number;
+}
+
+export const sources: Source[] = [
     {
         name: "zhihu explore",
         url: "https://www.zhihu.com/explore/recommendations",

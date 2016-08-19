@@ -2,15 +2,17 @@ import * as libs from "./libs";
 import * as types from "./types";
 import * as settings from "./settings";
 
-let config = {
+let config: types.Config = {
     key: "",
     serverUrl: "",
     willSync: false,
 };
 
+const schema = require("./schema.json");
+
 libs.electron.crashReporter.start({
     companyName: "news-fetcher",
-    submitURL: "http://localhost",
+    submitURL: `${config.serverUrl}/logs?key=${config.key}`,
 });
 
 let mainWindow: Electron.BrowserWindow | undefined = undefined;
@@ -35,7 +37,7 @@ console.log({ config });
 libs.electron.app.on("window-all-closed", function () {
     if (config.willSync) {
         libs.electron.app.quit();
-    } else {
+    } else if (localData) {
         const ExpiredMoment = Date.now() - 30 * 24 * 3600 * 1000;
         localData = localData.filter(d => d.createTime > ExpiredMoment);
         libs.fs.writeFile(historyPath, JSON.stringify(localData, null, "    "), error => {
@@ -80,7 +82,18 @@ libs.electron.ipcMain.on(types.events.reload, async (event, url) => {
     }
 });
 
-async function load(source: types.Source, event: Electron.IpcMainEvent) {
+libs.electron.ipcMain.on(types.events.saveConfiguration, async (event, newConfiguration) => {
+    try {
+        config = newConfiguration;
+        libs.fs.writeFileSync(configurationPath, JSON.stringify(config, null, "    "), {
+            encoding: "utf8",
+        });
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+async function load(source: settings.Source, event: Electron.IpcMainEvent) {
     try {
         const [, body] = await libs.requestAsync({
             url: source.url,
@@ -139,6 +152,11 @@ libs.electron.ipcMain.on(types.events.items, async (event) => {
             return;
         }
 
+        event.sender.send(types.events.initialize, {
+            startval: config,
+            schema,
+        });
+
         for (const source of settings.sources) {
             await load(source, event);
         }
@@ -153,5 +171,5 @@ libs.electron.app.on("ready", () => {
     mainWindow.on("closed", function () {
         mainWindow = undefined;
     });
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
 });

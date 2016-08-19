@@ -21,6 +21,12 @@
     position: fixed;
     z-index: 200;
 }
+.menu-save {
+    left: 100px;
+    top: 10px;
+    position: fixed;
+    z-index: 200;
+}
 .configuration {
     left: 10px;
     top: 30px;

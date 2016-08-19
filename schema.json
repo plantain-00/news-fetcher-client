@@ -1,0 +1,26 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "配置",
+    "description": "同步配置",
+    "type": "object",
+    "properties": {
+        "willSync": {
+            "type": "boolean",
+            "description": "是否开启同步，如果不开启同步，历史纪录会保存在本地",
+            "default": false
+        },
+        "key": {
+            "type": "string",
+            "description": "密钥",
+            "default": ""
+        },
+        "serverUrl": {
+            "type": "string",
+            "description": "服务器地址",
+            "default": ""
+        }
+    },
+    "required": [
+        "willSync"
+    ]
+}

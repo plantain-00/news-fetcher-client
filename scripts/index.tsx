@@ -4,12 +4,13 @@ import * as electron from "electron";
 import * as React from "react";
 import * as types from "../types";
 import * as ReactDOM from "react-dom";
-require("json-editor");
 
 (window as any)["jQuery"] = $;
 require("bootstrap");
+require("json-editor");
 
 const body = $("html,body");
+let editor: JSONEditor<types.Config>;
 
 $(document).on("click", "a[href^='http']", function (this: HTMLAnchorElement, e: JQueryEventObject) {
     e.preventDefault();
@@ -23,8 +24,21 @@ $(document).on("click", "a[href^='http']", function (this: HTMLAnchorElement, e:
     }, 500);
 });
 
-interface State {
-    news?: types.News[];
+type InitData = {
+    schema: any;
+    startval: types.Config;
+}
+
+type News = {
+    name: string;
+    source: string;
+    items: types.Item[];
+    error: string | null;
+    key: string;
+}
+
+type State = {
+    news?: News[];
     configurationDialogIsVisiable?: boolean;
 }
 
@@ -36,7 +50,7 @@ class MainComponent extends React.Component<{}, State> {
             configurationDialogIsVisiable: false,
         };
     }
-    public reload(n: types.News) {
+    public reload(n: News) {
         n.error = null;
         this.setState({ news: this.state.news });
         electron.ipcRenderer.send(types.events.reload, n.source);
@@ -51,7 +65,7 @@ class MainComponent extends React.Component<{}, State> {
         this.hide(item);
     }
     public componentDidMount() {
-        electron.ipcRenderer.on(types.events.items, (event: Electron.IpcRendererEvent, arg: types.News) => {
+        electron.ipcRenderer.on(types.events.items, (event: Electron.IpcRendererEvent, arg: News) => {
             const index = this.state.news!.findIndex(n => n.source === arg.source);
             if (arg.name) {
                 arg.key = arg.name.replace(" ", "");
@@ -63,11 +77,28 @@ class MainComponent extends React.Component<{}, State> {
             }
             this.setState({ news: this.state.news });
         });
+        electron.ipcRenderer.on(types.events.initialize, (event: Electron.IpcRendererEvent, arg: InitData) => {
+            editor = new JSONEditor(document.getElementById("configuration") !, {
+                theme: "bootstrap3",
+                iconlib: "bootstrap3" as any as boolean,
+                disable_collapse: true,
+                disable_edit_json: true,
+                disable_properties: true,
+                schema: arg.schema,
+                startval: arg.startval,
+            });
+        });
         electron.ipcRenderer.send(types.events.items);
     }
-    public toggleConfigurationaaDialog() {
+    public toggleConfigurationDialog() {
         this.setState({
             configurationDialogIsVisiable: !this.state.configurationDialogIsVisiable,
+        });
+    }
+    public saveConfiguration() {
+        electron.ipcRenderer.send(types.events.saveConfiguration, editor.getValue());
+        this.setState({
+            configurationDialogIsVisiable: false,
         });
     }
     public render() {
@@ -146,7 +177,8 @@ class MainComponent extends React.Component<{}, State> {
 
         return (
             <div className="container">
-                <button className="btn btn-xs menu-configuration" onClick={this.toggleConfigurationaaDialog.bind(this)}>配置</button>
+                <button className="btn btn-xs menu-configuration" onClick={this.toggleConfigurationDialog.bind(this)}>配置</button>
+                <button className={this.state.configurationDialogIsVisiable ? "btn btn-xs btn-primary menu-save" : "btn btn-xs menu-save btn-primary hidden"} onClick={this.saveConfiguration.bind(this)}>保存</button>
                 <div id="configuration" className={this.state.configurationDialogIsVisiable ? "configuration" : "configuration hidden"}>
                 </div>
                 <ul className="menu list-unstyled">{menuView}</ul>
@@ -156,38 +188,4 @@ class MainComponent extends React.Component<{}, State> {
     }
 };
 
-ReactDOM.render(<MainComponent /> as any, document.getElementById("container"));
-
-const editor = new JSONEditor(document.getElementById("configuration") !, {
-    theme: "bootstrap3",
-    iconlib: "bootstrap3" as any as boolean,
-    disable_collapse: true,
-    disable_edit_json: true,
-    disable_properties: true,
-    schema: {
-        "$schema": "http://json-schema.org/draft-04/schema#",
-        "title": "配置",
-        "description": "同步配置",
-        "type": "object",
-        "properties": {
-            "willSync": {
-                "type": "boolean",
-                "description": "是否开启同步，如果不开启同步，历史纪录会保存在本地",
-                "default": false,
-            },
-            "key": {
-                "type": "string",
-                "description": "密钥",
-                "default": "",
-            },
-            "serverUrl": {
-                "type": "string",
-                "description": "服务器地址",
-                "default": "",
-            },
-        },
-        "required": ["willSync"],
-    },
-});
-
-editor.getValue();
+ReactDOM.render(<MainComponent />, document.getElementById("container"));
