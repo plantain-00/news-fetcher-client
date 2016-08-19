@@ -153,5 +153,5 @@ libs.electron.app.on("ready", () => {
     mainWindow.on("closed", function () {
         mainWindow = undefined;
     });
-    // mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
 });

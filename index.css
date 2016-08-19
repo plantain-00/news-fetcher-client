@@ -1,0 +1,30 @@
+.item-hidden {
+    color: gray;
+}
+.menu {
+    right: 10px;
+    width: 200px;
+    position: fixed;
+}
+#container {
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.btn-link {
+    white-space: normal;
+    display: inline;
+}
+.menu-configuration {
+    left: 10px;
+    top: 10px;
+    position: fixed;
+    z-index: 200;
+}
+.configuration {
+    left: 10px;
+    top: 30px;
+    position: fixed;
+    z-index: 100;
+    background-color: white;
+}

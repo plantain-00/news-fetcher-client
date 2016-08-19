@@ -1,8 +1,10 @@
+/// <reference types="json-editor" />
 import * as $ from "jquery";
 import * as electron from "electron";
 import * as React from "react";
 import * as types from "../types";
 import * as ReactDOM from "react-dom";
+require("json-editor");
 
 (window as any)["jQuery"] = $;
 require("bootstrap");
@@ -23,54 +25,53 @@ $(document).on("click", "a[href^='http']", function (this: HTMLAnchorElement, e:
 
 interface State {
     news?: types.News[];
+    configurationDialogIsVisiable?: boolean;
 }
 
-interface Self extends types.Self<State> {
-    reload: (n: types.News) => void;
-    hide: (item: types.Item) => void;
-    openAndHide: (item: types.Item) => void;
-}
-
-class MainComponent extends React.Component<any, State> {
-    public reload(this: Self, n: types.News) {
-        const news = this.state!.news;
+class MainComponent extends React.Component<{}, State> {
+    constructor() {
+        super();
+        this.state = {
+            news: [],
+            configurationDialogIsVisiable: false,
+        };
+    }
+    public reload(n: types.News) {
         n.error = null;
-        this.setState!({ news });
+        this.setState({ news: this.state.news });
         electron.ipcRenderer.send(types.events.reload, n.source);
     }
-    public hide(this: Self, item: types.Item) {
-        const news = this.state!.news;
+    public hide(item: types.Item) {
         item.hidden = true;
-        this.setState!({ news });
+        this.setState({ news: this.state.news });
         electron.ipcRenderer.send(types.events.hide, item.href);
     }
-    public openAndHide(this: Self, item: types.Item) {
+    public openAndHide(item: types.Item) {
         electron.shell.openExternal(item.href);
-        this.hide!(item);
+        this.hide(item);
     }
-    public getInitialState() {
-        return {
-            news: [],
-        } as State;
-    }
-    public componentDidMount(this: Self) {
+    public componentDidMount() {
         electron.ipcRenderer.on(types.events.items, (event: Electron.IpcRendererEvent, arg: types.News) => {
-            const news = this.state!.news!;
-            const index = news.findIndex(n => n.source === arg.source);
+            const index = this.state.news!.findIndex(n => n.source === arg.source);
             if (arg.name) {
                 arg.key = arg.name.replace(" ", "");
             }
             if (index === -1) {
-                news.push(arg);
+                this.state.news!.push(arg);
             } else {
-                news[index] = arg;
+                this.state.news![index] = arg;
             }
-            this.setState!({ news: news });
+            this.setState({ news: this.state.news });
         });
         electron.ipcRenderer.send(types.events.items);
     }
-    public render(this: Self) {
-        const newsView = this.state!.news!.map(n => {
+    public toggleConfigurationaaDialog() {
+        this.setState({
+            configurationDialogIsVisiable: !this.state.configurationDialogIsVisiable,
+        });
+    }
+    public render() {
+        const newsView = this.state.news!.map(n => {
             if (n.items) {
                 const itemsView = n.items.map((i, index) => {
                     let detailView: JSX.Element | undefined = undefined;
@@ -126,7 +127,7 @@ class MainComponent extends React.Component<any, State> {
             }
         });
 
-        const menuView = this.state!.news!.map(n => {
+        const menuView = this.state.news!.map(n => {
             let errorView: JSX.Element | undefined = undefined;
             if (!n.items) {
                 errorView = (
@@ -145,6 +146,9 @@ class MainComponent extends React.Component<any, State> {
 
         return (
             <div className="container">
+                <button className="btn btn-xs menu-configuration" onClick={this.toggleConfigurationaaDialog.bind(this)}>配置</button>
+                <div id="configuration" className={this.state.configurationDialogIsVisiable ? "configuration" : "configuration hidden"}>
+                </div>
                 <ul className="menu list-unstyled">{menuView}</ul>
                 <div>{newsView}</div>
             </div>
@@ -152,4 +156,38 @@ class MainComponent extends React.Component<any, State> {
     }
 };
 
-ReactDOM.render(<MainComponent /> as any, document.getElementById("container") !);
+ReactDOM.render(<MainComponent /> as any, document.getElementById("container"));
+
+const editor = new JSONEditor(document.getElementById("configuration") !, {
+    theme: "bootstrap3",
+    iconlib: "bootstrap3" as any as boolean,
+    disable_collapse: true,
+    disable_edit_json: true,
+    disable_properties: true,
+    schema: {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "配置",
+        "description": "同步配置",
+        "type": "object",
+        "properties": {
+            "willSync": {
+                "type": "boolean",
+                "description": "是否开启同步，如果不开启同步，历史纪录会保存在本地",
+                "default": false,
+            },
+            "key": {
+                "type": "string",
+                "description": "密钥",
+                "default": "",
+            },
+            "serverUrl": {
+                "type": "string",
+                "description": "服务器地址",
+                "default": "",
+            },
+        },
+        "required": ["willSync"],
+    },
+});
+
+editor.getValue();
