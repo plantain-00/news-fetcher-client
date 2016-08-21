@@ -29,8 +29,21 @@ export const events = {
     saveConfiguration: "saveConfiguration",
 };
 
+export type RawSource = {
+    name: string;
+    url: string;
+    selector?: string;
+    getItem?: string;
+    limit?: number;
+    isMilestone?: boolean;
+    disabled?: boolean;
+}
+
 export type Config = {
-    key: string;
-    serverUrl: string;
-    willSync: boolean;
+    sync: {
+        key: string;
+        serverUrl: string;
+        willSync: boolean;
+    };
+    rawSources: RawSource[];
 };

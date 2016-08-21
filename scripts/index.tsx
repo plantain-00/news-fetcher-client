@@ -81,7 +81,6 @@ class MainComponent extends React.Component<{}, State> {
             editor = new JSONEditor(document.getElementById("configuration") !, {
                 theme: "bootstrap3",
                 iconlib: "bootstrap3" as any as boolean,
-                disable_collapse: true,
                 disable_edit_json: true,
                 disable_properties: true,
                 schema: arg.schema,

@@ -3,16 +3,19 @@ import * as types from "./types";
 import * as settings from "./settings";
 
 let config: types.Config = {
-    key: "",
-    serverUrl: "",
-    willSync: false,
+    sync: {
+        key: "",
+        serverUrl: "",
+        willSync: false,
+    },
+    rawSources: settings.rawSources,
 };
 
 const schema = require("./schema.json");
 
 libs.electron.crashReporter.start({
     companyName: "news-fetcher",
-    submitURL: `${config.serverUrl}/logs?key=${config.key}`,
+    submitURL: `${config.sync.serverUrl}/logs?key=${config.sync.key}`,
 });
 
 let mainWindow: Electron.BrowserWindow | undefined = undefined;
@@ -32,10 +35,48 @@ try {
     libs.fs.writeFile(configurationPath, JSON.stringify(config, null, "    "));
 }
 
-console.log({ config });
+type Source = {
+    name: string;
+    url: string;
+    selector: string;
+    getItem: (cheerio: Cheerio, $: CheerioStatic) => types.Item;
+    limit?: number;
+}
+
+const sources: Source[] = [];
+
+for (const rawSource of config.rawSources) {
+    if (rawSource.disabled) {
+        break;
+    }
+    if (rawSource.isMilestone) {
+        sources.push({
+            name: `${rawSource.name} milestone`,
+            url: rawSource.url,
+            selector: ".milestone-title-link > a",
+            getItem: (cheerio: Cheerio, $: CheerioStatic) => {
+                const progress = cheerio.parent().parent().next().find(".progress-percent").text();
+                return {
+                    href: "https://github.com" + cheerio.attr("href"),
+                    title: cheerio.text() + " - " + progress,
+                };
+            },
+        });
+    } else {
+        sources.push({
+            name: rawSource.name,
+            url: rawSource.url,
+            selector: rawSource.selector!,
+            /* tslint:disable:no-eval */
+            getItem: eval(rawSource.getItem!),
+            /* tslint:enable:no-eval */
+            limit: rawSource.limit,
+        });
+    }
+}
 
 libs.electron.app.on("window-all-closed", function () {
-    if (config.willSync) {
+    if (config.sync.willSync) {
         libs.electron.app.quit();
     } else if (localData) {
         const ExpiredMoment = Date.now() - 30 * 24 * 3600 * 1000;
@@ -54,9 +95,9 @@ libs.electron.ipcMain.on(types.events.hide, async (event, url) => {
     try {
         json.items.push(url);
 
-        if (config.willSync) {
+        if (config.sync.willSync) {
             await libs.requestAsync({
-                url: `${config.serverUrl}/items?key=${config.key}`,
+                url: `${config.sync.serverUrl}/items?key=${config.sync.key}`,
                 method: "POST",
                 form: { url },
             });
@@ -73,7 +114,7 @@ libs.electron.ipcMain.on(types.events.hide, async (event, url) => {
 
 libs.electron.ipcMain.on(types.events.reload, async (event, url) => {
     try {
-        const source = settings.sources.find(s => s.url === url);
+        const source = sources.find(s => s.url === url);
         if (source) {
             await load(source, event);
         }
@@ -93,7 +134,7 @@ libs.electron.ipcMain.on(types.events.saveConfiguration, async (event, newConfig
     }
 });
 
-async function load(source: settings.Source, event: Electron.IpcMainEvent) {
+async function load(source: Source, event: Electron.IpcMainEvent) {
     try {
         const [, body] = await libs.requestAsync({
             url: source.url,
@@ -126,9 +167,9 @@ async function load(source: settings.Source, event: Electron.IpcMainEvent) {
 
 libs.electron.ipcMain.on(types.events.items, async (event) => {
     try {
-        if (config.willSync) {
+        if (config.sync.willSync) {
             const [, body] = await libs.requestAsync({
-                url: `${config.serverUrl}/items?key=${config.key}`,
+                url: `${config.sync.serverUrl}/items?key=${config.sync.key}`,
             });
             json = JSON.parse(body);
         } else {
@@ -157,7 +198,7 @@ libs.electron.ipcMain.on(types.events.items, async (event) => {
             schema,
         });
 
-        for (const source of settings.sources) {
+        for (const source of sources) {
             await load(source, event);
         }
     } catch (error) {

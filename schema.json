@@ -1,26 +1,113 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "title": "配置",
-    "description": "同步配置",
     "type": "object",
     "properties": {
-        "willSync": {
-            "type": "boolean",
-            "description": "是否开启同步，如果不开启同步，历史纪录会保存在本地",
-            "default": false
+        "sync": {
+            "description": "同步配置",
+            "type": "object",
+            "options": {
+                "collapsed": true
+            },
+            "propertyOrder": 1,
+            "properties": {
+                "willSync": {
+                    "type": "boolean",
+                    "description": "是否开启同步，如果不开启同步，历史纪录会保存在本地",
+                    "default": false,
+                    "propertyOrder": 1,
+                    "format": "checkbox"
+                },
+                "serverUrl": {
+                    "type": "string",
+                    "description": "服务器地址",
+                    "default": "",
+                    "propertyOrder": 2
+                },
+                "key": {
+                    "type": "string",
+                    "description": "密钥",
+                    "default": "",
+                    "propertyOrder": 3
+                }
+            },
+            "required": [
+                "willSync"
+            ]
         },
-        "key": {
-            "type": "string",
-            "description": "密钥",
-            "default": ""
-        },
-        "serverUrl": {
-            "type": "string",
-            "description": "服务器地址",
-            "default": ""
+        "rawSources": {
+            "type": "array",
+            "options": {
+                "collapsed": true
+            },
+            "description": "数据源配置",
+            "format": "tabs",
+            "uniqueItems": true,
+            "propertyOrder": 2,
+            "items": {
+                "type": "object",
+                "title": "Source",
+                "headerTemplate": "{{ self.name }}",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "命名",
+                        "default": "",
+                        "propertyOrder": 1
+                    },
+                    "disabled": {
+                        "type": "boolean",
+                        "description": "是否禁用",
+                        "default": false,
+                        "propertyOrder": 2,
+                        "format": "checkbox"
+                    },
+                    "url": {
+                        "type": "string",
+                        "description": "页面URL",
+                        "default": "",
+                        "propertyOrder": 3
+                    },
+                    "isMilestone": {
+                        "type": "boolean",
+                        "description": "是否github项目的milestone页",
+                        "default": false,
+                        "propertyOrder": 4,
+                        "format": "checkbox"
+                    },
+                    "selector": {
+                        "type": "string",
+                        "description": "选择器",
+                        "default": "",
+                        "propertyOrder": 5
+                    },
+                    "getItem": {
+                        "type": "string",
+                        "description": "获取信息函数",
+                        "default": "(cheerio, $) => {\n    return {\n        href: \"\", \n        title: \"\"\n    };\n}",
+                        "format": "textarea",
+                        "options": {
+                            "input_height": "200px"
+                        },
+                        "propertyOrder": 6
+                    },
+                    "limit": {
+                        "type": "number",
+                        "description": "限制数目",
+                        "propertyOrder": 7
+                    }
+                },
+                "required": [
+                    "name",
+                    "url",
+                    "isMilestone",
+                    "disabled"
+                ]
+            }
         }
     },
     "required": [
-        "willSync"
+        "sync",
+        "rawSources"
     ]
 }
