@@ -106,6 +106,10 @@ let config: types.Config = {
         { name: "gogs", url: "https://github.com/gogits/gogs/milestones", isMilestone: true },
         { name: "letsencrypt", url: "https://github.com/letsencrypt/letsencrypt/milestones", isMilestone: true },
     ],
+    localFiles: {
+        historyPath: "",
+        configurationPath: "",
+    },
 };
 
 const schema = require("./schema.json");
@@ -121,15 +125,16 @@ let json: { isSuccess: boolean; errorMessage?: string; items: string[]; };
 let localData: { url: string; createTime: number; }[];
 
 const userDataPath = libs.electron.app.getPath("userData");
-const historyPath = libs.path.resolve(userDataPath, "history.json");
-const configurationPath = libs.path.resolve(userDataPath, "configuration.json");
+config.localFiles.historyPath = libs.path.resolve(userDataPath, "history.json");
+config.localFiles.configurationPath = libs.path.resolve(userDataPath, "configuration.json");
 
 try {
-    const data = libs.fs.readFileSync(configurationPath, "utf8");
-    config = JSON.parse(data);
+    const data = libs.fs.readFileSync(config.localFiles.configurationPath, "utf8");
+    const {sync, rawSources} = JSON.parse(data);
+    config.sync = sync;
+    config.rawSources = rawSources;
 } catch (error) {
-    console.log(error);
-    libs.fs.writeFile(configurationPath, JSON.stringify(config, null, "    "));
+    libs.fs.writeFile(config.localFiles.configurationPath, JSON.stringify(config, null, "    "));
 }
 
 type Source = {
@@ -172,13 +177,13 @@ for (const rawSource of config.rawSources) {
     }
 }
 
-libs.electron.app.on("window-all-closed", function () {
+libs.electron.app.on("window-all-closed", () => {
     if (config.sync.willSync) {
         libs.electron.app.quit();
     } else if (localData) {
         const ExpiredMoment = Date.now() - 30 * 24 * 3600 * 1000;
         localData = localData.filter(d => d.createTime > ExpiredMoment);
-        libs.fs.writeFile(historyPath, JSON.stringify(localData, null, "    "), error => {
+        libs.fs.writeFile(config.localFiles.historyPath, JSON.stringify(localData, null, "    "), error => {
             if (error) {
                 console.log(error);
             }
@@ -220,10 +225,11 @@ libs.electron.ipcMain.on(types.events.reload, async (event, url) => {
     }
 });
 
-libs.electron.ipcMain.on(types.events.saveConfiguration, async (event, newConfiguration) => {
+libs.electron.ipcMain.on(types.events.saveConfiguration, async (event: any, {sync, rawSources}: types.Config) => {
     try {
-        config = newConfiguration;
-        libs.fs.writeFileSync(configurationPath, JSON.stringify(config, null, "    "), {
+        config.sync = sync;
+        config.rawSources = rawSources;
+        libs.fs.writeFileSync(config.localFiles.configurationPath, JSON.stringify({ sync, rawSources }, null, "    "), {
             encoding: "utf8",
         });
     } catch (error) {
@@ -271,7 +277,7 @@ libs.electron.ipcMain.on(types.events.items, async (event) => {
             json = JSON.parse(body);
         } else {
             try {
-                localData = require(historyPath);
+                localData = require(config.localFiles.historyPath);
                 json = {
                     isSuccess: true,
                     items: localData.map(d => d.url),
@@ -306,7 +312,7 @@ libs.electron.ipcMain.on(types.events.items, async (event) => {
 libs.electron.app.on("ready", () => {
     mainWindow = new libs.electron.BrowserWindow({ width: 1200, height: 800 });
     mainWindow.loadURL(`file://${__dirname}/index.html`);
-    mainWindow.on("closed", function () {
+    mainWindow.on("closed", () => {
         mainWindow = undefined;
     });
     // mainWindow.webContents.openDevTools();

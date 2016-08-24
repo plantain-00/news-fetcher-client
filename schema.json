@@ -3,6 +3,32 @@
     "title": "配置",
     "type": "object",
     "properties": {
+        "localFiles": {
+            "description": "本地文件",
+            "type": "object",
+            "options": {
+                "collapsed": true
+            },
+            "propertyOrder": 0,
+            "properties": {
+                "configurationPath": {
+                    "type": "string",
+                    "description": "配置文件路径",
+                    "propertyOrder": 1,
+                    "readOnly": true
+                },
+                "historyPath": {
+                    "type": "string",
+                    "description": "历史文件路径",
+                    "propertyOrder": 2,
+                    "readOnly": true
+                }
+            },
+            "required": [
+                "configurationPath",
+                "historyPath"
+            ]
+        },
         "sync": {
             "description": "同步配置",
             "type": "object",

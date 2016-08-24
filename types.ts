@@ -46,4 +46,8 @@ export type Config = {
         willSync: boolean;
     };
     rawSources: RawSource[];
+    localFiles: {
+        historyPath: string;
+        configurationPath: string;
+    };
 };
