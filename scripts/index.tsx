@@ -10,7 +10,7 @@ require("bootstrap");
 require("json-editor");
 
 const body = $("html,body");
-let editor: JSONEditor<types.Config>;
+let editor: JSONEditor<types.ConfigData>;
 
 $(document).on("click", "a[href^='http']", function (this: HTMLAnchorElement, e: JQueryEventObject) {
     e.preventDefault();
@@ -24,21 +24,8 @@ $(document).on("click", "a[href^='http']", function (this: HTMLAnchorElement, e:
     }, 500);
 });
 
-type InitData = {
-    schema: any;
-    startval: types.Config;
-}
-
-type News = {
-    name: string;
-    source: string;
-    items: types.Item[];
-    error: string | null;
-    key: string;
-}
-
 type State = {
-    news?: News[];
+    news?: types.NewsCategory[];
     configurationDialogIsVisiable?: boolean;
 }
 
@@ -50,22 +37,22 @@ class MainComponent extends React.Component<{}, State> {
             configurationDialogIsVisiable: false,
         };
     }
-    public reload(n: News) {
-        n.error = null;
+    public reload(n: types.NewsCategory) {
+        n.error = undefined;
         this.setState({ news: this.state.news });
-        electron.ipcRenderer.send(types.events.reload, n.source);
+        electron.ipcRenderer.send("reload", n.source);
     }
-    public hide(item: types.Item) {
+    public hide(item: types.NewsItem) {
         item.hidden = true;
         this.setState({ news: this.state.news });
-        electron.ipcRenderer.send(types.events.hide, item.href);
+        electron.ipcRenderer.send("hide", item.href);
     }
-    public openAndHide(item: types.Item) {
+    public openAndHide(item: types.NewsItem) {
         electron.shell.openExternal(item.href);
         this.hide(item);
     }
     public componentDidMount() {
-        electron.ipcRenderer.on(types.events.items, (event: Electron.IpcRendererEvent, arg: News) => {
+        electron.ipcRenderer.on("items", (event: Electron.IpcRendererEvent, arg: types.NewsCategory) => {
             const index = this.state.news!.findIndex(n => n.source === arg.source);
             if (arg.name) {
                 arg.key = arg.name.replace(" ", "");
@@ -77,7 +64,7 @@ class MainComponent extends React.Component<{}, State> {
             }
             this.setState({ news: this.state.news });
         });
-        electron.ipcRenderer.on(types.events.initialize, (event: Electron.IpcRendererEvent, arg: InitData) => {
+        electron.ipcRenderer.on("initialize", (event: Electron.IpcRendererEvent, arg: types.InitialData) => {
             editor = new JSONEditor(document.getElementById("configuration") !, {
                 theme: "bootstrap3",
                 iconlib: "bootstrap3" as any as boolean,
@@ -87,7 +74,7 @@ class MainComponent extends React.Component<{}, State> {
                 startval: arg.startval,
             });
         });
-        electron.ipcRenderer.send(types.events.items);
+        electron.ipcRenderer.send("items");
     }
     public toggleConfigurationDialog() {
         this.setState({
@@ -95,7 +82,7 @@ class MainComponent extends React.Component<{}, State> {
         });
     }
     public saveConfiguration() {
-        electron.ipcRenderer.send(types.events.saveConfiguration, editor.getValue());
+        electron.ipcRenderer.send("saveConfiguration", editor.getValue() as types.ConfigData);
         this.setState({
             configurationDialogIsVisiable: false,
         });

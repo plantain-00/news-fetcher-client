@@ -12,7 +12,12 @@ libs.electron.crashReporter.start({
 
 let mainWindow: Electron.BrowserWindow | undefined = undefined;
 
-let json: { isSuccess: boolean; errorMessage?: string; items: string[]; rawSources?: any[] };
+let history: {
+    isSuccess: boolean;
+    items?: string[];
+    errorMessage?: string;
+    rawSources?: types.RawSource[];
+};
 let localData: { url: string; createTime: number; }[];
 
 const userDataPath = libs.electron.app.getPath("userData");
@@ -32,7 +37,7 @@ type Source = {
     name: string;
     url: string;
     selector: string;
-    getItem: (cheerio: Cheerio, $: CheerioStatic) => types.Item;
+    getItem: (cheerio: Cheerio, $: CheerioStatic) => types.NewsItem;
     limit?: number;
 }
 
@@ -86,9 +91,9 @@ libs.electron.app.on("window-all-closed", () => {
     }
 });
 
-libs.electron.ipcMain.on(types.events.hide, async (event, url) => {
+libs.electron.ipcMain.on("hide", async (event, url) => {
     try {
-        json.items.push(url);
+        history.items!.push(url);
 
         if (config.sync.willSync) {
             await libs.requestAsync({
@@ -107,7 +112,7 @@ libs.electron.ipcMain.on(types.events.hide, async (event, url) => {
     }
 });
 
-libs.electron.ipcMain.on(types.events.reload, async (event, url) => {
+libs.electron.ipcMain.on("reload", async (event: Electron.IpcMainEvent, url: string) => {
     try {
         const source = sources.find(s => s.url === url);
         if (source) {
@@ -118,7 +123,7 @@ libs.electron.ipcMain.on(types.events.reload, async (event, url) => {
     }
 });
 
-libs.electron.ipcMain.on(types.events.saveConfiguration, async (event: any, {sync, rawSources}: types.Config) => {
+libs.electron.ipcMain.on("saveConfiguration", async (event: any, {sync, rawSources}: types.ConfigData) => {
     try {
         config.sync = sync;
         config.rawSources = rawSources;
@@ -126,8 +131,9 @@ libs.electron.ipcMain.on(types.events.saveConfiguration, async (event: any, {syn
             encoding: "utf8",
         });
         await libs.requestAsync({
+            method: "POST",
             url: `${config.sync.serverUrl}/sources?key=${config.sync.key}`,
-            json: rawSources,
+            json: { rawSources },
         });
     } catch (error) {
         console.log(error);
@@ -140,68 +146,68 @@ async function load(source: Source, event: Electron.IpcMainEvent) {
             url: source.url,
         });
         const $ = libs.cheerio.load(body);
-        const items: types.Item[] = [];
+        const items: types.NewsItem[] = [];
         $(source.selector).each((index, element) => {
             if (source.limit && index >= source.limit) {
                 return;
             }
             const item = source.getItem($(element), $);
-            if (item && json.items.indexOf(item.href) === -1 && items.findIndex(i => i.href === item.href) === -1) {
+            if (item && history.items!.indexOf(item.href) === -1 && items.findIndex(i => i.href === item.href) === -1) {
                 items.push(item);
             }
         });
-        event.sender.send(types.events.items, {
+        event.sender.send("items", {
             name: source.name,
             source: source.url,
             items,
-        });
+        } as types.NewsCategory);
     } catch (error) {
         console.log(error);
-        event.sender.send(types.events.items, {
+        event.sender.send("items", {
             name: source.name,
             source: source.url,
             error: error.message,
-        });
+        } as types.NewsCategory);
     }
 }
 
-libs.electron.ipcMain.on(types.events.items, async (event) => {
+libs.electron.ipcMain.on("items", async (event) => {
     try {
         if (config.sync.willSync) {
             const [, body] = await libs.requestAsync({
                 url: `${config.sync.serverUrl}/items?key=${config.sync.key}`,
             });
-            json = JSON.parse(body);
-            if (json.rawSources) {
-                config.rawSources = json.rawSources;
+            history = JSON.parse(body);
+            if (history.rawSources) {
+                config.rawSources = history.rawSources;
             }
         } else {
             try {
                 localData = require(config.localFiles.historyPath);
-                json = {
+                history = {
                     isSuccess: true,
                     items: localData.map(d => d.url),
                 };
             } catch (error) {
                 localData = [];
-                json = {
+                history = {
                     isSuccess: true,
                     items: [],
                 };
             }
         }
 
-        if (!json.isSuccess) {
-            console.log(json.errorMessage);
+        if (!history.isSuccess) {
+            console.log(history.errorMessage);
             return;
         }
 
         constructSources();
 
-        event.sender.send(types.events.initialize, {
+        event.sender.send("initialize", {
             startval: config,
             schema,
-        });
+        } as types.InitialData);
 
         for (const source of sources) {
             await load(source, event);

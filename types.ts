@@ -1,19 +1,24 @@
-export type Item = {
+export type NewsItem = {
     href: string;
     title: string;
     detail?: string;
     hidden?: boolean;
 }
 
-export const events = {
-    items: "items",
-    hide: "hide",
-    reload: "reload",
-    initialize: "initialize",
-    saveConfiguration: "saveConfiguration",
-};
+export type NewsCategory = {
+    name: string;
+    source: string;
+    items?: NewsItem[];
+    error?: string;
+    key?: string;
+}
 
-type RawSource = {
+export type InitialData = {
+    schema: any,
+    startval: ConfigData,
+}
+
+export type RawSource = {
     name: string;
     url: string;
     selector?: string;
@@ -23,7 +28,7 @@ type RawSource = {
     disabled?: boolean;
 }
 
-export type Config = {
+export type ConfigData = {
     sync: {
         key: string;
         serverUrl: string;
@@ -34,4 +39,4 @@ export type Config = {
         historyPath: string;
         configurationPath: string;
     };
-};
+}

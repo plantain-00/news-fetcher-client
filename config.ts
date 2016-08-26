@@ -1,6 +1,6 @@
 import * as types from "./types";
 
-export const config: types.Config = {
+export const config: types.ConfigData = {
     sync: {
         key: "",
         serverUrl: "",

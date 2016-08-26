@@ -90,3 +90,69 @@ string
 ```
 
 #### from backend to server
+
+common parameter:
+
+```
+{
+    key: string;
+}
+```
+
+##### GET /items: get history
+
+```
+{
+    isSuccess: boolean;
+    items?: string[];
+    errorMessage?: string;
+    rawSources?: {
+        name: string;
+        url: string;
+        selector?: string;
+        getItem?: string;
+        limit?: number;
+        isMilestone?: boolean;
+        disabled?: boolean;
+    }[];
+}
+```
+
+##### POST /items: record history
+
+Content-Type: application/json or application/x-www-form-urlencoded
+
+```
+{
+    url: string;
+}
+```
+
+```
+{
+    isSuccess: boolean;
+    errorMessage?: string;
+}
+```
+
+##### POST /logs: submit logs
+
+Content-Type: multipart/form-data
+
+##### POST /sources: submit raw sources
+
+Content-Type: application/json or application/x-www-form-urlencoded
+
+```
+{
+    rawSources: {
+        name: string;
+        url: string;
+        selector?: string;
+        getItem?: string;
+        limit?: number;
+        isMilestone?: boolean;
+        disabled?: boolean;
+    }[];
+}
+```
