@@ -40,3 +40,7 @@ export type ConfigData = {
         configurationPath: string;
     };
 }
+
+export type ErrorMessage = {
+    message: string;
+}

@@ -2,7 +2,7 @@
 
 ##### items: give the news data
 
-```
+```ts
 {
     name: string,
     source: string,
@@ -18,7 +18,7 @@
 
 ##### initialize: give initial data
 
-```
+```ts
 {
     schema: any,
     startval: {
@@ -48,25 +48,25 @@
 
 ##### items: ready to show items
 
-```
+```ts
 void
 ```
 
 ##### hide: hide a url
 
-```
+```ts
 string
 ```
 
 ##### reload: reload a source
 
-```
+```ts
 string
 ```
 
 ##### saveConfiguration: save configuration command
 
-```
+```ts
 {
     sync: {
         key: string;
@@ -89,11 +89,19 @@ string
 }
 ```
 
+#### error: show error
+
+```ts
+{
+    message: string;
+}
+```
+
 #### from backend to server
 
 common parameter:
 
-```
+```ts
 {
     key: string;
 }
@@ -101,7 +109,7 @@ common parameter:
 
 ##### GET /items: get history
 
-```
+```ts
 {
     isSuccess: boolean;
     items?: string[];
@@ -115,6 +123,7 @@ common parameter:
         isMilestone?: boolean;
         disabled?: boolean;
     }[];
+    sourceVersion?: number;
 }
 ```
 
@@ -122,13 +131,13 @@ common parameter:
 
 Content-Type: application/json or application/x-www-form-urlencoded
 
-```
+```ts
 {
     url: string;
 }
 ```
 
-```
+```ts
 {
     isSuccess: boolean;
     errorMessage?: string;
@@ -143,7 +152,7 @@ Content-Type: multipart/form-data
 
 Content-Type: application/json or application/x-www-form-urlencoded
 
-```
+```ts
 {
     rawSources: {
         name: string;

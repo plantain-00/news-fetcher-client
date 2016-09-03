@@ -74,6 +74,9 @@ class MainComponent extends React.Component<{}, State> {
                 startval: arg.startval,
             });
         });
+        electron.ipcRenderer.on("error", (event: Electron.IpcRendererEvent, arg: types.ErrorMessage) => {
+            alert(arg.message);
+        });
         electron.ipcRenderer.send("items");
     }
     public toggleConfigurationDialog() {

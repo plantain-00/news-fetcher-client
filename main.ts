@@ -108,18 +108,16 @@ libs.electron.ipcMain.on("hide", async (event, url) => {
             });
         }
     } catch (error) {
-        console.log(error);
+        event.sender.send("error", {
+            message: error.message,
+        } as types.ErrorMessage);
     }
 });
 
 libs.electron.ipcMain.on("reload", async (event: Electron.IpcMainEvent, url: string) => {
-    try {
-        const source = sources.find(s => s.url === url);
-        if (source) {
-            await load(source, event);
-        }
-    } catch (error) {
-        console.log(error);
+    const source = sources.find(s => s.url === url);
+    if (source) {
+        await load(source, event);
     }
 });
 
@@ -136,7 +134,9 @@ libs.electron.ipcMain.on("saveConfiguration", async (event: any, {sync, rawSourc
             json: { rawSources },
         });
     } catch (error) {
-        console.log(error);
+        event.sender.send("error", {
+            message: error.message,
+        } as types.ErrorMessage);
     }
 });
 
