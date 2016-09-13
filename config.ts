@@ -105,6 +105,7 @@ export const config: types.ConfigData = {
         { name: "gogs", url: "https://github.com/gogits/gogs/milestones", isMilestone: true },
         { name: "letsencrypt", url: "https://github.com/letsencrypt/letsencrypt/milestones", isMilestone: true },
         { name: "roslyn", url: "https://github.com/dotnet/roslyn/milestones", isMilestone: true },
+        { name: "koa", url: "https://github.com/koajs/koa/milestones", isMilestone: true },
     ],
     localFiles: {
         historyPath: "",
