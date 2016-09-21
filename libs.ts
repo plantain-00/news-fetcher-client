@@ -1,5 +1,5 @@
 import * as electron from "electron";
-export {electron};
+export { electron };
 
 import * as http from "http";
 
@@ -23,10 +23,13 @@ export function requestAsync(options: request.Options) {
 }
 
 import * as cheerio from "cheerio";
-export {cheerio};
+export { cheerio };
 
 import * as fs from "fs";
-export {fs};
+export { fs };
 
 import * as path from "path";
-export {path};
+export { path };
+
+import { __awaiter } from "tslib";
+export { __awaiter };
