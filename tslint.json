@@ -22,7 +22,6 @@
             true,
             "ban-keywords"
         ],
-        "no-bitwise": false,
-        "only-arrow-functions": false
+        "no-bitwise": false
     }
 }
