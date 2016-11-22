@@ -39,7 +39,7 @@ type Source = {
     selector: string;
     getItem: (cheerio: Cheerio, $: CheerioStatic) => types.NewsItem;
     limit?: number;
-}
+};
 
 const sources: Source[] = [];
 

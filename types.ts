@@ -3,7 +3,7 @@ export type NewsItem = {
     title: string;
     detail?: string;
     hidden?: boolean;
-}
+};
 
 export type NewsCategory = {
     name: string;
@@ -11,12 +11,12 @@ export type NewsCategory = {
     items?: NewsItem[];
     error?: string;
     key?: string;
-}
+};
 
 export type InitialData = {
     schema: any,
     startval: ConfigData,
-}
+};
 
 export type RawSource = {
     name: string;
@@ -26,7 +26,7 @@ export type RawSource = {
     limit?: number;
     isMilestone?: boolean;
     disabled?: boolean;
-}
+};
 
 export type ConfigData = {
     sync: {
@@ -39,8 +39,8 @@ export type ConfigData = {
         historyPath: string;
         configurationPath: string;
     };
-}
+};
 
 export type ErrorMessage = {
     message: string;
-}
+};

@@ -29,7 +29,7 @@ $(document).on("click", "a[href^='http']", function (this: HTMLAnchorElement, e:
 type State = {
     news?: types.NewsCategory[];
     configurationDialogIsVisiable?: boolean;
-}
+};
 
 class MainComponent extends React.Component<{}, State> {
     constructor() {
