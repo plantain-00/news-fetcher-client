@@ -4,24 +4,17 @@
     "type": "object",
     "properties": {
         "localFiles": {
-            "description": "本地文件",
+            "title": "本地文件",
             "type": "object",
-            "options": {
-                "collapsed": true
-            },
-            "propertyOrder": 0,
+            "readonly": true,
             "properties": {
                 "configurationPath": {
                     "type": "string",
-                    "description": "配置文件路径",
-                    "propertyOrder": 1,
-                    "readOnly": true
+                    "title": "配置文件路径"
                 },
                 "historyPath": {
                     "type": "string",
-                    "description": "历史文件路径",
-                    "propertyOrder": 2,
-                    "readOnly": true
+                    "title": "历史文件路径"
                 }
             },
             "required": [
@@ -30,31 +23,24 @@
             ]
         },
         "sync": {
-            "description": "同步配置",
+            "title": "同步配置",
             "type": "object",
-            "options": {
-                "collapsed": true
-            },
-            "propertyOrder": 1,
             "properties": {
                 "willSync": {
                     "type": "boolean",
-                    "description": "是否开启同步，如果不开启同步，历史纪录会保存在本地",
+                    "title": "是否开启同步，如果不开启同步，历史纪录会保存在本地",
                     "default": false,
-                    "propertyOrder": 1,
                     "format": "checkbox"
                 },
                 "serverUrl": {
                     "type": "string",
-                    "description": "服务器地址",
-                    "default": "",
-                    "propertyOrder": 2
+                    "title": "服务器地址",
+                    "default": ""
                 },
                 "key": {
                     "type": "string",
-                    "description": "密钥",
-                    "default": "",
-                    "propertyOrder": 3
+                    "title": "密钥",
+                    "default": ""
                 }
             },
             "required": [
@@ -63,64 +49,49 @@
         },
         "rawSources": {
             "type": "array",
-            "options": {
-                "collapsed": true
-            },
-            "description": "数据源配置",
+            "title": "数据源配置",
             "format": "tabs",
             "uniqueItems": true,
-            "propertyOrder": 2,
             "items": {
                 "type": "object",
                 "title": "Source",
-                "headerTemplate": "{{ self.name }}",
                 "properties": {
                     "name": {
                         "type": "string",
-                        "description": "命名",
-                        "default": "",
-                        "propertyOrder": 1
+                        "title": "命名",
+                        "default": ""
                     },
                     "disabled": {
                         "type": "boolean",
-                        "description": "是否禁用",
+                        "title": "是否禁用",
                         "default": false,
-                        "propertyOrder": 2,
                         "format": "checkbox"
                     },
                     "url": {
                         "type": "string",
-                        "description": "页面URL",
-                        "default": "",
-                        "propertyOrder": 3
+                        "title": "页面URL",
+                        "default": ""
                     },
                     "isMilestone": {
                         "type": "boolean",
-                        "description": "是否github项目的milestone页",
+                        "title": "是否github项目的milestone页",
                         "default": false,
-                        "propertyOrder": 4,
                         "format": "checkbox"
                     },
                     "selector": {
                         "type": "string",
-                        "description": "选择器",
-                        "default": "",
-                        "propertyOrder": 5
+                        "title": "选择器",
+                        "default": ""
                     },
                     "getItem": {
                         "type": "string",
-                        "description": "获取信息函数",
+                        "title": "获取信息函数",
                         "default": "(cheerio, $) => {\n    return {\n        href: \"\", \n        title: \"\"\n    };\n}",
-                        "format": "textarea",
-                        "options": {
-                            "input_height": "200px"
-                        },
-                        "propertyOrder": 6
+                        "format": "textarea"
                     },
                     "limit": {
                         "type": "number",
-                        "description": "限制数目",
-                        "propertyOrder": 7
+                        "title": "限制数目"
                     }
                 },
                 "required": [

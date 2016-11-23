@@ -43,3 +43,7 @@
     height: 750px;
     width: 1000px;
 }
+
+.bootstrap3-row-container {
+    padding: 9px 25px;
+}

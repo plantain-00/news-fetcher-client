@@ -23,6 +23,7 @@
             "ban-keywords"
         ],
         "no-bitwise": false,
+        "member-access": false,
         "arrow-parens": false,
         "array-type": [true, "array"],
         "max-classes-per-file": [false]
