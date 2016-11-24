@@ -1,4 +1,3 @@
-/// <reference types="json-editor" />
 import * as $ from "jquery";
 import * as electron from "electron";
 import * as React from "react";
