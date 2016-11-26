@@ -75,8 +75,7 @@
                     "isMilestone": {
                         "type": "boolean",
                         "title": "是否github项目的milestone页",
-                        "default": false,
-                        "format": "checkbox"
+                        "default": false
                     },
                     "selector": {
                         "type": "string",
@@ -87,7 +86,7 @@
                         "type": "string",
                         "title": "获取信息函数",
                         "default": "(cheerio, $) => {\n    return {\n        href: \"\", \n        title: \"\"\n    };\n}",
-                        "format": "textarea"
+                        "format": "code"
                     },
                     "limit": {
                         "type": "number",

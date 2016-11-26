@@ -4,6 +4,7 @@ import * as React from "react";
 import * as types from "../types";
 import * as ReactDOM from "react-dom";
 import { JSONEditor } from "schema-based-json-editor/dist/react";
+import * as hljs from "highlight.js";
 
 (window as any)["jQuery"] = $;
 require("bootstrap");
@@ -11,10 +12,10 @@ require("bootstrap");
 const body = $("html,body");
 
 /* tslint:disable:only-arrow-functions */
-$(document).on("click", "a[href^='http']", function(this: HTMLAnchorElement, e: JQueryEventObject) {
+$(document).on("click", "a[href^='http']", function (this: HTMLAnchorElement, e: JQueryEventObject) {
     e.preventDefault();
     electron.shell.openExternal(this.href);
-}).on("click", "a[href^='#']", function(this: HTMLAnchorElement, e: JQueryEventObject) {
+}).on("click", "a[href^='#']", function (this: HTMLAnchorElement, e: JQueryEventObject) {
     e.preventDefault();
     e.stopPropagation();
     const top = $($(this).attr("href")).offset().top - 20;
@@ -173,7 +174,8 @@ class MainComponent extends React.Component<{}, State> {
                         updateValue={this.updateValue}
                         theme="bootstrap3"
                         icon="bootstrap3"
-                        locale={this.locale} />
+                        locale={this.locale}
+                        hljs={hljs} />
                 </div>
             );
         }
