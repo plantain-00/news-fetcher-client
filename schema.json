@@ -79,8 +79,7 @@
                     },
                     "selector": {
                         "type": "string",
-                        "title": "选择器",
-                        "default": ""
+                        "title": "选择器"
                     },
                     "getItem": {
                         "type": "string",
