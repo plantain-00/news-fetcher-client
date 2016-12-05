@@ -28,8 +28,8 @@
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "request": "^2.79.0",
-    "schema-based-json-editor": "^3.3.0",
-    "tslib": "^1.1.0"
+    "schema-based-json-editor": "^3.5.0",
+    "tslib": "^1.2.0"
   },
   "engines": {
     "node": ">=6.0.0"
