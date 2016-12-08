@@ -9,7 +9,8 @@
         "noImplicitThis": true,
         "strictNullChecks": true,
         "noImplicitReturns": true,
-        "noEmitHelpers": true
+        "noEmitHelpers": true,
+        "skipLibCheck": true
     },
     "exclude": [
         "node_modules",
