@@ -28,7 +28,7 @@
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "request": "^2.79.0",
-    "schema-based-json-editor": "^3.5.1",
+    "schema-based-json-editor": "^3.6.2",
     "tslib": "^1.2.0"
   },
   "engines": {
@@ -42,7 +42,7 @@
     "@types/lodash": "^4.14.40",
     "@types/react": "^0.14.33",
     "@types/react-dom": "^0.14.16",
-    "@types/request": "0.0.30",
+    "@types/request": "0.0.36",
     "electron-packager": "^8.2.0",
     "electron-prebuilt": "^1.4.5",
     "tslint": "^4.0.2",

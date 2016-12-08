@@ -59,37 +59,44 @@
                     "name": {
                         "type": "string",
                         "title": "命名",
-                        "default": ""
+                        "default": "",
+                        "propertyOrder": 1
                     },
                     "disabled": {
                         "type": "boolean",
                         "title": "是否禁用",
                         "default": false,
-                        "format": "checkbox"
+                        "format": "checkbox",
+                        "propertyOrder": 2
                     },
                     "url": {
                         "type": "string",
                         "title": "页面URL",
-                        "default": ""
+                        "default": "",
+                        "propertyOrder": 3
                     },
                     "isMilestone": {
                         "type": "boolean",
                         "title": "是否github项目的milestone页",
-                        "default": false
+                        "default": false,
+                        "propertyOrder": 4
                     },
                     "selector": {
                         "type": "string",
-                        "title": "选择器"
+                        "title": "选择器",
+                        "propertyOrder": 5
                     },
                     "getItem": {
                         "type": "string",
                         "title": "获取信息函数",
                         "default": "(cheerio, $) => {\n    return {\n        href: \"\", \n        title: \"\"\n    };\n}",
-                        "format": "code"
+                        "format": "code",
+                        "propertyOrder": 6
                     },
                     "limit": {
                         "type": "number",
-                        "title": "限制数目"
+                        "title": "限制数目",
+                        "propertyOrder": 7
                     }
                 },
                 "required": [
