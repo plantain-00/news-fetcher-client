@@ -7,6 +7,7 @@
             "title": "本地文件",
             "type": "object",
             "readonly": true,
+            "collapsed": true,
             "properties": {
                 "configurationPath": {
                     "type": "string",
@@ -25,6 +26,7 @@
         "sync": {
             "title": "同步配置",
             "type": "object",
+            "collapsed": true,
             "properties": {
                 "willSync": {
                     "type": "boolean",
@@ -52,9 +54,11 @@
             "title": "数据源配置",
             "format": "tabs",
             "uniqueItems": true,
+            "collapsed": true,
             "items": {
                 "type": "object",
                 "title": "Source",
+                "collapsed": true,
                 "properties": {
                     "name": {
                         "type": "string",

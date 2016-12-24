@@ -106,6 +106,7 @@ export const config: types.ConfigData = {
         { name: "letsencrypt", url: "https://github.com/letsencrypt/letsencrypt/milestones", isMilestone: true },
         { name: "roslyn", url: "https://github.com/dotnet/roslyn/milestones", isMilestone: true },
         { name: "koa", url: "https://github.com/koajs/koa/milestones", isMilestone: true },
+        { name: "rust", url: "https://github.com/rust-lang/rust/milestones", isMilestone: true },
     ],
     localFiles: {
         historyPath: "",
