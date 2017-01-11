@@ -11,11 +11,10 @@ require("bootstrap");
 
 const body = $("html,body");
 
-/* tslint:disable:only-arrow-functions */
-$(document).on("click", "a[href^='http']", function (this: HTMLAnchorElement, e: JQueryEventObject) {
+$(document).on("click", "a[href^='http']", function(this: HTMLAnchorElement, e: JQueryEventObject) {
     e.preventDefault();
     electron.shell.openExternal(this.href);
-}).on("click", "a[href^='#']", function (this: HTMLAnchorElement, e: JQueryEventObject) {
+}).on("click", "a[href^='#']", function(this: HTMLAnchorElement, e: JQueryEventObject) {
     e.preventDefault();
     e.stopPropagation();
     const top = $($(this).attr("href")).offset().top - 20;
@@ -23,7 +22,6 @@ $(document).on("click", "a[href^='http']", function (this: HTMLAnchorElement, e:
         scrollTop: top,
     }, 500);
 });
-/* tslint:enable:only-arrow-functions */
 
 type State = {
     news?: types.NewsCategory[];
