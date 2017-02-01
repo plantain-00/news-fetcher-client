@@ -10,7 +10,7 @@ libs.electron.crashReporter.start({
     submitURL: `${config.sync.serverUrl}/logs?key=${config.sync.key}`,
 });
 
-let mainWindow: Electron.BrowserWindow | undefined = undefined;
+let mainWindow: Electron.BrowserWindow | undefined;
 
 let history: {
     isSuccess: boolean;
@@ -91,7 +91,7 @@ libs.electron.app.on("window-all-closed", () => {
     }
 });
 
-libs.electron.ipcMain.on("hide", async(event, url) => {
+libs.electron.ipcMain.on("hide", async (event, url) => {
     try {
         history.items!.push(url);
 
@@ -114,14 +114,14 @@ libs.electron.ipcMain.on("hide", async(event, url) => {
     }
 });
 
-libs.electron.ipcMain.on("reload", async(event: Electron.IpcMainEvent, url: string) => {
+libs.electron.ipcMain.on("reload", async (event: Electron.IpcMainEvent, url: string) => {
     const source = sources.find(s => s.url === url);
     if (source) {
         await load(source, event);
     }
 });
 
-libs.electron.ipcMain.on("saveConfiguration", async(event: any, {sync, rawSources}: types.ConfigData) => {
+libs.electron.ipcMain.on("saveConfiguration", async (event: any, {sync, rawSources}: types.ConfigData) => {
     try {
         config.sync = sync;
         config.rawSources = rawSources;
@@ -171,7 +171,7 @@ async function load(source: Source, event: Electron.IpcMainEvent) {
     }
 }
 
-libs.electron.ipcMain.on("items", async(event) => {
+libs.electron.ipcMain.on("items", async (event) => {
     try {
         if (config.sync.willSync) {
             const [, body] = await libs.requestAsync({

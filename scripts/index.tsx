@@ -93,7 +93,7 @@ class MainComponent extends React.Component<{}, State> {
         const newsView = this.news!.map(n => {
             if (n.items) {
                 const itemsView = n.items.map((i, index) => {
-                    let detailView: JSX.Element | undefined = undefined;
+                    let detailView: JSX.Element | undefined;
                     if (i.detail) {
                         detailView = (
                             <a href={i.detail} className={"btn btn-link" + (i.hidden ? " item-hidden" : "")}>detail</a>
@@ -147,7 +147,7 @@ class MainComponent extends React.Component<{}, State> {
         });
 
         const menuView = this.news!.map(n => {
-            let errorView: JSX.Element | undefined = undefined;
+            let errorView: JSX.Element | undefined;
             if (!n.items) {
                 errorView = (
                     <span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
