@@ -23,11 +23,11 @@
   "dependencies": {
     "bootstrap": "3.3.7",
     "cheerio": "0.22.0",
-    "highlight.js": "9.9.0",
-    "jquery": "3.1.1",
+    "highlight.js": "9.10.0",
+    "jquery": "3.2.1",
     "react": "15.4.2",
     "react-dom": "15.4.2",
-    "request": "2.79.0",
+    "request": "2.81.0",
     "schema-based-json-editor": "3.7.2",
     "tslib": "1.6.0"
   },
@@ -35,17 +35,17 @@
     "node": ">=6.0.0"
   },
   "devDependencies": {
-    "@types/cheerio": "0.17.31",
-    "@types/electron": "1.4.33",
+    "@types/cheerio": "0.22.1",
+    "@types/electron": "1.4.35",
     "@types/highlight.js": "9.1.9",
-    "@types/jquery": "2.0.40",
-    "@types/lodash": "4.14.53",
-    "@types/react": "15.0.13",
+    "@types/jquery": "2.0.41",
+    "@types/lodash": "4.14.61",
+    "@types/react": "15.0.20",
     "@types/react-dom": "0.14.23",
-    "@types/request": "0.0.40",
-    "electron": "1.4.15",
-    "electron-packager": "8.5.2",
-    "tslint": "4.5.1",
-    "typescript": "2.2.1"
+    "@types/request": "0.0.42",
+    "electron": "1.6.2",
+    "electron-packager": "8.6.0",
+    "tslint": "5.0.0",
+    "typescript": "2.2.2"
   }
 }

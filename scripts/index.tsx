@@ -188,6 +188,6 @@ class MainComponent extends React.Component<{}, State> {
             </div>
         );
     }
-};
+}
 
 ReactDOM.render(<MainComponent />, document.getElementById("container"));
