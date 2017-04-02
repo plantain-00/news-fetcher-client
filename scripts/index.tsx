@@ -1,4 +1,3 @@
-import * as $ from "jquery";
 import * as electron from "electron";
 import * as React from "react";
 import * as types from "../types";
@@ -6,22 +5,15 @@ import * as ReactDOM from "react-dom";
 import { JSONEditor } from "schema-based-json-editor/dist/react";
 import * as hljs from "highlight.js";
 
-(window as any)["jQuery"] = $;
-require("bootstrap");
-
-const body = $("html,body");
-
-$(document).on("click", "a[href^='http']", function(this: HTMLAnchorElement, e: JQueryEventObject) {
-    e.preventDefault();
-    electron.shell.openExternal(this.href);
-}).on("click", "a[href^='#']", function(this: HTMLAnchorElement, e: JQueryEventObject) {
-    e.preventDefault();
-    e.stopPropagation();
-    const top = $($(this).attr("href")).offset().top - 20;
-    body.animate({
-        scrollTop: top,
-    }, 500);
-});
+document.onclick = e => {
+    const href = (e.target as HTMLAnchorElement).href;
+    if (href) {
+        if (href.startsWith("http")) {
+            e.preventDefault();
+            electron.shell.openExternal(href);
+        }
+    }
+};
 
 type State = {
     news?: types.NewsCategory[];
