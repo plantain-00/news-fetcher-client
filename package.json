@@ -4,8 +4,8 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "osx": "rm -rf distribution/news-darwin-x64 && electron-packager . 'news' --out=distribution --arch=x64 --version=1.2.1 --app-version='1.0.8' --platform=darwin --ignore='distribution/'",
-    "win": "rm -rf distribution/news-win32-x64 && electron-packager . 'news' --out=distribution --arch=x64 --version=1.2.1 --app-version='1.0.8' --platform=win32 --ignore='distribution/'",
+    "osx": "rimraf distribution/news-darwin-x64 && electron-packager . 'news' --out=distribution --arch=x64 --version=1.2.1 --app-version='1.0.8' --platform=darwin --ignore='distribution/'",
+    "win": "rimraf distribution/news-win32-x64 && electron-packager . 'news' --out=distribution --arch=x64 --version=1.2.1 --app-version='1.0.8' --platform=win32 --ignore='distribution/'",
     "lint": "tslint \"scripts/*.tsx\" \"*.ts\"",
     "build": "tsc",
     "start": "electron ."
@@ -44,6 +44,7 @@
     "@types/request": "0.0.42",
     "electron": "1.6.2",
     "electron-packager": "8.6.0",
+    "rimraf": "2.6.1",
     "tslint": "5.0.0",
     "typescript": "2.2.2"
   }
