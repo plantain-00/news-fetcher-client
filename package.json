@@ -46,6 +46,6 @@
     "electron-packager": "8.6.0",
     "rimraf": "2.6.1",
     "tslint": "5.0.0",
-    "typescript": "2.2.2"
+    "typescript": "2.3.2"
   }
 }

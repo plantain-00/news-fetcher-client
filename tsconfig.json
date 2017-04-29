@@ -2,18 +2,17 @@
     "compilerOptions": {
         "target": "es6",
         "module": "commonjs",
-        "jsx": "react",
-        "noImplicitAny": true,
-        "sourceMap": true,
+
+        "declaration": false,
+
+        "strict": true,
         "noUnusedLocals": true,
-        "noImplicitThis": true,
-        "strictNullChecks": true,
         "noImplicitReturns": true,
-        "noEmitHelpers": true,
-        "skipLibCheck": true
-    },
-    "exclude": [
-        "node_modules",
-        "dist"
-    ]
+
+        "skipLibCheck": true,
+        "importHelpers": true,
+        "jsx": "react",
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true
+    }
 }
