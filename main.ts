@@ -26,7 +26,7 @@ config.localFiles.configurationPath = libs.path.resolve(userDataPath, "configura
 
 try {
     const data = libs.fs.readFileSync(config.localFiles.configurationPath, "utf8");
-    const {sync, rawSources} = JSON.parse(data);
+    const { sync, rawSources } = JSON.parse(data);
     config.sync = sync;
     config.rawSources = rawSources;
 } catch (error) {
@@ -108,9 +108,10 @@ libs.electron.ipcMain.on("hide", async (event, url) => {
             });
         }
     } catch (error) {
-        event.sender.send("error", {
+        const errorMessage: types.ErrorMessage = {
             message: error.message,
-        } as types.ErrorMessage);
+        };
+        event.sender.send("error", errorMessage);
     }
 });
 
@@ -121,7 +122,7 @@ libs.electron.ipcMain.on("reload", async (event: Electron.IpcMainEvent, url: str
     }
 });
 
-libs.electron.ipcMain.on("saveConfiguration", async (event: any, {sync, rawSources}: types.ConfigData) => {
+libs.electron.ipcMain.on("saveConfiguration", async (event: any, { sync, rawSources }: types.ConfigData) => {
     try {
         config.sync = sync;
         config.rawSources = rawSources;
@@ -134,9 +135,10 @@ libs.electron.ipcMain.on("saveConfiguration", async (event: any, {sync, rawSourc
             json: { rawSources },
         });
     } catch (error) {
-        event.sender.send("error", {
+        const errorMessage: types.ErrorMessage = {
             message: error.message,
-        } as types.ErrorMessage);
+        };
+        event.sender.send("error", errorMessage);
     }
 });
 
@@ -156,18 +158,20 @@ async function load(source: Source, event: Electron.IpcMainEvent) {
                 items.push(item);
             }
         });
-        event.sender.send("items", {
+        const newsCategory: types.NewsCategory = {
             name: source.name,
             source: source.url,
             items,
-        } as types.NewsCategory);
+        };
+        event.sender.send("items", newsCategory);
     } catch (error) {
         console.log(error);
-        event.sender.send("items", {
+        const newsCategory: types.NewsCategory = {
             name: source.name,
             source: source.url,
             error: error.message,
-        } as types.NewsCategory);
+        };
+        event.sender.send("items", newsCategory);
     }
 }
 
@@ -204,10 +208,11 @@ libs.electron.ipcMain.on("items", async (event) => {
 
         constructSources();
 
-        event.sender.send("initialize", {
+        const initialData: types.InitialData = {
             startval: config,
             schema,
-        } as types.InitialData);
+        };
+        event.sender.send("initialize", initialData);
 
         for (const source of sources) {
             await load(source, event);
