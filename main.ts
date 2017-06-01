@@ -3,6 +3,7 @@ import * as types from "./types";
 
 import { config } from "./config";
 
+// tslint:disable-next-line:no-var-requires
 const schema = require("./schema.json");
 
 libs.electron.crashReporter.start({
@@ -66,9 +67,8 @@ function constructSources() {
                 name: rawSource.name,
                 url: rawSource.url,
                 selector: rawSource.selector!,
-                /* tslint:disable:no-eval */
+                // tslint:disable-next-line:no-eval
                 getItem: eval(rawSource.getItem!),
-                /* tslint:enable:no-eval */
                 limit: rawSource.limit,
             });
         }
@@ -83,6 +83,7 @@ libs.electron.app.on("window-all-closed", () => {
         localData = localData.filter(d => d.createTime > ExpiredMoment);
         libs.fs.writeFile(config.localFiles.historyPath, JSON.stringify(localData, null, "    "), error => {
             if (error) {
+                // tslint:disable-next-line:no-console
                 console.log(error);
             }
 
@@ -165,6 +166,7 @@ async function load(source: Source, event: Electron.IpcMainEvent) {
         };
         event.sender.send("items", newsCategory);
     } catch (error) {
+        // tslint:disable-next-line:no-console
         console.log(error);
         const newsCategory: types.NewsCategory = {
             name: source.name,
@@ -202,6 +204,7 @@ libs.electron.ipcMain.on("items", async (event) => {
         }
 
         if (!history.isSuccess) {
+            // tslint:disable-next-line:no-console
             console.log(history.errorMessage);
             return;
         }
@@ -218,6 +221,7 @@ libs.electron.ipcMain.on("items", async (event) => {
             await load(source, event);
         }
     } catch (error) {
+        // tslint:disable-next-line:no-console
         console.log(error);
     }
 });
