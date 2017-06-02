@@ -47,7 +47,7 @@ class MainComponent extends React.Component<{}, State> {
         this.hide(item);
     }
     componentDidMount() {
-        electron.ipcRenderer.on("items", (event: Electron.IpcRendererEvent, arg: types.NewsCategory) => {
+        electron.ipcRenderer.on("items", (event: Electron.Event, arg: types.NewsCategory) => {
             const index = this.news!.findIndex(n => n.source === arg.source);
             if (arg.name) {
                 arg.key = arg.name.replace(" ", "");
@@ -59,11 +59,11 @@ class MainComponent extends React.Component<{}, State> {
             }
             this.setState({ news: this.news });
         });
-        electron.ipcRenderer.on("initialize", (event: Electron.IpcRendererEvent, arg: types.InitialData) => {
+        electron.ipcRenderer.on("initialize", (event: Electron.Event, arg: types.InitialData) => {
             this.schema = arg.schema;
             this.value = arg.startval;
         });
-        electron.ipcRenderer.on("error", (event: Electron.IpcRendererEvent, arg: types.ErrorMessage) => {
+        electron.ipcRenderer.on("error", (event: Electron.Event, arg: types.ErrorMessage) => {
             alert(arg.message);
         });
         electron.ipcRenderer.send("items");
