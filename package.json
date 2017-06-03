@@ -27,8 +27,7 @@
     "react": "15.5.4",
     "react-dom": "15.5.4",
     "request": "2.81.0",
-    "schema-based-json-editor": "3.9.0",
-    "tslib": "1.7.1"
+    "schema-based-json-editor": "3.9.0"
   },
   "engines": {
     "node": ">=6.0.0"
