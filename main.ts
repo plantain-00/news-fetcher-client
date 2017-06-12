@@ -3,8 +3,7 @@ import * as types from "./types";
 
 import { config } from "./config";
 
-// tslint:disable-next-line:no-var-requires
-const schema = require("./schema.json");
+import schema = require("./schema.json");
 
 libs.electron.crashReporter.start({
     companyName: "news-fetcher",
