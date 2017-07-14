@@ -227,7 +227,7 @@ libs.electron.ipcMain.on("items", async (event: Electron.Event) => {
 
 libs.electron.app.on("ready", () => {
     mainWindow = new libs.electron.BrowserWindow({ width: 1200, height: 800 });
-    mainWindow.loadURL(`file://${__dirname}/index.html`);
+    mainWindow.loadURL(`file://${__dirname}/static/index.html`);
     mainWindow.on("closed", () => {
         mainWindow = undefined;
     });

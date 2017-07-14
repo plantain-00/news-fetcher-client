@@ -1,7 +1,8 @@
 {
     "compilerOptions": {
-        "target": "es6",
-        "module": "commonjs",
+        "target": "es5",
+        "module": "esnext",
+        "moduleResolution": "node",
 
         "strict": true,
         "noUnusedLocals": true,
@@ -9,10 +10,8 @@
 
         "skipLibCheck": true,
         "importHelpers": true,
+        "jsx": "react",
+        "experimentalDecorators": true,
         "allowSyntheticDefaultImports": true
-    },
-    "exclude": [
-        "node_modules/",
-        "static/"
-    ]
+    }
 }

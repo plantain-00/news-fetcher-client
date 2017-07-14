@@ -1,14 +1,16 @@
-import * as electron from "electron";
+/// <reference types="electron" />
+declare const electron: Electron.AllElectron;
 import * as React from "react";
 import * as types from "../types";
 import * as ReactDOM from "react-dom";
-import { JSONEditor } from "schema-based-json-editor/dist/react";
+import { JSONEditor } from "schema-based-json-editor/dist/react.js";
+import { locale as zhCNLocale } from "schema-based-json-editor/dist/locales/zh-CN.js";
 import * as hljs from "highlight.js";
 
 document.onclick = e => {
     const href = (e.target as HTMLAnchorElement).href;
     if (href) {
-        if (href.startsWith("http")) {
+        if (href.indexOf("http") === 0) {
             e.preventDefault();
             electron.shell.openExternal(href);
         }
@@ -20,10 +22,19 @@ type State = {
     configurationDialogIsVisiable?: boolean;
 };
 
+function findIndex<T>(array: T[], condition: (item: T) => boolean) {
+    for (let i = 0; i < array.length; i++) {
+        if (condition(array[i])) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 class MainComponent extends React.Component<{}, State> {
     schema: any;
     value: types.ConfigData;
-    locale = navigator.language;
+    locale = zhCNLocale;
     isValid: boolean;
     news: types.NewsCategory[] = [];
     configurationDialogIsVisiable = false;
@@ -48,7 +59,7 @@ class MainComponent extends React.Component<{}, State> {
     }
     componentDidMount() {
         electron.ipcRenderer.on("items", (event: Electron.Event, arg: types.NewsCategory) => {
-            const index = this.news!.findIndex(n => n.source === arg.source);
+            const index = findIndex(this.news!, n => n.source === arg.source);
             if (arg.name) {
                 arg.key = arg.name.replace(" ", "");
             }

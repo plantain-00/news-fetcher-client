@@ -4,12 +4,17 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "osx": "rimraf distribution/news-darwin-x64 && electron-packager . 'news' --out=distribution --arch=x64 --version=1.2.1 --app-version='1.0.8' --platform=darwin --ignore='distribution/'",
-    "win": "rimraf distribution/news-win32-x64 && electron-packager . 'news' --out=distribution --arch=x64 --version=1.2.1 --app-version='1.0.8' --platform=win32 --ignore='distribution/'",
-    "lint": "tslint \"scripts/*.tsx\" \"*.ts\"",
-    "build": "tsc",
+    "lint": "tslint \"scripts/*.tsx\" \"*.ts\" && npm run standard",
+    "build": "tsc && tsc -p static && npm run clean && npm run cpy && npm run cleancss && npm run webpack",
     "start": "electron .",
-    "test": "tsc -p spec && jasmine && tsc -p static_spec && karma start static_spec/karma.config.js"
+    "clean": "rimraf static/index.bundle.* static/css static/fonts",
+    "webpack": "webpack --config static/webpack.config.js",
+    "cleancss": "cleancss -o static/index.bundle.css static/index.css",
+    "test": "tsc -p spec && jasmine && tsc -p static_spec && karma start static_spec/karma.config.js",
+    "standard": "standard \"**/*.config.js\"",
+    "fix": "standard --fix \"**/*.config.js\"",
+    "release": "rimraf dist && clean-release",
+    "cpy": "cpy ./node_modules/bootstrap/dist/css/bootstrap.min.css static/css/ && cpy ./node_modules/bootstrap/fonts/*.* ./static/fonts && cpy ./node_modules/highlight.js/styles/github.css static/css"
   },
   "repository": {
     "type": "git",
@@ -22,13 +27,9 @@
   },
   "homepage": "https://github.com/plantain-00/news-fetcher-client#readme",
   "dependencies": {
-    "bootstrap": "3.3.7",
     "cheerio": "0.22.0",
-    "highlight.js": "9.12.0",
-    "react": "15.6.1",
-    "react-dom": "15.6.1",
     "request": "2.81.0",
-    "schema-based-json-editor": "3.9.0"
+    "tslib": "1.7.1"
   },
   "engines": {
     "node": ">=6.0.0"
@@ -40,17 +41,25 @@
     "@types/react": "15.0.34",
     "@types/react-dom": "15.5.1",
     "@types/request": "0.0.45",
+    "bootstrap": "3.3.7",
+    "clean-css-cli": "4.1.6",
+    "clean-release": "1.2.0",
+    "cpy-cli": "1.0.1",
     "electron": "1.6.11",
-    "electron-packager": "8.7.2",
+    "highlight.js": "9.12.0",
     "jasmine": "2.6.0",
     "karma": "1.7.0",
     "karma-chrome-launcher": "2.2.0",
     "karma-firefox-launcher": "1.0.1",
     "karma-jasmine": "1.1.0",
     "karma-webpack": "2.0.3",
+    "react": "15.6.1",
+    "react-dom": "15.6.1",
     "rimraf": "2.6.1",
+    "schema-based-json-editor": "4.0.1",
+    "standard": "10.0.2",
     "tslint": "5.4.3",
     "typescript": "2.4.1",
-    "webpack": "3.0.0"
+    "webpack": "3.2.0"
   }
 }
