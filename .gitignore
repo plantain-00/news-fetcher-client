@@ -35,7 +35,7 @@ dist
 !**/*-*.js
 !**/*-*.css
 service-worker.js
-!*.index.bundle.js
 #**/*-*.png
 #index.html
 static/fonts
+!index.css
