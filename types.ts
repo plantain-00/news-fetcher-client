@@ -16,6 +16,7 @@ export type NewsCategory = {
 export type InitialData = {
     schema: any,
     startval: ConfigData,
+    version: string;
 };
 
 export type RawSource = {

@@ -5,6 +5,8 @@ import { config } from "./config";
 
 import schema = require("./schema.json");
 
+import packageJson = require("./package.json");
+
 libs.electron.crashReporter.start({
     companyName: "news-fetcher",
     submitURL: `${config.sync.serverUrl}/logs?key=${config.sync.key}`,
@@ -213,6 +215,7 @@ libs.electron.ipcMain.on("items", async (event: Electron.Event) => {
         const initialData: types.InitialData = {
             startval: config,
             schema,
+            version: packageJson.version,
         };
         event.sender.send("initialize", initialData);
 

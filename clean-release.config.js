@@ -1,3 +1,5 @@
+const { version } = require('./package.json')
+
 module.exports = {
   include: [
     'libs.js',
@@ -17,9 +19,11 @@ module.exports = {
   ],
   postScript: [
     'cd [dir] && npm i --production',
-    'electron-packager [dir] "news" --out=dist --arch=x64 --version=1.2.1 --app-version="1.0.8" --platform=darwin --ignore="dist/"',
-    'electron-packager [dir] "news" --out=dist --arch=x64 --version=1.2.1 --app-version="1.0.8" --platform=win32 --ignore="dist/"',
-    '7z a -r -tzip dist/news-darwin-x64.zip dist/news-darwin-x64/',
-    '7z a -r -tzip dist/news-win32-x64.zip dist/news-win32-x64/'
+    `electron-packager [dir] "news-fetcher-client" --out=dist --arch=x64 --version=${version} --app-version="${version}" --platform=darwin --ignore="dist/"`,
+    `electron-packager [dir] "news-fetcher-client" --out=dist --arch=x64 --version=${version} --app-version="${version}" --platform=win32 --ignore="dist/"`,
+    `7z a -r -tzip dist/news-fetcher-client-darwin-x64-${version}.zip dist/news-fetcher-client-darwin-x64/`,
+    `7z a -r -tzip dist/news-fetcher-client-win32-x64-${version}.zip dist/news-fetcher-client-win32-x64/`,
+    'electron-installer-windows --src dist/news-fetcher-client-win32-x64/ --dest dist/',
+    'cd dist && create-dmg news-fetcher-client-darwin-x64/news-fetcher-client.app'
   ]
 }

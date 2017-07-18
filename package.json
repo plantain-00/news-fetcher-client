@@ -1,7 +1,7 @@
 {
   "name": "news-fetcher-client",
-  "version": "1.2.1",
-  "description": "",
+  "version": "1.2.3",
+  "description": "The client side of a cross-platform tool to get and sync news.",
   "main": "main.js",
   "scripts": {
     "lint": "tslint \"scripts/*.tsx\" \"*.ts\" && npm run standard",

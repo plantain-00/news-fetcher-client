@@ -40,7 +40,8 @@
             historyPath: string;
             configurationPath: string;
         };
-    }
+    },
+    version: string
 }
 ```
 

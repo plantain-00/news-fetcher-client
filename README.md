@@ -15,10 +15,3 @@
 ![](./sample.png)
 
 if you want to sync history between different PC, you may want the server-side part: https://github.com/plantain-00/news-fetcher , and set your key and server url at `configuration.json` in your `userData` path.
-
-### MEMO
-
-When update a version, 3 places should be updated:
-+ version in package.json
-+ osx and win in scripts in package.json
-+ title in index.html

@@ -73,6 +73,7 @@ class MainComponent extends React.Component<{}, State> {
         electron.ipcRenderer.on("initialize", (event: Electron.Event, arg: types.InitialData) => {
             this.schema = arg.schema;
             this.value = arg.startval;
+            document.title = `news fetcher client v${arg.version}`;
         });
         electron.ipcRenderer.on("error", (event: Electron.Event, arg: types.ErrorMessage) => {
             alert(arg.message);
