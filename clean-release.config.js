@@ -1,4 +1,5 @@
-const { version } = require('./package.json')
+const { name, version, devDependencies } = require('./package.json')
+const electronVersion = devDependencies.electron
 
 module.exports = {
   include: [
@@ -19,11 +20,11 @@ module.exports = {
   ],
   postScript: [
     'cd [dir] && npm i --production',
-    `electron-packager [dir] "news-fetcher-client" --out=dist --arch=x64 --version=${version} --app-version="${version}" --platform=darwin --ignore="dist/"`,
-    `electron-packager [dir] "news-fetcher-client" --out=dist --arch=x64 --version=${version} --app-version="${version}" --platform=win32 --ignore="dist/"`,
-    `7z a -r -tzip dist/news-fetcher-client-darwin-x64-${version}.zip dist/news-fetcher-client-darwin-x64/`,
-    `7z a -r -tzip dist/news-fetcher-client-win32-x64-${version}.zip dist/news-fetcher-client-win32-x64/`,
-    'electron-installer-windows --src dist/news-fetcher-client-win32-x64/ --dest dist/',
-    'cd dist && create-dmg news-fetcher-client-darwin-x64/news-fetcher-client.app'
+    `electron-packager [dir] "${name}" --out=dist --arch=x64 --electron-version=${electronVersion} --platform=darwin --ignore="dist/"`,
+    `electron-packager [dir] "${name}" --out=dist --arch=x64 --electron-version=${electronVersion} --platform=win32 --ignore="dist/"`,
+    `7z a -r -tzip dist/${name}-darwin-x64-${version}.zip dist/${name}-darwin-x64/`,
+    `7z a -r -tzip dist/${name}-win32-x64-${version}.zip dist/${name}-win32-x64/`,
+    `electron-installer-windows --src dist/${name}-win32-x64/ --dest dist/`,
+    `cd dist && create-dmg ${name}-darwin-x64/${name}.app`
   ]
 }
