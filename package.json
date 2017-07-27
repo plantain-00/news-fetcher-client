@@ -4,17 +4,12 @@
   "description": "The client side of a cross-platform tool to get and sync news.",
   "main": "main.js",
   "scripts": {
-    "lint": "tslint \"scripts/*.tsx\" \"*.ts\" && npm run standard",
-    "build": "tsc && tsc -p static && npm run clean && npm run cpy && npm run cleancss && npm run webpack",
     "start": "electron .",
-    "clean": "rimraf static/index.bundle.* static/css static/fonts",
-    "webpack": "webpack --config static/webpack.config.js",
-    "cleancss": "cleancss -o static/index.bundle.css static/index.css",
-    "test": "tsc -p spec && jasmine && tsc -p static_spec && karma start static_spec/karma.config.js",
-    "standard": "standard \"**/*.config.js\"",
-    "fix": "standard --fix \"**/*.config.js\"",
-    "release": "rimraf dist && clean-release",
-    "cpy": "cpy ./node_modules/bootstrap/dist/css/bootstrap.min.css static/css/ && cpy ./node_modules/bootstrap/fonts/*.* ./static/fonts && cpy ./node_modules/highlight.js/styles/github.css static/css"
+    "build": "clean-scripts build",
+    "lint": "clean-scripts lint",
+    "test": "clean-scripts test",
+    "fix": "clean-scripts fix",
+    "release": "clean-scripts release"
   },
   "repository": {
     "type": "git",
@@ -44,6 +39,7 @@
     "bootstrap": "3.3.7",
     "clean-css-cli": "4.1.6",
     "clean-release": "1.2.0",
+    "clean-scripts": "1.0.0",
     "cpy-cli": "1.0.1",
     "electron": "1.6.11",
     "highlight.js": "9.12.0",
