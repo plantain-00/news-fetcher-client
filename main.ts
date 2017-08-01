@@ -181,6 +181,48 @@ async function load(source: Source, event: Electron.Event) {
     }
 }
 
+type Release = {
+    tag_name: string;
+    prerelease: boolean;
+    draft: boolean;
+    assets: libs.Asset[];
+};
+
+async function checkUpdate() {
+    try {
+        const [, body] = await libs.requestAsync({
+            method: "GET",
+            url: `https://api.github.com/repos/plantain-00/news-fetcher-client/releases`,
+        });
+        const releases: Release[] = JSON.parse(body);
+        for (const release of releases) {
+            if (!release.prerelease && !release.draft) {
+                if (libs.semver.gt(release.tag_name, packageJson.version)) {
+                    for (const asset of release.assets) {
+                        if (process.platform === "darwin") {
+                            if (asset.name.endsWith(".dmg")) {
+                                libs.downloadThenOpen(asset);
+                                break;
+                            }
+                        } else if (process.platform === "win32") {
+                            if (asset.name.endsWith(".exe")) {
+                                libs.downloadThenOpen(asset);
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+    } catch (error) {
+        // tslint:disable-next-line:no-console
+        console.log(error);
+    }
+}
+
+checkUpdate();
+
 libs.electron.ipcMain.on("items", async (event: Electron.Event) => {
     try {
         if (config.sync.willSync) {
