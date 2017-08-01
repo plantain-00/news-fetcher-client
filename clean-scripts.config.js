@@ -7,7 +7,7 @@ module.exports = {
     `cpy ./node_modules/bootstrap/fonts/*.* ./static/fonts`,
     `cpy ./node_modules/highlight.js/styles/github.css static/css`,
     `cleancss -o static/index.bundle.css static/index.css`,
-    `webpack --config static/webpack.config.js`
+    `webpack --display-modules --config static/webpack.config.js`
   ],
   lint: [
     `tslint "scripts/*.tsx" "*.ts"`,
