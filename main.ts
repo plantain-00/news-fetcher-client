@@ -32,7 +32,10 @@ try {
     config.sync = sync;
     config.rawSources = rawSources;
 } catch (error) {
-    libs.fs.writeFile(config.localFiles.configurationPath, JSON.stringify(config, null, "    "));
+    libs.fs.writeFile(config.localFiles.configurationPath, JSON.stringify(config, null, "    "), error => {
+        // tslint:disable-next-line:no-console
+        console.log(error);
+    });
 }
 
 type Source = {
