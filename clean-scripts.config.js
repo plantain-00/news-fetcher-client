@@ -27,7 +27,10 @@ module.exports = {
       'karma start static_spec/karma.config.js'
     ]
   },
-  fix: `standard --fix "**/*.config.js"`,
+  fix: {
+    ts: `tslint --fix "scripts/*.tsx" "*.ts"`,
+    js: `standard --fix "**/*.config.js"`
+  },
   release: [
     `rimraf dist`,
     `clean-release`
