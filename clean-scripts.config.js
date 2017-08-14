@@ -15,7 +15,8 @@ module.exports = {
   },
   lint: {
     ts: `tslint "scripts/*.tsx" "*.ts"`,
-    js: `standard "**/*.config.js"`
+    js: `standard "**/*.config.js"`,
+    export: `no-unused-export "scripts/*.tsx" "*.ts"`
   },
   test: {
     jasmine: [
@@ -34,5 +35,6 @@ module.exports = {
   release: [
     `rimraf dist`,
     `clean-release`
-  ]
+  ],
+  watch: `watch-then-execute "scripts/*.tsx" "*.ts" "scripts/*.css" --script "npm run build"`
 }
