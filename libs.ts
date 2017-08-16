@@ -11,6 +11,11 @@ export type Asset = {
     size: number;
 };
 
+export function printInConsole(message: any) {
+    // tslint:disable-next-line:no-console
+    console.log(message);
+}
+
 export function downloadThenOpen(asset: Asset) {
     const result = tmp.dirSync();
     const filePath = path.resolve(result.name, asset.name);
@@ -20,8 +25,7 @@ export function downloadThenOpen(asset: Asset) {
     readableStream.on("data", data => {
         downloadedSize += data.length;
         const percent = Math.round(downloadedSize * 100.0 / asset.size);
-        // tslint:disable-next-line:no-console
-        console.log(`${percent}% ${downloadedSize} / ${asset.size}`);
+        printInConsole(`${percent}% ${downloadedSize} / ${asset.size}`);
     });
 
     const writableStream = fs.createWriteStream(filePath);

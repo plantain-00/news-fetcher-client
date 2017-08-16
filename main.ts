@@ -33,8 +33,7 @@ try {
     config.rawSources = rawSources;
 } catch (error) {
     libs.fs.writeFile(config.localFiles.configurationPath, JSON.stringify(config, null, "    "), error => {
-        // tslint:disable-next-line:no-console
-        console.log(error);
+        libs.printInConsole(error);
     });
 }
 
@@ -87,8 +86,7 @@ libs.electron.app.on("window-all-closed", () => {
         localData = localData.filter(d => d.createTime > ExpiredMoment);
         libs.fs.writeFile(config.localFiles.historyPath, JSON.stringify(localData, null, "    "), error => {
             if (error) {
-                // tslint:disable-next-line:no-console
-                console.log(error);
+                libs.printInConsole(error);
             }
 
             libs.electron.app.quit();
@@ -170,8 +168,7 @@ async function load(source: Source, event: Electron.Event) {
         };
         event.sender.send("items", newsCategory);
     } catch (error) {
-        // tslint:disable-next-line:no-console
-        console.log(error);
+        libs.printInConsole(error);
         const newsCategory: types.NewsCategory = {
             name: source.name,
             source: source.url,
@@ -216,8 +213,7 @@ async function checkUpdate() {
             }
         }
     } catch (error) {
-        // tslint:disable-next-line:no-console
-        console.log(error);
+        libs.printInConsole(error);
     }
 }
 
@@ -250,8 +246,7 @@ libs.electron.ipcMain.on("items", async (event: Electron.Event) => {
         }
 
         if (!history.isSuccess) {
-            // tslint:disable-next-line:no-console
-            console.log(history.errorMessage);
+            libs.printInConsole(history.errorMessage);
             return;
         }
 
@@ -268,8 +263,7 @@ libs.electron.ipcMain.on("items", async (event: Electron.Event) => {
             await load(source, event);
         }
     } catch (error) {
-        // tslint:disable-next-line:no-console
-        console.log(error);
+        libs.printInConsole(error);
     }
 });
 
