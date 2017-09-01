@@ -54,14 +54,14 @@
     "karma-firefox-launcher": "1.0.1",
     "karma-jasmine": "1.1.0",
     "karma-webpack": "2.0.4",
-    "no-unused-export": "1.2.3",
+    "no-unused-export": "1.2.4",
     "react": "15.6.1",
     "react-dom": "15.6.1",
     "rimraf": "2.6.1",
     "schema-based-json-editor": "5.1.0",
     "standard": "10.0.3",
     "tslint": "5.7.0",
-    "typescript": "2.4.2",
+    "typescript": "2.5.2",
     "watch-then-execute": "1.0.1",
     "webpack": "3.5.5"
   }
