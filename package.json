@@ -55,6 +55,7 @@
     "karma-jasmine": "1.1.0",
     "karma-webpack": "2.0.4",
     "no-unused-export": "1.2.4",
+    "puppeteer": "0.10.1",
     "react": "15.6.1",
     "react-dom": "15.6.1",
     "rimraf": "2.6.1",
