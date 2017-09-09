@@ -42,11 +42,11 @@
     "@types/semver": "5.4.0",
     "@types/tmp": "0.0.33",
     "bootstrap": "3.3.7",
-    "clean-css-cli": "4.1.6",
+    "clean-css-cli": "4.1.9",
     "clean-release": "1.3.4",
-    "clean-scripts": "1.2.4",
+    "clean-scripts": "1.2.6",
     "cpy-cli": "1.0.1",
-    "electron": "1.7.5",
+    "electron": "1.7.6",
     "highlight.js": "9.12.0",
     "jasmine": "2.8.0",
     "karma": "1.7.1",
@@ -64,6 +64,6 @@
     "tslint": "5.7.0",
     "typescript": "2.5.2",
     "watch-then-execute": "1.0.1",
-    "webpack": "3.5.5"
+    "webpack": "3.5.6"
   }
 }
