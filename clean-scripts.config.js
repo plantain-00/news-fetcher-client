@@ -10,7 +10,10 @@ module.exports = {
       `tsc -p static`,
       `webpack --display-modules --config static/webpack.config.js`
     ],
-    css: `cleancss -o static/index.bundle.css static/index.css`,
+    css: [
+      `postcss static/index.css -o static/index.postcss.css`,
+      `cleancss -o static/index.bundle.css static/index.postcss.css`
+    ],
     copy: [
       `rimraf static/css static/fonts`,
       `cpy ./node_modules/bootstrap/dist/css/bootstrap.min.css static/css/`,
