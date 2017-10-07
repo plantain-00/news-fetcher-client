@@ -194,4 +194,4 @@ class MainComponent extends React.Component<{}, State> {
     }
 }
 
-ReactDOM.render(<MainComponent />, document.getElementById("container"));
+ReactDOM.render(<MainComponent /> as any, document.getElementById("container"));
