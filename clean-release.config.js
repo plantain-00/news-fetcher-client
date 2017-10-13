@@ -1,5 +1,4 @@
-const { name, version, devDependencies } = require('./package.json')
-const electronVersion = devDependencies.electron
+const { name, version, devDependencies: { electron: electronVersion } } = require('./package.json')
 
 module.exports = {
   include: [
