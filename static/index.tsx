@@ -32,31 +32,13 @@ function findIndex<T>(array: T[], condition: (item: T) => boolean) {
 }
 
 class MainComponent extends React.Component<{}, State> {
-    schema: any;
-    value: types.ConfigData;
-    locale = zhCNLocale;
-    isValid: boolean;
-    news: types.NewsCategory[] = [];
-    configurationDialogIsVisiable = false;
+    private schema: any;
+    private value: types.ConfigData;
+    private locale = zhCNLocale;
+    private isValid: boolean;
+    private news: types.NewsCategory[] = [];
+    private configurationDialogIsVisiable = false;
 
-    updateValue = (value: any, isValid: boolean) => {
-        this.value = value;
-        this.isValid = isValid;
-    }
-    reload(n: types.NewsCategory) {
-        n.error = undefined;
-        this.setState({ news: this.news });
-        electron.ipcRenderer.send("reload", n.source);
-    }
-    hide(item: types.NewsItem) {
-        item.hidden = true;
-        this.setState({ news: this.news });
-        electron.ipcRenderer.send("hide", item.href);
-    }
-    openAndHide(item: types.NewsItem) {
-        electron.shell.openExternal(item.href);
-        this.hide(item);
-    }
     componentDidMount() {
         electron.ipcRenderer.on("items", (event: Electron.Event, arg: types.NewsCategory) => {
             const index = findIndex(this.news!, n => n.source === arg.source);
@@ -79,19 +61,6 @@ class MainComponent extends React.Component<{}, State> {
             alert(arg.message);
         });
         electron.ipcRenderer.send("items");
-    }
-    toggleConfigurationDialog() {
-        this.configurationDialogIsVisiable = !this.configurationDialogIsVisiable;
-        this.setState({
-            configurationDialogIsVisiable: this.configurationDialogIsVisiable,
-        });
-    }
-    saveConfiguration() {
-        electron.ipcRenderer.send("saveConfiguration", this.value);
-        this.configurationDialogIsVisiable = false;
-        this.setState({
-            configurationDialogIsVisiable: this.configurationDialogIsVisiable,
-        });
     }
     render() {
         const newsView = this.news!.map(n => {
@@ -191,6 +160,38 @@ class MainComponent extends React.Component<{}, State> {
                 <div>{newsView}</div>
             </div>
         );
+    }
+
+    private updateValue = (value: any, isValid: boolean) => {
+        this.value = value;
+        this.isValid = isValid;
+    }
+    private reload(n: types.NewsCategory) {
+        n.error = undefined;
+        this.setState({ news: this.news });
+        electron.ipcRenderer.send("reload", n.source);
+    }
+    private hide(item: types.NewsItem) {
+        item.hidden = true;
+        this.setState({ news: this.news });
+        electron.ipcRenderer.send("hide", item.href);
+    }
+    private openAndHide(item: types.NewsItem) {
+        electron.shell.openExternal(item.href);
+        this.hide(item);
+    }
+    private toggleConfigurationDialog() {
+        this.configurationDialogIsVisiable = !this.configurationDialogIsVisiable;
+        this.setState({
+            configurationDialogIsVisiable: this.configurationDialogIsVisiable,
+        });
+    }
+    private saveConfiguration() {
+        electron.ipcRenderer.send("saveConfiguration", this.value);
+        this.configurationDialogIsVisiable = false;
+        this.setState({
+            configurationDialogIsVisiable: this.configurationDialogIsVisiable,
+        });
     }
 }
 
