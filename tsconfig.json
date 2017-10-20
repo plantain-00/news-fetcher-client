@@ -9,7 +9,8 @@
 
         "skipLibCheck": true,
         "importHelpers": true,
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+        "newLine": "LF"
     },
     "exclude": [
         "node_modules/",
