@@ -1,7 +1,4 @@
-const childProcess = require('child_process')
-const util = require('util')
-
-const execAsync = util.promisify(childProcess.exec)
+const { execAsync } = require('clean-scripts')
 
 const tsFiles = `"*.ts" "static/**/*.tsx" "spec/**/*.ts" "static_spec/**/*.ts"`
 const jsFiles = `"*.config.js" "static/**/*.config.js" "static_spec/**/*.config.js"`
