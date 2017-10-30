@@ -3,12 +3,16 @@ const { execAsync } = require('clean-scripts')
 const tsFiles = `"*.ts" "static/**/*.tsx" "spec/**/*.ts" "static_spec/**/*.ts"`
 const jsFiles = `"*.config.js" "static/**/*.config.js" "static_spec/**/*.config.js"`
 
+const tscCommand = `tsc`
+const tscStaticCommand = `tsc -p static`
+const webpackCommand = `webpack --display-modules --config static/webpack.config.js`
+
 module.exports = {
   build: {
-    back: `tsc`,
+    back: tscCommand,
     js: [
-      `tsc -p static`,
-      `webpack --display-modules --config static/webpack.config.js`
+      tscStaticCommand,
+      webpackCommand
     ],
     css: [
       `postcss static/index.css -o static/index.postcss.css`,
@@ -51,5 +55,10 @@ module.exports = {
     `rimraf dist`,
     `clean-release`
   ],
-  watch: `watch-then-execute "scripts/*.tsx" "*.ts" "scripts/*.css" --script "npm run build"`
+  watch: {
+    back: `${tscCommand} --watch`,
+    front: `${tscStaticCommand} --watch`,
+    webpack: `${webpackCommand} --watch`,
+    css: `watch-then-execute "scripts/*.css" --script "npm run build.css"`
+  }
 }
