@@ -35,7 +35,7 @@ class MainComponent extends React.Component<{}, State> {
     private schema: any;
     private value: types.ConfigData;
     private locale = zhCNLocale;
-    private isValid: boolean;
+    private isValid = true;
     private news: types.NewsCategory[] = [];
     private configurationDialogIsVisiable = false;
 
@@ -154,7 +154,7 @@ class MainComponent extends React.Component<{}, State> {
         return (
             <div className="container">
                 <button className="btn btn-xs menu-configuration" onClick={this.toggleConfigurationDialog.bind(this)}>配置</button>
-                <button className={this.configurationDialogIsVisiable ? "btn btn-xs btn-primary menu-save" : "btn btn-xs menu-save btn-primary hidden"} onClick={this.saveConfiguration.bind(this)}>保存</button>
+                <button className={this.configurationDialogIsVisiable && this.isValid ? "btn btn-xs btn-primary menu-save" : "btn btn-xs menu-save btn-primary hidden"} onClick={this.saveConfiguration.bind(this)}>保存</button>
                 {configurationView}
                 <ul className="menu list-unstyled">{menuView}</ul>
                 <div>{newsView}</div>

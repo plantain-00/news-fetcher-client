@@ -1,4 +1,5 @@
-const { execAsync } = require('clean-scripts')
+const { execAsync, executeScriptAsync } = require('clean-scripts')
+const { watch } = require('watch-then-execute')
 
 const tsFiles = `"*.ts" "static/**/*.tsx" "spec/**/*.ts" "static_spec/**/*.ts"`
 const jsFiles = `"*.config.js" "static/**/*.config.js" "static_spec/**/*.config.js"`
@@ -6,6 +7,10 @@ const jsFiles = `"*.config.js" "static/**/*.config.js" "static_spec/**/*.config.
 const tscCommand = `tsc`
 const tscStaticCommand = `tsc -p static`
 const webpackCommand = `webpack --display-modules --config static/webpack.config.js`
+const cssCommand = [
+  `postcss static/index.css -o static/index.postcss.css`,
+  `cleancss -o static/index.bundle.css static/index.postcss.css`
+]
 
 module.exports = {
   build: {
@@ -14,10 +19,7 @@ module.exports = {
       tscStaticCommand,
       webpackCommand
     ],
-    css: [
-      `postcss static/index.css -o static/index.postcss.css`,
-      `cleancss -o static/index.bundle.css static/index.postcss.css`
-    ],
+    css: cssCommand,
     copy: [
       `rimraf static/css static/fonts`,
       `cpy ./node_modules/bootstrap/dist/css/bootstrap.min.css static/css/`,
@@ -59,6 +61,6 @@ module.exports = {
     back: `${tscCommand} --watch`,
     front: `${tscStaticCommand} --watch`,
     webpack: `${webpackCommand} --watch`,
-    css: `watch-then-execute "scripts/*.css" --script "npm run build.css"`
+    css: () => watch(['scripts/*.css'], [], () => executeScriptAsync(cssCommand))
   }
 }
