@@ -33,6 +33,8 @@
     "node": ">=6.0.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "5.0.1",
+    "@commitlint/config-angular": "5.0.1",
     "@types/cheerio": "0.22.5",
     "@types/highlight.js": "9.12.1",
     "@types/jasmine": "2.8.2",
