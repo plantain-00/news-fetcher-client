@@ -48,10 +48,6 @@ module.exports = {
     ts: `tslint --fix ${tsFiles}`,
     js: `standard --fix ${jsFiles}`
   },
-  release: [
-    `rimraf dist`,
-    `clean-release`
-  ],
   watch: {
     back: `${tscCommand} --watch`,
     front: `${tscStaticCommand} --watch`,

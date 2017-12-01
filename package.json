@@ -9,7 +9,6 @@
     "lint": "clean-scripts lint",
     "test": "clean-scripts test",
     "fix": "clean-scripts fix",
-    "release": "clean-scripts release",
     "watch": "clean-scripts watch"
   },
   "repository": {
@@ -46,7 +45,6 @@
     "autoprefixer": "7.1.6",
     "bootstrap": "3.3.7",
     "clean-css-cli": "4.1.10",
-    "clean-release": "1.4.0",
     "clean-scripts": "1.7.0",
     "cpy-cli": "1.0.1",
     "electron": "1.7.9",
