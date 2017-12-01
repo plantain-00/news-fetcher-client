@@ -6,7 +6,7 @@ const jsFiles = `"*.config.js" "static/**/*.config.js" "static_spec/**/*.config.
 
 const tscCommand = `tsc`
 const tscStaticCommand = `tsc -p static`
-const webpackCommand = `webpack --display-modules --config static/webpack.config.js`
+const webpackCommand = `webpack --config static/webpack.config.js`
 const cssCommand = [
   `postcss static/index.css -o static/index.postcss.css`,
   `cleancss -o static/index.bundle.css static/index.postcss.css`
