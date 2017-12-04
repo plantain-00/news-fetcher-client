@@ -3,8 +3,9 @@ declare const electron: Electron.AllElectron;
 import * as React from "react";
 import * as types from "../types";
 import * as ReactDOM from "react-dom";
-import { JSONEditor } from "schema-based-json-editor/react.js";
-import { locale as zhCNLocale } from "schema-based-json-editor/locales/zh-CN.js";
+import { JSONEditor } from "react-schema-based-json-editor";
+// tslint:disable-next-line:no-implicit-dependencies
+import { locale as zhCNLocale } from "schema-based-json-editor/dist/locales/zh-CN";
 import * as hljs from "highlight.js";
 
 document.onclick = e => {
