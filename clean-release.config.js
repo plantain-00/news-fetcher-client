@@ -21,7 +21,7 @@ module.exports = {
   changesGitStaged: true,
   postScript: [
     'git add package.json',
-    'git commit -m "feat: publish v[version]"',
+    'git commit -m "v[version]"',
     'git tag v[version]',
     'git push',
     'git push origin v[version]',
