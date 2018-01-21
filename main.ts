@@ -70,7 +70,7 @@ function constructSources () {
         name: rawSource.name,
         url: rawSource.url,
         selector: rawSource.selector!,
-                // tslint:disable-next-line:no-eval
+        // tslint:disable-next-line:no-eval
         getItem: eval(rawSource.getItem!),
         limit: rawSource.limit
       })

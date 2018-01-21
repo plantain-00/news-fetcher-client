@@ -4,7 +4,6 @@ import * as React from 'react'
 import * as types from '../types'
 import * as ReactDOM from 'react-dom'
 import { JSONEditor } from 'react-schema-based-json-editor'
-// tslint:disable-next-line:no-implicit-dependencies
 import { locale as zhCNLocale } from 'schema-based-json-editor/dist/locales/zh-CN'
 import * as hljs from 'highlight.js'
 
@@ -70,52 +69,52 @@ class MainComponent extends React.Component<{}, State> {
           let detailView: JSX.Element | undefined
           if (i.detail) {
             detailView = (
-                            <a href={i.detail} className={'btn btn-link' + (i.hidden ? ' item-hidden' : '')}>detail</a>
-                        )
+              <a href={i.detail} className={'btn btn-link' + (i.hidden ? ' item-hidden' : '')}>detail</a>
+            )
           }
           if (i.hidden) {
             return (
-                            <div key={index}>
-                                <a href={i.href} className='btn btn-link item-hidden'>{i.title}</a>
-                                {detailView}
-                            </div>
+              <div key={index}>
+                <a href={i.href} className='btn btn-link item-hidden'>{i.title}</a>
+                {detailView}
+              </div>
             )
           } else {
             return (
-                            <div key={index}>
-                                <a href={i.href} className='btn btn-link'>{i.title}</a>
-                                {detailView}
-                                <button className='btn btn-link' onClick={this.hide.bind(this, i)}>hide</button>
-                                <button className='btn btn-link' onClick={this.openAndHide.bind(this, i)}>open and hide</button>
-                            </div>
+              <div key={index}>
+                <a href={i.href} className='btn btn-link'>{i.title}</a>
+                {detailView}
+                <button className='btn btn-link' onClick={this.hide.bind(this, i)}>hide</button>
+                <button className='btn btn-link' onClick={this.openAndHide.bind(this, i)}>open and hide</button>
+              </div>
             )
           }
         })
         return (
-                    <div key={n.source} className='panel panel-default'>
-                        <div className='panel-heading'>
-                            <h3 className='panel-title' id={n.key}>
-                                <a href={n.source} className='btn btn-link'>{n.name}</a>
-                                <button className='btn btn-link' onClick={this.reload.bind(this, n)}>reload</button>
-                            </h3>
-                        </div>
-                        <div className='panel-body'>
-                            {itemsView}
-                        </div>
-                    </div>
+          <div key={n.source} className='panel panel-default'>
+            <div className='panel-heading'>
+              <h3 className='panel-title' id={n.key}>
+                <a href={n.source} className='btn btn-link'>{n.name}</a>
+                <button className='btn btn-link' onClick={this.reload.bind(this, n)}>reload</button>
+              </h3>
+            </div>
+            <div className='panel-body'>
+              {itemsView}
+            </div>
+          </div>
         )
       } else {
         return (
-                    <div key={n.source} className='panel panel-default'>
-                        <div className='panel-heading'>
-                            <h3 className='panel-title' id={n.key}>
-                                <a href={n.source} className='btn btn-link'>{n.name}</a>
-                                <span className='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>
-                                <span>{n.error}</span>
-                                <button className='btn btn-link' onClick={this.reload.bind(this, n)}>reload</button>
-                            </h3>
-                        </div>
-                    </div>
+          <div key={n.source} className='panel panel-default'>
+            <div className='panel-heading'>
+              <h3 className='panel-title' id={n.key}>
+                <a href={n.source} className='btn btn-link'>{n.name}</a>
+                <span className='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>
+                <span>{n.error}</span>
+                <button className='btn btn-link' onClick={this.reload.bind(this, n)}>reload</button>
+              </h3>
+            </div>
+          </div>
         )
       }
     })
@@ -124,42 +123,42 @@ class MainComponent extends React.Component<{}, State> {
       let errorView: JSX.Element | undefined
       if (!n.items) {
         errorView = (
-                    <span className='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>
-                )
+          <span className='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>
+        )
       }
       return (
-                <li key={n.source}>
-                    <a href={'#' + n.key} className='btn btn-link'>
-                        {n.name}
-                        {errorView}
-                    </a>
-                </li>
+        <li key={n.source}>
+          <a href={'#' + n.key} className='btn btn-link'>
+            {n.name}
+            {errorView}
+          </a>
+        </li>
       )
     })
 
     let configurationView: JSX.Element | null = null
     if (this.schema && this.configurationDialogIsVisiable) {
       configurationView = (
-                <div id='configuration' className='configuration bootstrap3-row-container'>
-                    <JSONEditor schema={this.schema}
-                        initialValue={this.value}
-                        updateValue={this.updateValue}
-                        theme='bootstrap3'
-                        icon='bootstrap3'
-                        locale={this.locale}
-                        hljs={hljs} />
-                </div>
-            )
+        <div id='configuration' className='configuration bootstrap3-row-container'>
+          <JSONEditor schema={this.schema}
+            initialValue={this.value}
+            updateValue={this.updateValue}
+            theme='bootstrap3'
+            icon='bootstrap3'
+            locale={this.locale}
+            hljs={hljs} />
+        </div>
+      )
     }
 
     return (
-            <div className='container'>
-                <button className='btn btn-xs menu-configuration' onClick={this.toggleConfigurationDialog.bind(this)}>配置</button>
-                <button className={this.configurationDialogIsVisiable && this.isValid ? 'btn btn-xs btn-primary menu-save' : 'btn btn-xs menu-save btn-primary hidden'} onClick={this.saveConfiguration.bind(this)}>保存</button>
-                {configurationView}
-                <ul className='menu list-unstyled'>{menuView}</ul>
-                <div>{newsView}</div>
-            </div>
+      <div className='container'>
+        <button className='btn btn-xs menu-configuration' onClick={this.toggleConfigurationDialog.bind(this)}>配置</button>
+        <button className={this.configurationDialogIsVisiable && this.isValid ? 'btn btn-xs btn-primary menu-save' : 'btn btn-xs menu-save btn-primary hidden'} onClick={this.saveConfiguration.bind(this)}>保存</button>
+        {configurationView}
+        <ul className='menu list-unstyled'>{menuView}</ul>
+        <div>{newsView}</div>
+      </div>
     )
   }
 
