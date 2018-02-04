@@ -33,7 +33,7 @@ function findIndex<T> (array: T[], condition: (item: T) => boolean) {
 
 class MainComponent extends React.Component<{}, State> {
   private schema: any
-  private value: types.ConfigData
+  private value!: types.ConfigData
   private locale = zhCNLocale
   private isValid = true
   private news: types.NewsCategory[] = []
