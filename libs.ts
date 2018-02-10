@@ -3,7 +3,7 @@ export { electron }
 
 import * as http from 'http'
 
-import * as request from 'request'
+import request from 'request'
 
 export type Asset = {
   browser_download_url: string;
@@ -52,7 +52,7 @@ export function requestAsync (options: request.Options) {
   })
 }
 
-import * as cheerio from 'cheerio'
+import cheerio from 'cheerio'
 export { cheerio }
 
 import * as fs from 'fs'

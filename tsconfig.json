@@ -1,19 +1,10 @@
 {
-    "compilerOptions": {
-        "target": "es6",
-        "module": "commonjs",
-
-        "strict": true,
-        "noUnusedLocals": true,
-        "noImplicitReturns": true,
-
-        "skipLibCheck": true,
-        "importHelpers": true,
-        "allowSyntheticDefaultImports": true,
-        "newLine": "LF"
-    },
-    "exclude": [
-        "node_modules/",
-        "static/"
-    ]
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "module": "commonjs"
+  },
+  "exclude": [
+    "node_modules/",
+    "static/"
+  ]
 }
