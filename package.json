@@ -61,7 +61,7 @@
     "puppeteer": "1.1.0",
     "react": "16.2.0",
     "react-dom": "16.2.0",
-    "react-schema-based-json-editor": "7.2.4",
+    "react-schema-based-json-editor": "7.4.0",
     "rimraf": "2.6.2",
     "standard": "10.0.3",
     "tslint": "5.9.1",

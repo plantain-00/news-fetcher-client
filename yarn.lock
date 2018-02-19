@@ -2275,6 +2275,20 @@ file-entry-cache@^2.0.0:
     flat-cache "^1.2.1"
     object-assign "^4.0.1"
 
+file-uploader-component@7, file-uploader-component@^7.1.4:
+  version "7.1.4"
+  resolved "https://registry.yarnpkg.com/file-uploader-component/-/file-uploader-component-7.1.4.tgz#bb65ffa7f325d15cf162a95aa137e98d971fbab7"
+  dependencies:
+    tslib "1"
+
+file-uploader-react-component@7:
+  version "7.1.4"
+  resolved "https://registry.yarnpkg.com/file-uploader-react-component/-/file-uploader-react-component-7.1.4.tgz#8d9099542704e984471e5b42a033ee061f199b94"
+  dependencies:
+    file-uploader-component "^7.1.4"
+    react "16"
+    react-dom "16"
+
 file-uri-to-path@1:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/file-uri-to-path/-/file-uri-to-path-1.0.0.tgz#553a7b8446ff6f684359c445f1e37a05dacc33dd"
@@ -4924,17 +4938,18 @@ rc@~1.1.6:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-react-schema-based-json-editor@7.2.4:
-  version "7.2.4"
-  resolved "https://registry.yarnpkg.com/react-schema-based-json-editor/-/react-schema-based-json-editor-7.2.4.tgz#d1fbfb8069d4e0611847e7e4b85b9e184de33dab"
+react-schema-based-json-editor@7.4.0:
+  version "7.4.0"
+  resolved "https://registry.yarnpkg.com/react-schema-based-json-editor/-/react-schema-based-json-editor-7.4.0.tgz#c0e3019c30d8b82708c7cfb5b4f376b28637d3b7"
   dependencies:
     "@types/dragula" "*"
     "@types/highlight.js" "*"
     "@types/markdown-it" "*"
+    file-uploader-react-component "7"
     markdown-tip-react "6"
     react "16"
     react-dom "16"
-    schema-based-json-editor "^7.2.4"
+    schema-based-json-editor "^7.4.0"
     select2-react-component "5"
 
 "react@15 || 16", react@16, react@16.2.0:
@@ -5296,10 +5311,11 @@ safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@^5.1.1, safe-buffer@~5.1.0, 
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.1.tgz#893312af69b2123def71f57889001671eeb2c853"
 
-schema-based-json-editor@^7.2.4:
-  version "7.2.4"
-  resolved "https://registry.yarnpkg.com/schema-based-json-editor/-/schema-based-json-editor-7.2.4.tgz#a516b9c02624012a21e0c47e39e4dfbea54024a3"
+schema-based-json-editor@^7.4.0:
+  version "7.4.0"
+  resolved "https://registry.yarnpkg.com/schema-based-json-editor/-/schema-based-json-editor-7.4.0.tgz#9f064c5043c15d328e977c37bf3201e8721eb8e1"
   dependencies:
+    file-uploader-component "7"
     lodash.isinteger "4"
     lodash.isobject "3"
     lodash.tointeger "4"

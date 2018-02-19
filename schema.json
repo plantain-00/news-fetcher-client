@@ -32,17 +32,22 @@
                     "type": "boolean",
                     "title": "是否开启同步，如果不开启同步，历史纪录会保存在本地",
                     "default": false,
-                    "format": "checkbox"
+                    "format": "checkbox",
+                    "propertyOrder": 1
                 },
                 "serverUrl": {
                     "type": "string",
                     "title": "服务器地址",
-                    "default": ""
+                    "default": "",
+                    "propertyOrder": 2,
+                    "requiredWhen": ["willSync", "===", true]
                 },
                 "key": {
                     "type": "string",
                     "title": "密钥",
-                    "default": ""
+                    "default": "",
+                    "propertyOrder": 3,
+                    "requiredWhen": ["willSync", "===", true]
                 }
             },
             "required": [
@@ -88,19 +93,22 @@
                     "selector": {
                         "type": "string",
                         "title": "选择器",
-                        "propertyOrder": 5
+                        "propertyOrder": 5,
+                        "requiredWhen": ["isMilestone", "===", false]
                     },
                     "getItem": {
                         "type": "string",
                         "title": "获取信息函数",
                         "default": "(cheerio, $) => {\n    return {\n        href: \"\", \n        title: \"\"\n    };\n}",
                         "format": "code",
-                        "propertyOrder": 6
+                        "propertyOrder": 6,
+                        "requiredWhen": ["isMilestone", "===", false]
                     },
                     "limit": {
                         "type": "number",
                         "title": "限制数目",
-                        "propertyOrder": 7
+                        "propertyOrder": 7,
+                        "requiredWhen": ["isMilestone", "===", false]
                     }
                 },
                 "required": [

@@ -1,4 +1,4 @@
-import * as electron from 'electron'
+import electron = require('electron')
 export { electron }
 
 import * as http from 'http'
