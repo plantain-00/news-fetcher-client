@@ -23,7 +23,6 @@ module.exports = {
     copy: [
       `rimraf static/css static/fonts`,
       `cpy ./node_modules/bootstrap/dist/css/bootstrap.min.css static/css/`,
-      `cpy ./node_modules/bootstrap/fonts/*.* ./static/fonts`,
       `cpy ./node_modules/highlight.js/styles/github.css static/css`
     ]
   },

@@ -143,8 +143,7 @@ class MainComponent extends React.Component<{}, State> {
           <JSONEditor schema={this.schema}
             initialValue={this.value}
             updateValue={this.updateValue}
-            theme='bootstrap3'
-            icon='bootstrap3'
+            theme='bootstrap4'
             locale={this.locale}
             hljs={hljs} />
         </div>
