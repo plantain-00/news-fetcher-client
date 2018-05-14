@@ -22,7 +22,7 @@ type State = {
   configurationDialogIsVisiable?: boolean;
 }
 
-function findIndex<T> (array: T[], condition: (item: T) => boolean) {
+function findIndex<T>(array: T[], condition: (item: T) => boolean) {
   for (let i = 0; i < array.length; i++) {
     if (condition(array[i])) {
       return i
@@ -30,6 +30,8 @@ function findIndex<T> (array: T[], condition: (item: T) => boolean) {
   }
   return -1
 }
+
+const buttonCommonClass = 'btn btn-link'
 
 class MainComponent extends React.Component<{}, State> {
   private schema: any
@@ -39,16 +41,16 @@ class MainComponent extends React.Component<{}, State> {
   private news: types.NewsCategory[] = []
   private configurationDialogIsVisiable = false
 
-  componentDidMount () {
+  componentDidMount() {
     electron.ipcRenderer.on('items', (event: Electron.Event, arg: types.NewsCategory) => {
-      const index = findIndex(this.news!, n => n.source === arg.source)
+      const index = findIndex(this.news, n => n.source === arg.source)
       if (arg.name) {
         arg.key = arg.name.replace(' ', '')
       }
       if (index === -1) {
-        this.news!.push(arg)
+        this.news.push(arg)
       } else {
-        this.news![index] = arg
+        this.news[index] = arg
       }
       this.setState({ news: this.news })
     })
@@ -62,14 +64,15 @@ class MainComponent extends React.Component<{}, State> {
     })
     electron.ipcRenderer.send('items')
   }
-  render () {
-    const newsView = this.news!.map(n => {
+  // tslint:disable-next-line:cognitive-complexity
+  render() {
+    const newsView = this.news.map(n => {
       if (n.items) {
         const itemsView = n.items.map((i, index) => {
           let detailView: JSX.Element | undefined
           if (i.detail) {
             detailView = (
-              <a href={i.detail} className={'btn btn-link' + (i.hidden ? ' item-hidden' : '')}>detail</a>
+              <a href={i.detail} className={buttonCommonClass + (i.hidden ? ' item-hidden' : '')}>detail</a>
             )
           }
           if (i.hidden) {
@@ -82,10 +85,10 @@ class MainComponent extends React.Component<{}, State> {
           } else {
             return (
               <div key={index}>
-                <a href={i.href} className='btn btn-link'>{i.title}</a>
+                <a href={i.href} className={buttonCommonClass}>{i.title}</a>
                 {detailView}
-                <button className='btn btn-link' onClick={this.hide.bind(this, i)}>hide</button>
-                <button className='btn btn-link' onClick={this.openAndHide.bind(this, i)}>open and hide</button>
+                <button className={buttonCommonClass} onClick={this.hide.bind(this, i)}>hide</button>
+                <button className={buttonCommonClass} onClick={this.openAndHide.bind(this, i)}>open and hide</button>
               </div>
             )
           }
@@ -94,8 +97,8 @@ class MainComponent extends React.Component<{}, State> {
           <div key={n.source} className='panel panel-default'>
             <div className='panel-heading'>
               <h3 className='panel-title' id={n.key}>
-                <a href={n.source} className='btn btn-link'>{n.name}</a>
-                <button className='btn btn-link' onClick={this.reload.bind(this, n)}>reload</button>
+                <a href={n.source} className={buttonCommonClass}>{n.name}</a>
+                <button className={buttonCommonClass} onClick={this.reload.bind(this, n)}>reload</button>
               </h3>
             </div>
             <div className='panel-body'>
@@ -108,10 +111,10 @@ class MainComponent extends React.Component<{}, State> {
           <div key={n.source} className='panel panel-default'>
             <div className='panel-heading'>
               <h3 className='panel-title' id={n.key}>
-                <a href={n.source} className='btn btn-link'>{n.name}</a>
+                <a href={n.source} className={buttonCommonClass}>{n.name}</a>
                 <span className='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>
                 <span>{n.error}</span>
-                <button className='btn btn-link' onClick={this.reload.bind(this, n)}>reload</button>
+                <button className={buttonCommonClass} onClick={this.reload.bind(this, n)}>reload</button>
               </h3>
             </div>
           </div>
@@ -119,7 +122,7 @@ class MainComponent extends React.Component<{}, State> {
       }
     })
 
-    const menuView = this.news!.map(n => {
+    const menuView = this.news.map(n => {
       let errorView: JSX.Element | undefined
       if (!n.items) {
         errorView = (
@@ -128,7 +131,7 @@ class MainComponent extends React.Component<{}, State> {
       }
       return (
         <li key={n.source}>
-          <a href={'#' + n.key} className='btn btn-link'>
+          <a href={'#' + n.key} className={buttonCommonClass}>
             {n.name}
             {errorView}
           </a>
@@ -165,27 +168,27 @@ class MainComponent extends React.Component<{}, State> {
     this.value = value
     this.isValid = isValid
   }
-  private reload (n: types.NewsCategory) {
+  private reload(n: types.NewsCategory) {
     n.error = undefined
     this.setState({ news: this.news })
     electron.ipcRenderer.send('reload', n.source)
   }
-  private hide (item: types.NewsItem) {
+  private hide(item: types.NewsItem) {
     item.hidden = true
     this.setState({ news: this.news })
     electron.ipcRenderer.send('hide', item.href)
   }
-  private openAndHide (item: types.NewsItem) {
+  private openAndHide(item: types.NewsItem) {
     electron.shell.openExternal(item.href)
     this.hide(item)
   }
-  private toggleConfigurationDialog () {
+  private toggleConfigurationDialog() {
     this.configurationDialogIsVisiable = !this.configurationDialogIsVisiable
     this.setState({
       configurationDialogIsVisiable: this.configurationDialogIsVisiable
     })
   }
-  private saveConfiguration () {
+  private saveConfiguration() {
     electron.ipcRenderer.send('saveConfiguration', this.value)
     this.configurationDialogIsVisiable = false
     this.setState({

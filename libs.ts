@@ -11,11 +11,11 @@ export type Asset = {
   size: number;
 }
 
-export function printInConsole (message: any) {
+export function printInConsole(message: any) {
   console.log(message)
 }
 
-export function downloadThenOpen (asset: Asset) {
+export function downloadThenOpen(asset: Asset) {
   const result = tmp.dirSync()
   const filePath = path.resolve(result.name, asset.name)
 
@@ -35,7 +35,7 @@ export function downloadThenOpen (asset: Asset) {
   readableStream.pipe(writableStream)
 }
 
-export function requestAsync (options: request.Options) {
+export function requestAsync(options: request.Options) {
   return new Promise<[http.IncomingMessage, any]>((resolve, reject) => {
     options.headers = {
       'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.65 Safari/537.36'

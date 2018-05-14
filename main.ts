@@ -47,7 +47,7 @@ type Source = {
 
 const sources: Source[] = []
 
-function constructSources () {
+function constructSources() {
   for (const rawSource of config.rawSources) {
     if (rawSource.disabled) {
       break
@@ -94,7 +94,7 @@ libs.electron.app.on('window-all-closed', () => {
   }
 })
 
-libs.electron.ipcMain.on('hide', async (event: Electron.Event, url: string) => {
+libs.electron.ipcMain.on('hide', async(event: Electron.Event, url: string) => {
   try {
     history.items!.push(url)
 
@@ -118,14 +118,14 @@ libs.electron.ipcMain.on('hide', async (event: Electron.Event, url: string) => {
   }
 })
 
-libs.electron.ipcMain.on('reload', async (event: Electron.Event, url: string) => {
+libs.electron.ipcMain.on('reload', async(event: Electron.Event, url: string) => {
   const source = sources.find(s => s.url === url)
   if (source) {
     await load(source, event)
   }
 })
 
-libs.electron.ipcMain.on('saveConfiguration', async (event: Electron.Event, { sync, rawSources }: types.ConfigData) => {
+libs.electron.ipcMain.on('saveConfiguration', async(event: Electron.Event, { sync, rawSources }: types.ConfigData) => {
   try {
     config.sync = sync
     config.rawSources = rawSources
@@ -145,7 +145,7 @@ libs.electron.ipcMain.on('saveConfiguration', async (event: Electron.Event, { sy
   }
 })
 
-async function load (source: Source, event: Electron.Event) {
+async function load(source: Source, event: Electron.Event) {
   try {
     const [, body] = await libs.requestAsync({
       url: source.url
@@ -185,7 +185,8 @@ type Release = {
   assets: libs.Asset[];
 }
 
-async function checkUpdate () {
+// tslint:disable-next-line:cognitive-complexity
+async function checkUpdate() {
   try {
     const [, body] = await libs.requestAsync({
       method: 'GET',
@@ -219,7 +220,7 @@ async function checkUpdate () {
 
 checkUpdate()
 
-libs.electron.ipcMain.on('items', async (event: Electron.Event) => {
+libs.electron.ipcMain.on('items', async(event: Electron.Event) => {
   try {
     if (config.sync.willSync) {
       const [, body] = await libs.requestAsync({
@@ -273,5 +274,4 @@ libs.electron.app.on('ready', () => {
   mainWindow.on('closed', () => {
     mainWindow = undefined
   })
-    // mainWindow.webContents.openDevTools();
 })
