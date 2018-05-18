@@ -23,10 +23,10 @@
   "homepage": "https://github.com/plantain-00/news-fetcher-client#readme",
   "dependencies": {
     "cheerio": "1.0.0-rc.2",
-    "request": "2.85.0",
+    "request": "2.86.0",
     "semver": "5.5.0",
     "tmp": "0.0.33",
-    "tslib": "1.9.0"
+    "tslib": "1.9.1"
   },
   "engines": {
     "node": ">=6.0.0"
@@ -42,12 +42,12 @@
     "@types/request": "2.47.0",
     "@types/semver": "5.5.0",
     "@types/tmp": "0.0.33",
-    "autoprefixer": "8.4.1",
+    "autoprefixer": "8.5.0",
     "bootstrap": "4.1.1",
     "clean-css-cli": "4.1.11",
-    "clean-scripts": "1.8.0",
+    "clean-scripts": "1.9.2",
     "cpy-cli": "1.0.1",
-    "electron": "2.0.0",
+    "electron": "2.0.1",
     "highlight.js": "9.12.0",
     "jasmine": "3.1.0",
     "karma": "2.0.2",
@@ -55,8 +55,8 @@
     "karma-firefox-launcher": "1.1.0",
     "karma-jasmine": "1.1.2",
     "karma-webpack": "3.0.0",
-    "markdownlint-cli": "0.8.1",
-    "no-unused-export": "1.5.0",
+    "markdownlint-cli": "0.8.2",
+    "no-unused-export": "1.5.1",
     "postcss-cli": "5.0.0",
     "puppeteer": "1.4.0",
     "react": "16.3.2",
@@ -69,7 +69,7 @@
     "tslint-sonarts": "1.6.0",
     "typescript": "2.8.3",
     "watch-then-execute": "1.1.1",
-    "webpack": "4.8.2",
+    "webpack": "4.8.3",
     "webpack-cli": "2.1.3"
   }
 }
