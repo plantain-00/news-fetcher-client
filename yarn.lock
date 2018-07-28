@@ -178,8 +178,8 @@
   resolved "https://registry.yarnpkg.com/@types/markdown-it/-/markdown-it-0.0.4.tgz#c5f67365916044b342dae8d702724788ba0b5b74"
 
 "@types/node@*":
-  version "10.5.2"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.5.2.tgz#f19f05314d5421fe37e74153254201a7bf00a707"
+  version "10.5.3"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.5.3.tgz#5bcfaf088ad17894232012877669634c06b20cc5"
 
 "@types/node@^8.0.24":
   version "8.10.21"
@@ -192,9 +192,9 @@
     "@types/node" "*"
     "@types/react" "*"
 
-"@types/react@*", "@types/react@16.4.6":
-  version "16.4.6"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.4.6.tgz#5024957c6bcef4f02823accf5974faba2e54fada"
+"@types/react@*", "@types/react@16.4.7":
+  version "16.4.7"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.4.7.tgz#f33f6d759a7e1833befa15224d68942d178a5a3f"
   dependencies:
     csstype "^2.2.0"
 
@@ -772,9 +772,9 @@ boom@2.x.x:
   dependencies:
     hoek "2.x.x"
 
-bootstrap@4.1.2:
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.1.2.tgz#aee2a93472e61c471fc79fb475531dcbc87de326"
+bootstrap@4.1.3:
+  version "4.1.3"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.1.3.tgz#0eb371af2c8448e8c210411d0cb824a6409a12be"
 
 brace-expansion@^1.1.7:
   version "1.1.11"
@@ -1185,8 +1185,8 @@ color-name@1.1.1:
   resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.1.1.tgz#4b1415304cf50028ea81643643bd82ea05803689"
 
 colors@^1.1.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/colors/-/colors-1.3.0.tgz#5f20c9fef6945cb1134260aab33bfbdc8295e04e"
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/colors/-/colors-1.3.1.tgz#4accdb89cf2cabc7f982771925e9468784f32f3d"
 
 combine-lists@^1.0.0:
   version "1.0.1"
@@ -2298,17 +2298,17 @@ file-entry-cache@^2.0.0:
     flat-cache "^1.2.1"
     object-assign "^4.0.1"
 
-file-uploader-component@7, file-uploader-component@^7.2.2:
-  version "7.2.2"
-  resolved "https://registry.yarnpkg.com/file-uploader-component/-/file-uploader-component-7.2.2.tgz#623125c272cbc08fc0cba74028e8958d346a0b3f"
+file-uploader-component@7, file-uploader-component@^7.3.0:
+  version "7.3.0"
+  resolved "https://registry.yarnpkg.com/file-uploader-component/-/file-uploader-component-7.3.0.tgz#89766a7882cd9e7ef23a9b3de8f68fe4ce53802f"
   dependencies:
     tslib "1"
 
 file-uploader-react-component@7:
-  version "7.2.2"
-  resolved "https://registry.yarnpkg.com/file-uploader-react-component/-/file-uploader-react-component-7.2.2.tgz#bb037c79840897fcdb911e6534341ac933d6aeef"
+  version "7.3.0"
+  resolved "https://registry.yarnpkg.com/file-uploader-react-component/-/file-uploader-react-component-7.3.0.tgz#e867f0f28d247968b3e9be85a73cd959c3a45435"
   dependencies:
-    file-uploader-component "^7.2.2"
+    file-uploader-component "^7.3.0"
     react "16"
     react-dom "16"
 
@@ -3475,9 +3475,9 @@ karma-webpack@3.0.0:
     source-map "^0.5.6"
     webpack-dev-middleware "^2.0.6"
 
-karma@2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/karma/-/karma-2.0.4.tgz#b399785f57e9bab1d3c4384db33fef4dec8ae349"
+karma@2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/karma/-/karma-2.0.5.tgz#3710c7a2e71b1c439313f283846d88e04e4f918c"
   dependencies:
     bluebird "^3.3.0"
     body-parser "^1.16.1"
@@ -3843,16 +3843,16 @@ markdown-it@8.4.1:
     uc.micro "^1.0.5"
 
 markdown-tip-react@6:
-  version "6.2.2"
-  resolved "https://registry.yarnpkg.com/markdown-tip-react/-/markdown-tip-react-6.2.2.tgz#aac5787f1632d39f1d7eb935be55c0ca42f185b1"
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/markdown-tip-react/-/markdown-tip-react-6.3.0.tgz#9da5569d36aa6f70cffb0191d1ccda3a9ec3bf4e"
   dependencies:
-    markdown-tip "^6.2.0"
+    markdown-tip "^6.3.0"
     react "16"
     react-dom "16"
 
-markdown-tip@6, markdown-tip@^6.2.0:
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/markdown-tip/-/markdown-tip-6.2.0.tgz#716ed6e74f4f3516a21f9f93211c94fdadea6b34"
+markdown-tip@6, markdown-tip@^6.3.0:
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/markdown-tip/-/markdown-tip-6.3.0.tgz#ff0dd1fc06a202bc0d11dd85df9bd29993c24132"
   dependencies:
     tslib "1"
 
@@ -4325,8 +4325,8 @@ npm-bundled@^1.0.1:
   resolved "https://registry.yarnpkg.com/npm-bundled/-/npm-bundled-1.0.3.tgz#7e71703d973af3370a9591bafe3a63aca0be2308"
 
 npm-packlist@^1.1.6:
-  version "1.1.10"
-  resolved "https://registry.yarnpkg.com/npm-packlist/-/npm-packlist-1.1.10.tgz#1039db9e985727e464df066f4cf0ab6ef85c398a"
+  version "1.1.11"
+  resolved "https://registry.yarnpkg.com/npm-packlist/-/npm-packlist-1.1.11.tgz#84e8c683cbe7867d34b1d357d893ce29e28a02de"
   dependencies:
     ignore-walk "^3.0.1"
     npm-bundled "^1.0.1"
@@ -4977,9 +4977,9 @@ punycode@^2.1.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
 
-puppeteer@1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-1.6.0.tgz#b6b6bd6a063a0b7591258613ec89a135f2cf8f2e"
+puppeteer@1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-1.6.1.tgz#ae50021bf8b2172be8f8d79224bec215f1a0c7c7"
   dependencies:
     debug "^3.1.0"
     extract-zip "^1.6.6"
@@ -5061,7 +5061,7 @@ rc@^1.1.2, rc@^1.2.7, rc@~1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-"react-dom@15 || 16", react-dom@16, react-dom@16.4.1:
+react-dom@16, react-dom@16.4.1:
   version "16.4.1"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.4.1.tgz#7f8b0223b3a5fbe205116c56deb85de32685dad6"
   dependencies:
@@ -5086,7 +5086,7 @@ react-schema-based-json-editor@7.17.0:
     schema-based-json-editor "^7.17.0"
     select2-react-component "5"
 
-"react@15 || 16", react@16, react@16.4.1:
+react@16, react@16.4.1:
   version "16.4.1"
   resolved "https://registry.yarnpkg.com/react/-/react-16.4.1.tgz#de51ba5764b5dbcd1f9079037b862bd26b82fe32"
   dependencies:
@@ -5475,21 +5475,21 @@ schema-utils@^0.4.4, schema-utils@^0.4.5:
     ajv "^6.1.0"
     ajv-keywords "^3.1.0"
 
-select2-component@5, select2-component@^5.3.0:
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/select2-component/-/select2-component-5.3.0.tgz#42b655d30aa3abb81ea1e69319301efcfdaf9ff0"
+select2-component@5, select2-component@^5.4.0:
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/select2-component/-/select2-component-5.4.0.tgz#0a286d9ac0743e40d0e01f4a6da838702e14d5c3"
   dependencies:
     "@types/node" "*"
     tslib "1"
 
 select2-react-component@5:
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/select2-react-component/-/select2-react-component-5.3.0.tgz#8280272cfe3cc2de043fb803de1ccb01e1e45113"
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/select2-react-component/-/select2-react-component-5.4.0.tgz#f93ce673a77709a166f1581f611c3d2c756cd904"
   dependencies:
     "@types/node" "*"
-    react "15 || 16"
-    react-dom "15 || 16"
-    select2-component "^5.3.0"
+    react "16"
+    react-dom "16"
+    select2-component "^5.4.0"
 
 "semver@2 || 3 || 4 || 5", semver@5.5.0, semver@^5.3.0, semver@^5.4.1, semver@^5.5.0:
   version "5.5.0"
@@ -6141,8 +6141,8 @@ tsutils@2.8.0:
     tslib "^1.7.1"
 
 tsutils@^2.27.2:
-  version "2.28.0"
-  resolved "https://registry.yarnpkg.com/tsutils/-/tsutils-2.28.0.tgz#6bd71e160828f9d019b6f4e844742228f85169a1"
+  version "2.29.0"
+  resolved "https://registry.yarnpkg.com/tsutils/-/tsutils-2.29.0.tgz#32b488501467acbedd4b85498673a0812aca0b99"
   dependencies:
     tslib "^1.8.1"
 
@@ -6418,9 +6418,9 @@ webpack-sources@^1.0.1, webpack-sources@^1.1.0:
     source-list-map "^2.0.0"
     source-map "~0.6.1"
 
-webpack@4.16.1:
-  version "4.16.1"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.16.1.tgz#2c4b89ea648125c3e67bcca6adf49ce2c14b2d31"
+webpack@4.16.3:
+  version "4.16.3"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.16.3.tgz#861be3176d81e7e3d71c66c8acc9bba35588b525"
   dependencies:
     "@webassemblyjs/ast" "1.5.13"
     "@webassemblyjs/helper-module-context" "1.5.13"
