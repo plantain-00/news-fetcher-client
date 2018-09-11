@@ -49,7 +49,6 @@ module.exports = {
   },
   watch: {
     back: `${tscCommand} --watch`,
-    front: `${tscStaticCommand} --watch`,
     webpack: `${webpackCommand} --watch`,
     css: () => watch(['scripts/*.css'], [], () => executeScriptAsync(cssCommand))
   }
