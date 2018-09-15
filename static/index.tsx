@@ -9,11 +9,9 @@ import * as hljs from 'highlight.js'
 
 document.onclick = e => {
   const href = (e.target as HTMLAnchorElement).href
-  if (href) {
-    if (href.indexOf('http') === 0) {
-      e.preventDefault()
-      electron.shell.openExternal(href)
-    }
+  if (href && href.indexOf('http') === 0) {
+    e.preventDefault()
+    electron.shell.openExternal(href)
   }
 }
 

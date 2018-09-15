@@ -194,23 +194,19 @@ async function checkUpdate() {
     })
     const releases: Release[] = JSON.parse(body)
     for (const release of releases) {
-      if (!release.prerelease && !release.draft) {
-        if (libs.semver.gt(release.tag_name, packageJson.version)) {
-          for (const asset of release.assets) {
-            if (process.platform === 'darwin') {
-              if (asset.name.endsWith('.dmg')) {
-                libs.downloadThenOpen(asset)
-                break
-              }
-            } else if (process.platform === 'win32') {
-              if (asset.name.endsWith('.exe')) {
-                libs.downloadThenOpen(asset)
-                break
-              }
+      if (!release.prerelease && !release.draft && libs.semver.gt(release.tag_name, packageJson.version)) {
+        for (const asset of release.assets) {
+          if (process.platform === 'darwin') {
+            if (asset.name.endsWith('.dmg')) {
+              libs.downloadThenOpen(asset)
+              break
             }
+          } else if (process.platform === 'win32' && asset.name.endsWith('.exe')) {
+            libs.downloadThenOpen(asset)
+            break
           }
-          break
         }
+        break
       }
     }
   } catch (error) {
