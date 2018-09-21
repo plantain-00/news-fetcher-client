@@ -22,7 +22,7 @@ module.exports = {
   postScript: [
     'git add package.json',
     'git commit -m "[version]"',
-    'git tag v[version]',
+    'git tag -a v[version] -m "v[version]"',
     'git push',
     'git push origin v[version]',
     'cd "[dir]" && npm i --production',
