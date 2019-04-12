@@ -25,7 +25,7 @@
     "atLeast": 95
   },
   "dependencies": {
-    "cheerio": "1.0.0-rc.2",
+    "cheerio": "1.0.0-rc.3",
     "request": "2.88.0",
     "semver": "6.0.0",
     "tmp": "0.1.0",
@@ -40,14 +40,14 @@
     "@types/cheerio": "0.22.11",
     "@types/highlight.js": "9.12.3",
     "@types/jasmine": "3.3.12",
-    "@types/react": "16.8.12",
-    "@types/react-dom": "16.8.3",
+    "@types/react": "16.8.13",
+    "@types/react-dom": "16.8.4",
     "@types/request": "2.48.1",
     "@types/semver": "6.0.0",
     "@types/tmp": "0.1.0",
-    "autoprefixer": "9.5.0",
+    "autoprefixer": "9.5.1",
     "bootstrap": "4.3.1",
-    "clean-css-cli": "4.2.1",
+    "clean-css-cli": "4.3.0",
     "clean-scripts": "1.9.2",
     "cpy-cli": "2.0.0",
     "cross-env": "5.2.0",
@@ -73,9 +73,9 @@
     "tslint-config-standard": "8.0.1",
     "tslint-sonarts": "1.9.0",
     "type-coverage": "1.12.0",
-    "typescript": "3.4.2",
+    "typescript": "3.4.3",
     "watch-then-execute": "1.1.1",
-    "webpack": "4.29.6",
+    "webpack": "4.30.0",
     "webpack-cli": "3.3.0"
   }
 }
