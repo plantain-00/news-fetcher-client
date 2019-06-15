@@ -29,7 +29,7 @@
     "request": "2.88.0",
     "semver": "6.1.1",
     "tmp": "0.1.0",
-    "tslib": "1.9.3"
+    "tslib": "1.10.0"
   },
   "engines": {
     "node": ">=6.0.0"
@@ -40,7 +40,7 @@
     "@types/cheerio": "0.22.11",
     "@types/highlight.js": "9.12.3",
     "@types/jasmine": "3.3.13",
-    "@types/react": "16.8.19",
+    "@types/react": "16.8.20",
     "@types/react-dom": "16.8.4",
     "@types/request": "2.48.1",
     "@types/semver": "6.0.0",
@@ -58,8 +58,8 @@
     "karma-chrome-launcher": "2.2.0",
     "karma-firefox-launcher": "1.1.0",
     "karma-jasmine": "2.0.1",
-    "karma-webpack": "4.0.1",
-    "markdownlint-cli": "0.16.0",
+    "karma-webpack": "4.0.2",
+    "markdownlint-cli": "0.17.0",
     "no-unused-export": "1.7.0",
     "postcss-cli": "6.1.2",
     "puppeteer": "1.17.0",
@@ -73,9 +73,9 @@
     "tslint-config-standard": "8.0.1",
     "tslint-sonarts": "1.9.0",
     "type-coverage": "2.0.2",
-    "typescript": "3.5.1",
+    "typescript": "3.5.2",
     "watch-then-execute": "1.1.1",
-    "webpack": "4.33.0",
-    "webpack-cli": "3.3.3"
+    "webpack": "4.34.0",
+    "webpack-cli": "3.3.4"
   }
 }
