@@ -27,7 +27,7 @@
   "dependencies": {
     "cheerio": "1.0.0-rc.3",
     "request": "2.88.0",
-    "semver": "6.1.1",
+    "semver": "6.1.2",
     "tmp": "0.1.0",
     "tslib": "1.10.0"
   },
@@ -51,7 +51,7 @@
     "clean-scripts": "1.11.1",
     "cpy-cli": "2.0.0",
     "cross-env": "5.2.0",
-    "electron": "5.0.5",
+    "electron": "5.0.6",
     "highlight.js": "9.15.8",
     "jasmine": "3.4.0",
     "karma": "4.1.0",
@@ -62,7 +62,7 @@
     "markdownlint-cli": "0.17.0",
     "no-unused-export": "1.7.0",
     "postcss-cli": "6.1.2",
-    "puppeteer": "1.18.0",
+    "puppeteer": "1.18.1",
     "react": "16.8.6",
     "react-dom": "16.8.6",
     "react-schema-based-json-editor": "7.23.0",
@@ -72,10 +72,10 @@
     "tslint": "5.18.0",
     "tslint-config-standard": "8.0.1",
     "tslint-sonarts": "1.9.0",
-    "type-coverage": "2.0.2",
+    "type-coverage": "2.0.4",
     "typescript": "3.5.2",
     "watch-then-execute": "1.1.1",
     "webpack": "4.35.0",
-    "webpack-cli": "3.3.4"
+    "webpack-cli": "3.3.5"
   }
 }
