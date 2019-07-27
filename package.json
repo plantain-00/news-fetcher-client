@@ -27,7 +27,7 @@
   "dependencies": {
     "cheerio": "1.0.0-rc.3",
     "request": "2.88.0",
-    "semver": "6.2.0",
+    "semver": "6.3.0",
     "tmp": "0.1.0",
     "tslib": "1.10.0"
   },
