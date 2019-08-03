@@ -94,7 +94,7 @@ libs.electron.app.on('window-all-closed', () => {
   }
 })
 
-libs.electron.ipcMain.on('hide', async(event: Electron.Event, url: string) => {
+libs.electron.ipcMain.on('hide', async(event, url: string) => {
   try {
     history.items!.push(url)
 
@@ -118,14 +118,14 @@ libs.electron.ipcMain.on('hide', async(event: Electron.Event, url: string) => {
   }
 })
 
-libs.electron.ipcMain.on('reload', async(event: Electron.Event, url: string) => {
+libs.electron.ipcMain.on('reload', async(event, url: string) => {
   const source = sources.find(s => s.url === url)
   if (source) {
     await load(source, event)
   }
 })
 
-libs.electron.ipcMain.on('saveConfiguration', async(event: Electron.Event, { sync, rawSources }: types.ConfigData) => {
+libs.electron.ipcMain.on('saveConfiguration', async(event, { sync, rawSources }: types.ConfigData) => {
   try {
     config.sync = sync
     config.rawSources = rawSources
@@ -145,7 +145,7 @@ libs.electron.ipcMain.on('saveConfiguration', async(event: Electron.Event, { syn
   }
 })
 
-async function load(source: Source, event: Electron.Event) {
+async function load(source: Source, event: Electron.IpcMainEvent) {
   try {
     const [, body] = await libs.requestAsync({
       url: source.url
@@ -216,7 +216,7 @@ async function checkUpdate() {
 
 checkUpdate()
 
-libs.electron.ipcMain.on('items', async(event: Electron.Event) => {
+libs.electron.ipcMain.on('items', async(event) => {
   try {
     if (config.sync.willSync) {
       const [, body] = await libs.requestAsync({
