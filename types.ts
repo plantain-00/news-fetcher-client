@@ -1,11 +1,11 @@
-export type NewsItem = {
+export interface NewsItem {
   href: string;
   title: string;
   detail?: string;
   hidden?: boolean;
 }
 
-export type NewsCategory = {
+export interface NewsCategory {
   name: string;
   source: string;
   items?: NewsItem[];
@@ -13,13 +13,13 @@ export type NewsCategory = {
   key?: string;
 }
 
-export type InitialData = {
+export interface InitialData {
   schema: any,
   startval: ConfigData,
   version: string;
 }
 
-export type RawSource = {
+export interface RawSource {
   name: string;
   url: string;
   selector?: string;
@@ -29,7 +29,7 @@ export type RawSource = {
   disabled?: boolean;
 }
 
-export type ConfigData = {
+export interface ConfigData {
   sync: {
     key: string;
     serverUrl: string;
@@ -42,6 +42,6 @@ export type ConfigData = {
   };
 }
 
-export type ErrorMessage = {
+export interface ErrorMessage {
   message: string;
 }

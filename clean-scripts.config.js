@@ -27,8 +27,7 @@ module.exports = {
     ]
   },
   lint: {
-    ts: `tslint ${tsFiles}`,
-    js: `standard ${jsFiles}`,
+    ts: `eslint --ext .js,.ts,.tsx ${tsFiles} ${jsFiles}`,
     export: `no-unused-export ${tsFiles}`,
     commit: `commitlint --from=HEAD~1`,
     markdown: `markdownlint README.md`,
@@ -45,10 +44,7 @@ module.exports = {
       'karma start static_spec/karma.config.js'
     ]
   },
-  fix: {
-    ts: `tslint --fix ${tsFiles}`,
-    js: `standard --fix ${jsFiles}`
-  },
+  fix: `eslint --ext .js,.ts,.tsx ${tsFiles} ${jsFiles} --fix`,
   watch: {
     back: `${tscCommand} --watch`,
     webpack: `${webpackCommand} --watch`,

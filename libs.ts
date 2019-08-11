@@ -5,7 +5,7 @@ import * as http from 'http'
 
 import request from 'request'
 
-export type Asset = {
+export interface Asset {
   browser_download_url: string;
   name: string;
   size: number;

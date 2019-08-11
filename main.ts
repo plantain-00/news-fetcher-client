@@ -37,7 +37,7 @@ try {
   })
 }
 
-type Source = {
+interface Source {
   name: string;
   url: string;
   selector: string;
@@ -70,7 +70,6 @@ function constructSources() {
         name: rawSource.name,
         url: rawSource.url,
         selector: rawSource.selector!,
-        // tslint:disable-next-line:no-eval
         getItem: eval(rawSource.getItem!),
         limit: rawSource.limit
       })
@@ -178,14 +177,13 @@ async function load(source: Source, event: Electron.IpcMainEvent) {
   }
 }
 
-type Release = {
+interface Release {
   tag_name: string;
   prerelease: boolean;
   draft: boolean;
   assets: libs.Asset[];
 }
 
-// tslint:disable-next-line:cognitive-complexity
 async function checkUpdate() {
   try {
     const [, body] = await libs.requestAsync({

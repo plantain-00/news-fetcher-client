@@ -15,7 +15,7 @@ document.onclick = e => {
   }
 }
 
-type State = {
+interface State {
   news?: types.NewsCategory[];
   configurationDialogIsVisiable?: boolean;
 }
@@ -62,7 +62,6 @@ class MainComponent extends React.Component<{}, State> {
     })
     electron.ipcRenderer.send('items')
   }
-  // tslint:disable-next-line:cognitive-complexity
   render() {
     const newsView = this.news.map(n => {
       if (n.items) {
