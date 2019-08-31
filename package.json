@@ -53,13 +53,13 @@
     "clean-scripts": "1.12.1",
     "cpy-cli": "2.0.0",
     "cross-env": "5.2.0",
-    "electron": "6.0.2",
-    "eslint": "6.1.0",
+    "electron": "6.0.6",
+    "eslint": "6.3.0",
     "eslint-config-prettier": "6.0.0",
     "eslint-plugin-plantain": "0.1.2",
     "highlight.js": "9.15.9",
     "jasmine": "3.4.0",
-    "karma": "4.2.0",
+    "karma": "4.3.0",
     "karma-chrome-launcher": "3.1.0",
     "karma-firefox-launcher": "1.2.0",
     "karma-jasmine": "2.0.1",
@@ -74,9 +74,9 @@
     "rimraf": "3.0.0",
     "ts-loader": "6.0.4",
     "type-coverage": "2.2.0",
-    "typescript": "3.5.3",
+    "typescript": "3.6.2",
     "watch-then-execute": "1.1.1",
-    "webpack": "4.39.2",
+    "webpack": "4.39.3",
     "webpack-cli": "3.3.6"
   }
 }
