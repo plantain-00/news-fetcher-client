@@ -31,7 +31,7 @@ function findIndex<T>(array: T[], condition: (item: T) => boolean) {
 
 const buttonCommonClass = 'btn btn-link'
 
-class MainComponent extends React.Component<{}, State> {
+class MainComponent extends React.Component<unknown, State> {
   private schema: any
   private value!: types.ConfigData
   private locale = zhCNLocale
