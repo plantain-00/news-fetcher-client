@@ -5,6 +5,7 @@
   },
   "exclude": [
     "node_modules/",
-    "static/"
+    "static/",
+    "*.config.ts"
   ]
 }

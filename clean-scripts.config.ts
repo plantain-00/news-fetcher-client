@@ -1,22 +1,20 @@
-const { executeScriptAsync } = require('clean-scripts')
-const { watch } = require('watch-then-execute')
+import { executeScriptAsync } from 'clean-scripts'
+import { watch } from 'watch-then-execute'
 
-const tsFiles = `"*.ts" "static/**/*.tsx" "spec/**/*.ts" "static_spec/**/*.ts"`
-const jsFiles = `"*.config.js" "static/**/*.config.js" "static_spec/**/*.config.js"`
+const tsFiles = `"*.ts" "static/**/*.tsx"`
+const jsFiles = `"*.config.js"`
 
 const tscCommand = `tsc`
-const tscStaticCommand = `tsc -p static`
-const webpackCommand = `webpack --config static/webpack.config.js`
+const webpackCommand = `webpack --config static/webpack.config.ts`
 const cssCommand = [
   `postcss static/index.css -o static/index.postcss.css`,
   `cleancss -o static/index.bundle.css static/index.postcss.css`
 ]
 
-module.exports = {
+export default {
   build: {
     back: tscCommand,
     js: [
-      tscStaticCommand,
       webpackCommand
     ],
     css: cssCommand,
@@ -34,16 +32,7 @@ module.exports = {
     typeCoverage: 'type-coverage -p . --strict',
     typeCoverageStatic: 'type-coverage -p static --strict'
   },
-  test: {
-    jasmine: [
-      'tsc -p spec',
-      'jasmine'
-    ],
-    karma: [
-      'tsc -p static_spec',
-      'karma start static_spec/karma.config.js'
-    ]
-  },
+  test: {},
   fix: `eslint --ext .js,.ts,.tsx ${tsFiles} ${jsFiles} --fix`,
   watch: {
     back: `${tscCommand} --watch`,

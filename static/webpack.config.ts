@@ -1,6 +1,6 @@
-const isDev = process.env.NODE_ENV === 'development'
+import * as webpack from 'webpack'
 
-module.exports = {
+export default {
   entry: {
     index: './static/index'
   },
@@ -8,12 +8,12 @@ module.exports = {
     path: __dirname,
     filename: '[name].bundle.js'
   },
-  resolve: isDev ? {
+  resolve: {
     extensions: ['.ts', '.tsx', '.js']
-  } : undefined,
-  module: isDev ? {
+  },
+  module: {
     rules: [
       { test: /\.tsx?$/, loader: 'ts-loader' }
     ]
-  } : undefined
-}
+  }
+} as webpack.Configuration
