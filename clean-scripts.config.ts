@@ -2,7 +2,6 @@ import { executeScriptAsync } from 'clean-scripts'
 import { watch } from 'watch-then-execute'
 
 const tsFiles = `"*.ts" "static/**/*.tsx"`
-const jsFiles = `"*.config.js"`
 
 const tscCommand = `tsc`
 const webpackCommand = `webpack --config static/webpack.config.ts`
@@ -25,15 +24,14 @@ export default {
     ]
   },
   lint: {
-    ts: `eslint --ext .js,.ts,.tsx ${tsFiles} ${jsFiles}`,
+    ts: `eslint --ext .js,.ts,.tsx ${tsFiles}`,
     export: `no-unused-export ${tsFiles}`,
-    commit: `commitlint --from=HEAD~1`,
     markdown: `markdownlint README.md`,
     typeCoverage: 'type-coverage -p . --strict',
     typeCoverageStatic: 'type-coverage -p static --strict'
   },
   test: {},
-  fix: `eslint --ext .js,.ts,.tsx ${tsFiles} ${jsFiles} --fix`,
+  fix: `eslint --ext .js,.ts,.tsx ${tsFiles} --fix`,
   watch: {
     back: `${tscCommand} --watch`,
     webpack: `${webpackCommand} --watch`,

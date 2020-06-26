@@ -35,8 +35,6 @@
     "node": ">=6.0.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "9.0.1",
-    "@commitlint/config-conventional": "9.0.1",
     "@types/cheerio": "0.22.18",
     "@types/highlight.js": "9.12.4",
     "@types/react": "16.9.41",
