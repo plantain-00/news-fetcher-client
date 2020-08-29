@@ -1,5 +1,5 @@
 /// <reference types="electron" />
-declare const electron: Electron.AllElectron
+declare const electron: typeof Electron
 import * as React from 'react'
 import * as types from '../types'
 import * as ReactDOM from 'react-dom'
