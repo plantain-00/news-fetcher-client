@@ -31,7 +31,7 @@ try {
   const { sync, rawSources } = JSON.parse(data)
   config.sync = sync
   config.rawSources = rawSources
-} catch (error) {
+} catch {
   libs.fs.writeFile(config.localFiles.configurationPath, JSON.stringify(config, null, '    '), error => {
     libs.printInConsole(error)
   })
@@ -109,9 +109,9 @@ libs.electron.ipcMain.on('hide', async(event, url: string) => {
         createTime: Date.now()
       })
     }
-  } catch (error) {
+  } catch (error: unknown) {
     const errorMessage: types.ErrorMessage = {
-      message: error.message
+      message: error instanceof Error ? error.message : String(error)
     }
     event.sender.send('error', errorMessage)
   }
@@ -136,9 +136,9 @@ libs.electron.ipcMain.on('saveConfiguration', async(event, { sync, rawSources }:
       url: `${config.sync.serverUrl}/sources?key=${config.sync.key}`,
       json: { rawSources }
     })
-  } catch (error) {
+  } catch (error: unknown) {
     const errorMessage: types.ErrorMessage = {
-      message: error.message
+      message: error instanceof Error ? error.message : String(error)
     }
     event.sender.send('error', errorMessage)
   }
@@ -166,12 +166,12 @@ async function load(source: Source, event: Electron.IpcMainEvent) {
       items
     }
     event.sender.send('items', newsCategory)
-  } catch (error) {
+  } catch (error: unknown) {
     libs.printInConsole(error)
     const newsCategory: types.NewsCategory = {
       name: source.name,
       source: source.url,
-      error: error.message
+      error: error instanceof Error ? error.message : String(error)
     }
     event.sender.send('items', newsCategory)
   }
@@ -207,7 +207,7 @@ async function checkUpdate() {
         break
       }
     }
-  } catch (error) {
+  } catch (error: unknown) {
     libs.printInConsole(error)
   }
 }
@@ -231,7 +231,7 @@ libs.electron.ipcMain.on('items', async(event) => {
           isSuccess: true,
           items: localData.map(d => d.url)
         }
-      } catch (error) {
+      } catch {
         localData = []
         history = {
           isSuccess: true,
@@ -257,7 +257,7 @@ libs.electron.ipcMain.on('items', async(event) => {
     for (const source of sources) {
       await load(source, event)
     }
-  } catch (error) {
+  } catch (error: unknown) {
     libs.printInConsole(error)
   }
 })
