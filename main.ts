@@ -41,7 +41,7 @@ interface Source {
   name: string;
   url: string;
   selector: string;
-  getItem: (cheerio: Cheerio, $: CheerioStatic) => types.NewsItem;
+  getItem: (cheerio: cheerio.Cheerio, $: cheerio.Root) => types.NewsItem;
   limit?: number;
 }
 
@@ -57,7 +57,7 @@ function constructSources() {
         name: `${rawSource.name} milestone`,
         url: rawSource.url,
         selector: '.milestone-title-link > a',
-        getItem: (cheerio: Cheerio, $: CheerioStatic) => {
+        getItem: (cheerio: cheerio.Cheerio) => {
           const progress = cheerio.parent().parent().next().find('.progress-percent').text()
           return {
             href: 'https://github.com' + cheerio.attr('href'),
