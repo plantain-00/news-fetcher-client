@@ -1,4 +1,5 @@
 import * as packageJson from './package.json'
+import { Configuration } from 'clean-release'
 
 const name = packageJson.name
 const electronVersion = packageJson.devDependencies.electron
@@ -37,4 +38,4 @@ export default {
     `electron-installer-windows --src dist/${name}-win32-x64/ --dest dist/`,
     `cd dist && create-dmg ${name}-darwin-x64/${name}.app`
   ]
-}
+} as Configuration
