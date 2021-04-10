@@ -11,7 +11,7 @@ export interface Asset {
   size: number;
 }
 
-export function printInConsole(message: any) {
+export function printInConsole(message: unknown) {
   console.log(message)
 }
 

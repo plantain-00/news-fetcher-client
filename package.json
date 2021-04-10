@@ -25,11 +25,11 @@
     "atLeast": 98.08
   },
   "dependencies": {
-    "cheerio": "1.0.0-rc.5",
+    "cheerio": "1.0.0-rc.6",
     "request": "2.88.2",
     "semver": "7.3.5",
     "tmp": "0.2.1",
-    "tslib": "2.1.0"
+    "tslib": "2.2.0"
   },
   "engines": {
     "node": ">=6.0.0"
@@ -42,8 +42,8 @@
     "@types/semver": "7.3.4",
     "@types/tmp": "0.2.0",
     "@types/webpack": "5.28.0",
-    "@typescript-eslint/eslint-plugin": "4.20.0",
-    "@typescript-eslint/parser": "4.20.0",
+    "@typescript-eslint/eslint-plugin": "4.21.0",
+    "@typescript-eslint/parser": "4.21.0",
     "autoprefixer": "10.2.5",
     "bootstrap": "4.6.0",
     "clean-css-cli": "5.2.2",
@@ -52,10 +52,10 @@
     "cpy-cli": "3.1.1",
     "cross-env": "7.0.3",
     "electron": "12.0.2",
-    "eslint": "7.23.0",
+    "eslint": "7.24.0",
     "eslint-config-prettier": "8.1.0",
     "eslint-plugin-plantain": "1.1.0",
-    "highlight.js": "10.7.1",
+    "highlight.js": "10.7.2",
     "markdownlint-cli": "0.27.1",
     "no-unused-export": "1.14.1",
     "postcss": "8.2.9",
@@ -67,10 +67,10 @@
     "ts-loader": "8.1.0",
     "ts-node": "9.1.1",
     "tsconfig-plantain": "0.0.1",
-    "type-coverage": "2.17.0",
-    "typescript": "4.2.3",
+    "type-coverage": "2.17.1",
+    "typescript": "4.2.4",
     "watch-then-execute": "1.2.0",
-    "webpack": "5.30.0",
+    "webpack": "5.31.2",
     "webpack-cli": "4.6.0"
   }
 }
