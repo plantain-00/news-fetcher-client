@@ -35,14 +35,14 @@ export function downloadThenOpen(asset: Asset) {
   readableStream.pipe(writableStream)
 }
 
-export function requestAsync(options: request.Options) {
-  return new Promise<[http.IncomingMessage, any]>((resolve, reject) => {
+export function requestAsync<T = string>(options: request.Options) {
+  return new Promise<[http.IncomingMessage, T]>((resolve, reject) => {
     options.headers = {
       'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.65 Safari/537.36'
     }
     options.timeout = 10000
     options.gzip = true
-    request(options, (error, response, body) => {
+    request(options, (error: Error | null, response, body: T) => {
       if (error) {
         reject(error)
       } else {
