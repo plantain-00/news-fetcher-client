@@ -5,7 +5,7 @@ import * as types from '../types'
 import * as ReactDOM from 'react-dom'
 import { JSONEditor } from 'react-schema-based-json-editor'
 import { locale as zhCNLocale } from 'schema-based-json-editor/dist/locales/zh-CN'
-import * as hljs from 'highlight.js'
+import hljs from 'highlight.js'
 
 document.onclick = e => {
   const href = (e.target as HTMLAnchorElement).href
