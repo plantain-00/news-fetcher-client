@@ -20,15 +20,6 @@ interface State {
   configurationDialogIsVisiable?: boolean;
 }
 
-function findIndex<T>(array: T[], condition: (item: T) => boolean) {
-  for (let i = 0; i < array.length; i++) {
-    if (condition(array[i])) {
-      return i
-    }
-  }
-  return -1
-}
-
 const buttonCommonClass = 'btn btn-link'
 
 class MainComponent extends React.Component<unknown, State> {
@@ -41,7 +32,7 @@ class MainComponent extends React.Component<unknown, State> {
 
   componentDidMount() {
     electron.ipcRenderer.on('items', (event: Electron.Event, arg: types.NewsCategory) => {
-      const index = findIndex(this.news, n => n.source === arg.source)
+      const index = this.news.findIndex(n => n.source === arg.source)
       if (arg.name) {
         arg.key = arg.name.replace(' ', '')
       }
